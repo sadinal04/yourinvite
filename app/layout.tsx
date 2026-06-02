@@ -37,10 +37,15 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Undangan Digital Premium",
+  title: {
+    default: "yourinvite | buat undangan digital",
+    template: "%s | yourinvite",
+  },
   description: "Undangan Pernikahan Digital — Sunflower Gold Luxury",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon/icon.png",
+    shortcut: "/icon/icon.png",
+    apple: "/icon/icon.png",
   },
 };
 

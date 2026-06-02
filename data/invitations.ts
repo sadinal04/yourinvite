@@ -1,8 +1,8 @@
 import { InvitationsMap } from "@/types/invitation";
 
 export const invitations: InvitationsMap = {
-  "haris-cut": {
-    slug: "haris-cut",
+  "haris-icut": {
+    slug: "haris-icut",
     meta: {
       title: "Undangan Pernikahan Haris & Cut",
       description:
