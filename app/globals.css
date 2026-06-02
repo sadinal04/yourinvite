@@ -1,0 +1,343 @@
+@import "tailwindcss";
+
+/* ============================================
+   SUNFLOWER GOLD LUXURY — Design System
+   ============================================ */
+
+@layer base {
+  :root {
+    /* Color Palette */
+    --color-white: #ffffff;
+    --color-cream: #fbecd9;
+    --color-cream-light: #fdf5ec;
+    --color-gold: #cc9b3f;
+    --color-gold-light: #e0b96a;
+    --color-gold-dark: #b5832a;
+    --color-gold-pale: #f5e6c8;
+    --color-maroon: #65081f;
+    --color-maroon-light: #8a1530;
+    --color-text-dark: #2a1a0a;
+    --color-text-mid: #5a3e28;
+    --color-text-light: #8a6a4a;
+
+    /* Spacing */
+    --section-px: 1.5rem;
+    --max-width: 480px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream-light);
+    color: var(--color-text-dark);
+    font-family: 'Lora', Georgia, serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scroll lock when cover is shown */
+  body.scroll-locked {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-white);
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+@layer utilities {
+  .font-heading {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-script {
+    font-family: 'Great Vibes', cursive;
+  }
+
+  .font-body {
+    font-family: 'Lora', Georgia, serif;
+  }
+
+  .text-gold {
+    color: var(--color-gold);
+  }
+
+  .text-gold-dark {
+    color: var(--color-gold-dark);
+  }
+
+  .text-maroon {
+    color: var(--color-maroon);
+  }
+
+  .text-cream {
+    color: var(--color-cream);
+  }
+}
+
+/* ============================================
+   ANIMATIONS & KEYFRAMES
+   ============================================ */
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-12px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(6px) rotate(-3deg);
+  }
+}
+
+@keyframes float-petal {
+  0% {
+    transform: translateY(-5vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(110vh) translateX(60px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer-gold {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(204, 155, 63, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(204, 155, 63, 0.8), 0 0 60px rgba(204, 155, 63, 0.3);
+  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ornament-spin {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes divider-expand {
+  from { width: 0; opacity: 0; }
+  to { width: 80px; opacity: 1; }
+}
+
+@keyframes bismillah-glow {
+  0%, 100% { text-shadow: 0 0 10px rgba(204, 155, 63, 0.3); }
+  50% { text-shadow: 0 0 25px rgba(204, 155, 63, 0.7), 0 0 50px rgba(204, 155, 63, 0.2); }
+}
+
+/* ============================================
+   DESKTOP WRAPPER
+   ============================================ */
+.invitation-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+  min-height: 100dvh;
+  background-color: var(--color-white);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+.section-px {
+  padding-left: var(--section-px);
+  padding-right: var(--section-px);
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+/* ============================================
+   GLASS CARD
+   ============================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(204, 155, 63, 0.2);
+  border-radius: 1rem;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+.btn-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  color: var(--color-white);
+  border: none;
+  padding: 0.875rem 2.5rem;
+  border-radius: 3rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(204, 155, 63, 0.5);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   COUNTDOWN BOXES
+   ============================================ */
+.countdown-box {
+  background: linear-gradient(135deg, rgba(204, 155, 63, 0.1) 0%, rgba(181, 131, 42, 0.05) 100%);
+  border: 1px solid rgba(204, 155, 63, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.875rem 0.5rem;
+  text-align: center;
+  min-width: 64px;
+}
+
+/* ============================================
+   MUSIC PLAYER
+   ============================================ */
+.music-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(204, 155, 63, 0.4);
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+.music-btn.playing .disc {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* ============================================
+   ORNAMENT ANIMATIONS
+   ============================================ */
+.animate-float {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-gentle 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer-gold 3s ease-in-out infinite;
+}
+
+.animate-bismillah {
+  animation: bismillah-glow 3s ease-in-out infinite;
+}
+
+/* ============================================
+   SCROLL ANIMATIONS (JS-driven via Framer)
+   ============================================ */
+.fade-up-ready {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* ============================================
+   RESPONSIVE DESKTOP SIDE DECORATION
+   ============================================ */
+@media (min-width: 520px) {
+  body {
+    background: linear-gradient(135deg, #f5e6c8 0%, #fbecd9 50%, #f5e6c8 100%);
+  }
+}
