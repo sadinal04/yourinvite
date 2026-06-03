@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { InvitationData } from "@/types/invitation";
 import CoverScreen from "@/components/cover/CoverScreen";
 import FloatingParticles from "@/components/ui/FloatingParticles";
@@ -11,7 +11,6 @@ import OpeningSection from "@/components/sections/OpeningSection";
 import CoupleSection from "@/components/sections/CoupleSection";
 import CountdownSection from "@/components/sections/CountdownSection";
 import EventSection from "@/components/sections/EventSection";
-import LocationSection from "@/components/sections/LocationSection";
 import QuranSection from "@/components/sections/QuranSection";
 import LoveStorySection from "@/components/sections/LoveStorySection";
 import ClosingSection from "@/components/sections/ClosingSection";
@@ -21,6 +20,47 @@ import { useSnapScroll } from "@/hooks/useSnapScroll";
 interface InvitationClientProps {
   data: InvitationData;
   guestName: string;
+}
+
+// Animatic section wrapper — slides up and covers the previous section
+function SectionSlide({
+  children,
+  index,
+  id,
+}: {
+  children: React.ReactNode;
+  index: number;
+  id: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, {
+    once: false,
+    margin: "-5% 0px -5% 0px",
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      id={id}
+      style={{
+        position: "relative",
+        zIndex: 10 + index,
+        willChange: "transform, opacity",
+      }}
+      initial={{ opacity: 0, y: 60, scale: 0.97 }}
+      animate={
+        isInView
+          ? { opacity: 1, y: 0, scale: 1 }
+          : { opacity: 0, y: 60, scale: 0.97 }
+      }
+      transition={{
+        duration: 0.65,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 export default function InvitationClient({
@@ -46,11 +86,22 @@ export default function InvitationClient({
 
   const handleOpen = useCallback(() => {
     setIsOpen(true);
-    play(); // silently skips if audio unavailable
+    play();
   }, [play]);
 
   // Activate JS snap-scroll once invitation is opened
   useSnapScroll(isOpen);
+
+  // Section definitions with IDs matching snap-scroll hook
+  const sections = [
+    { id: "opening",    Component: () => <OpeningSection data={data} /> },
+    { id: "couple",     Component: () => <CoupleSection data={data} /> },
+    { id: "countdown",  Component: () => <CountdownSection data={data} /> },
+    { id: "event",      Component: () => <EventSection data={data} /> },
+    { id: "quran",      Component: () => <QuranSection data={data} /> },
+    { id: "love-story", Component: () => <LoveStorySection /> },
+    { id: "closing",    Component: () => <ClosingSection data={data} guestName={guestName} /> },
+  ];
 
   return (
     <div className="invitation-wrapper">
@@ -73,21 +124,18 @@ export default function InvitationClient({
             key="main-content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <OpeningSection data={data} />
-            <CoupleSection data={data} />
-            <CountdownSection data={data} />
-            <EventSection data={data} />
-            <LocationSection data={data} />
-            <QuranSection data={data} />
-            <LoveStorySection />
-            <ClosingSection data={data} guestName={guestName} />
+            {sections.map((s, i) => (
+              <SectionSlide key={s.id} index={i} id={s.id}>
+                <s.Component />
+              </SectionSlide>
+            ))}
           </motion.main>
         )}
       </AnimatePresence>
 
-      {/* Floating Music Controller — only shown when audio file is available */}
+      {/* Floating Music Controller */}
       {isOpen && isAvailable && (
         <MusicController isPlaying={isPlaying} onToggle={toggle} />
       )}

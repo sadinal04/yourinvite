@@ -4,8 +4,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import {
-  fadeLeft, fadeRight, fadeDown, fadeUp, zoomIn, zoomInUp,
-  staggerContainer, SectionLabel, GoldOrnamentDivider,
+  fadeLeft, fadeRight, fadeDown, fadeUp, zoomIn,
+  SectionLabel, GoldOrnamentDivider,
 } from "@/components/ui/Animations";
 
 interface CoupleSectionProps {
@@ -26,31 +26,62 @@ const PersonCard = ({
   childOfText: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-30px 0px" });
+
+  // Split name by comma to separate main name and academic/customary title (gelar)
   const nameParts = person.name.split(",");
   const mainName = nameParts[0].trim();
   const suffix = nameParts.slice(1).join(",").trim();
 
+  // Asymmetric leaf shape border radius values
+  const borderRadius = direction === "left" 
+    ? {
+        borderTopLeftRadius: "40px",
+        borderBottomRightRadius: "40px",
+        borderTopRightRadius: "12px",
+        borderBottomLeftRadius: "12px",
+      }
+    : {
+        borderTopRightRadius: "40px",
+        borderBottomLeftRadius: "40px",
+        borderTopLeftRadius: "12px",
+        borderBottomRightRadius: "12px",
+      };
+
   return (
     <motion.div
       ref={ref}
-      className="glass-card p-4 text-center relative overflow-hidden"
+      className="p-3 text-center relative overflow-hidden max-w-[320px] mx-auto w-full"
+      style={{
+        ...borderRadius,
+        background: "rgba(253, 245, 236, 0.7)",
+        border: "1.5px solid rgba(204, 155, 63, 0.25)",
+        boxShadow: "0 4px 15px rgba(204, 155, 63, 0.05)",
+      }}
       variants={direction === "left" ? fadeLeft : fadeRight}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       transition={{ delay }}
     >
-      {/* Gold top bar */}
-      <div className="absolute top-0 left-0 right-0 h-0.5"
-        style={{ background: "linear-gradient(90deg, transparent, #CC9B3F 30%, #CC9B3F 70%, transparent)" }} />
+      {/* Inner thin decorative border following the leaf shape */}
+      <div 
+        className="absolute inset-[5px] pointer-events-none"
+        style={{
+          border: "1px solid rgba(204,155,63,0.12)",
+          borderTopLeftRadius: direction === "left" ? "35px" : "8px",
+          borderBottomRightRadius: direction === "left" ? "35px" : "8px",
+          borderTopRightRadius: direction === "left" ? "8px" : "35px",
+          borderBottomLeftRadius: direction === "left" ? "8px" : "35px",
+        }}
+      />
 
       {/* Sunflower ornament */}
       <motion.div
-        className="flex justify-center mb-1.5"
-        animate={{ rotate: [0, 5, -5, 0] }}
+        className="flex justify-center mb-0.5"
+        animate={{ rotate: [0, 4, -4, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
-        <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
+        <svg width="24" height="24" viewBox="0 0 60 60" fill="none">
           <circle cx="30" cy="30" r="28" fill="rgba(204,155,63,0.06)" />
           {Array.from({ length: 10 }, (_, i) => {
             const angle = (i * 360) / 10;
@@ -70,32 +101,33 @@ const PersonCard = ({
       </motion.div>
 
       {/* Role */}
-      <p className="tracking-[0.2em] text-xs uppercase mb-1"
+      <p className="tracking-[0.2em] text-[9.5px] uppercase mb-0.5"
         style={{ fontFamily: "'Cormorant Garamond', serif", color: "#B5832A" }}>
         {role}
       </p>
 
       {/* Script name */}
-      <h3 className="leading-tight mb-0.5"
-        style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.1rem", color: "#CC9B3F" }}>
+      <h3 className="leading-tight mb-0 whitespace-nowrap"
+        style={{ fontFamily: "'Italianno', cursive", fontSize: "2.7rem", color: "#CC9B3F" }}>
         {mainName}
       </h3>
 
+      {/* Title/Gelar (using same Italianno font, but slightly smaller) */}
       {suffix && (
-        <p className="text-[10px] mb-1.5"
-          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#8a6a4a", fontStyle: "italic" }}>
+        <p className="leading-none mt-0 mb-0.5 whitespace-nowrap"
+          style={{ fontFamily: "'Italianno', cursive", fontSize: "1.7rem", color: "#CC9B3F", opacity: 0.85 }}>
           {suffix}
         </p>
       )}
 
-      <div className="flex items-center gap-2 justify-center my-2">
-        <div style={{ height: "1px", flex: 1, background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.4))" }} />
-        <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: "#CC9B3F", opacity: 0.6 }} />
-        <div style={{ height: "1px", flex: 1, background: "linear-gradient(90deg, rgba(204,155,63,0.4), transparent)" }} />
+      <div className="flex items-center gap-2 justify-center my-1">
+        <div style={{ height: "1px", width: "40px", background: "linear-gradient(90deg, transparent, rgba(204, 155, 63, 0.3))" }} />
+        <div style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#CC9B3F", opacity: 0.5 }} />
+        <div style={{ height: "1px", width: "40px", background: "linear-gradient(90deg, rgba(204, 155, 63, 0.3), transparent)" }} />
       </div>
 
       {/* Parents */}
-      <p className="text-[11px] leading-relaxed"
+      <p className="text-[10px] leading-snug"
         style={{ fontFamily: "'Lora', serif", color: "#6a4e30", fontStyle: "italic" }}>
         {childOfText} dari<br />
         Bapak {person.father}<br />
@@ -107,20 +139,20 @@ const PersonCard = ({
 
 export default function CoupleSection({ data }: CoupleSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-30px 0px" });
 
   return (
     <section
       id="couple"
-      className="section-snap section-px py-6 relative flex flex-col justify-center gap-y-3"
+      className="section-snap section-px py-4 relative flex flex-col justify-center gap-y-2 h-dvh overflow-hidden"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #fbecd9 40%, #fdf5ec 100%)" }}
     >
       {/* Header */}
-      <div ref={ref} className="text-center mb-3">
+      <div ref={ref} className="text-center mb-1">
         <SectionLabel text="Mempelai" />
 
         <motion.h2
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.8rem", fontWeight: 600, color: "#5a3e28", fontStyle: "italic" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.6rem", fontWeight: 600, color: "#5a3e28", fontStyle: "italic" }}
           variants={fadeDown}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -133,7 +165,7 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
       </div>
 
       {/* Cards */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         <PersonCard
           person={data.groom}
           role="Mempelai Pria"
@@ -144,14 +176,14 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
 
         {/* & connecting */}
         <motion.div
-          className="flex items-center justify-center py-0.5"
+          className="flex items-center justify-center py-0"
           variants={zoomIn}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px 0px" }}
         >
           <motion.p
-            style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2rem", color: "#CC9B3F", lineHeight: 1 }}
+            style={{ fontFamily: "'Italianno', cursive", fontSize: "2rem", color: "#CC9B3F", lineHeight: 1 }}
             animate={{ scale: [1, 1.06, 1] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           >

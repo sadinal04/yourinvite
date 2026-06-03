@@ -45,8 +45,8 @@ export default function NotFound() {
       <p
         className="mt-3 mb-2"
         style={{
-          fontFamily: "'Great Vibes', cursive",
-          fontSize: "2rem",
+          fontFamily: "'Italianno', cursive",
+          fontSize: "2.5rem",
           color: "#5a3e28",
         }}
       >

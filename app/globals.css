@@ -67,7 +67,7 @@
   }
 
   .font-script {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Italianno', cursive;
   }
 
   .font-body {
@@ -363,6 +363,45 @@
    ============================================ */
 @media (min-width: 520px) {
   body {
-    background: linear-gradient(135deg, #f5e6c8 0%, #fbecd9 50%, #f5e6c8 100%);
+    background: linear-gradient(160deg, #f7e8d2 0%, #fbecd9 50%, #f7e8d2 100%);
+    min-height: 100dvh;
   }
+
+  /* Clean cream side panels — no flowers, just warmth */
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: calc((100vw - 480px) / 2);
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(245, 230, 200, 0.55) 0%,
+      rgba(251, 236, 217, 0.35) 40%,
+      rgba(245, 230, 200, 0.45) 70%,
+      rgba(240, 225, 195, 0.5) 100%
+    );
+  }
+
+  body::before { left: 0; }
+  body::after  { right: 0; }
 }
+
+/* Ensure invitation wrapper stays above side panels */
+.invitation-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SECTION STACKING STYLES
+   ============================================ */
+
+/* Each section gets a soft upward shadow to emphasize stacking */
+main > div {
+  box-shadow: 0 -6px 32px rgba(0,0,0,0.05);
+}
+

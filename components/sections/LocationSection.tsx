@@ -39,8 +39,8 @@ export default function LocationSection({ data }: LocationSectionProps) {
         </p>
         <h2
           style={{
-            fontFamily: "'Great Vibes', cursive",
-            fontSize: "2.8rem",
+            fontFamily: "'Italianno', cursive",
+            fontSize: "3.2rem",
             color: "#CC9B3F",
           }}
         >

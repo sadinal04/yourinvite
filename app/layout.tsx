@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import {
   Cormorant_Garamond,
   Lora,
-  Great_Vibes,
+  Italianno,
 } from "next/font/google";
 import "./globals.css";
 
@@ -22,10 +22,10 @@ const lora = Lora({
   display: "swap",
 });
 
-const greatVibes = Great_Vibes({
+const italianno = Italianno({
   subsets: ["latin"],
   weight: ["400"],
-  variable: "--font-great-vibes",
+  variable: "--font-italianno",
   display: "swap",
 });
 
@@ -63,7 +63,7 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body
-        className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable}`}
+        className={`${cormorantGaramond.variable} ${lora.variable} ${italianno.variable}`}
       >
         {children}
       </body>

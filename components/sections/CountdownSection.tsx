@@ -137,7 +137,7 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
         {/* Countdown boxes and Calendar button */}
         {countdown.isPast ? (
           <motion.div className="text-center" variants={zoomIn}>
-            <p style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.8rem", color: "#CC9B3F" }}>Alhamdulillah</p>
+            <p style={{ fontFamily: "'Italianno', cursive", fontSize: "3.5rem", color: "#CC9B3F" }}>Alhamdulillah</p>
             <p className="text-sm mt-2" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.8)", fontStyle: "italic" }}>
               Semoga menjadi keluarga sakinah mawaddah warahmah
             </p>

@@ -121,7 +121,7 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
             Kepada yang terhormat
           </motion.p>
           <motion.p variants={zoomIn}
-            style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.2rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)" }}>
+            style={{ fontFamily: "'Italianno', cursive", fontSize: "2.8rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)" }}>
             {guestName}
           </motion.p>
         </motion.div>
@@ -152,7 +152,7 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
             Hormat Kami
           </motion.p>
           <motion.p variants={zoomIn}
-            style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.8rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)", lineHeight: 1.3 }}>
+            style={{ fontFamily: "'Italianno', cursive", fontSize: "3.5rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)", lineHeight: 1.3 }}>
             {data.closing?.signature || `${groomFirst} & ${brideFirst}`}
           </motion.p>
         </motion.div>
