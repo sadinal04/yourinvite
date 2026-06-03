@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import SectionWrapper, { itemVariants } from "@/components/ui/SectionWrapper";
 import { InvitationData } from "@/types/invitation";
+import { Navigation } from "lucide-react";
 
 interface LocationSectionProps {
   data: InvitationData;
 }
 
 export default function LocationSection({ data }: LocationSectionProps) {
-  const mapsUrl = data.event.akad.mapsUrl || data.event.resepsi.mapsUrl;
+  const mapsUrl = data.event.resepsi.mapsUrl || data.event.akad.mapsUrl;
 
   // Extract Google Maps embed URL from share URL
   const getEmbedUrl = (url?: string) => {
@@ -19,8 +20,8 @@ export default function LocationSection({ data }: LocationSectionProps) {
   };
 
   return (
+    <section id="location" className="section-snap-tall">
     <SectionWrapper
-      id="location"
       className="section-px py-14 relative"
       style={{
         background: "linear-gradient(180deg, #ffffff 0%, #fbecd9 100%)",
@@ -70,37 +71,40 @@ export default function LocationSection({ data }: LocationSectionProps) {
               style={{
                 background:
                   i === 0
-                    ? "linear-gradient(90deg, transparent, #CC9B3F 30%, #CC9B3F 70%, transparent)"
+                     ? "linear-gradient(90deg, transparent, #CC9B3F 30%, #CC9B3F 70%, transparent)"
                     : "linear-gradient(90deg, transparent, #65081F 30%, #65081F 70%, transparent)",
               }}
             />
-            <p
-              className="text-xs tracking-[0.2em] uppercase mb-2"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: i === 0 ? "#B5832A" : "#65081F",
-              }}
-            >
+            {/* Type label */}
+            <p style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "0.6rem",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: i === 0 ? "#B5832A" : "#65081F",
+              marginBottom: "0.5rem",
+              opacity: 0.85,
+            }}>
               {loc.type}
             </p>
-            <p
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "1.1rem",
-                fontWeight: 600,
-                color: "#5a3e28",
-              }}
-            >
+            {/* Venue name */}
+            <p style={{
+              fontFamily: "'Lora', serif",
+              fontSize: "1rem",
+              fontWeight: 700,
+              color: "#2a1a0a",
+              lineHeight: 1.3,
+              marginBottom: "0.35rem",
+            }}>
               {loc.venue}
             </p>
-            <p
-              className="text-xs mt-1"
-              style={{
-                fontFamily: "'Lora', serif",
-                color: "#8a6a4a",
-                fontStyle: "italic",
-              }}
-            >
+            {/* Address */}
+            <p style={{
+              fontFamily: "'Lora', serif",
+              fontSize: "0.78rem",
+              color: "#6a4e30",
+              lineHeight: 1.5,
+            }}>
               {loc.address}
             </p>
             {loc.mapsUrl && (
@@ -118,9 +122,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
                   textDecoration: "none",
                 }}
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#CC9B3F"/>
-                </svg>
+                <Navigation size={11} />
                 Lihat di Google Maps
               </a>
             )}
@@ -145,14 +147,14 @@ export default function LocationSection({ data }: LocationSectionProps) {
           }}
         />
         <iframe
-          src={`https://maps.google.com/maps?q=Masjid+Agung+Sultan+Jeumpa+Bireuen&output=embed&z=15`}
+          src={`https://maps.google.com/maps?q=${encodeURIComponent("Krueng Juli Timu, Kuala, Bireuen, Aceh")}&output=embed&z=15`}
           width="100%"
           height="220"
           style={{ border: 0, display: "block" }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Lokasi Akad Nikah"
+          title="Lokasi Utama"
         />
       </motion.div>
 
@@ -163,7 +165,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full text-center py-3.5 rounded-2xl mt-5 transition-all duration-300"
+          className="flex items-center justify-center gap-2 w-full text-center py-3.5 rounded-2xl mt-5 transition-all duration-300"
           style={{
             background: "linear-gradient(135deg, #CC9B3F, #B5832A)",
             fontFamily: "'Cormorant Garamond', serif",
@@ -176,9 +178,11 @@ export default function LocationSection({ data }: LocationSectionProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          📍 Buka Google Maps
+          <Navigation size={16} />
+          Buka Google Maps
         </motion.a>
       )}
     </SectionWrapper>
+    </section>
   );
 }

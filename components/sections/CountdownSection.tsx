@@ -6,6 +6,7 @@ import { InvitationData } from "@/types/invitation";
 import { useCountdown } from "@/hooks/useCountdown";
 import { fadeDown, fadeUp, zoomIn, zoomInUp, staggerContainer, SectionLabel } from "@/components/ui/Animations";
 import { useMemo } from "react";
+import { Sparkles } from "lucide-react";
 
 interface CountdownSectionProps {
   data: InvitationData;
@@ -68,7 +69,7 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
     <section
       ref={ref}
       id="countdown"
-      className="section-px py-14 text-center relative overflow-hidden"
+      className="section-snap section-px py-14 text-center relative overflow-hidden"
       style={{ background: "linear-gradient(160deg, #5a3e28 0%, #3a2510 50%, #2a1a0a 100%)" }}
     >
       {/* Shimmer particles */}
@@ -108,8 +109,11 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
         animate={isInView ? "visible" : "hidden"}
       >
         <motion.p variants={fadeDown}
+          className="flex items-center justify-center gap-2"
           style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.7rem", letterSpacing: "0.35em", color: "rgba(204,155,63,0.8)", textTransform: "uppercase" }}>
-          ✦ Menuju Hari Bahagia ✦
+          <Sparkles size={10} color="rgba(204,155,63,0.7)" />
+          Menuju Hari Bahagia
+          <Sparkles size={10} color="rgba(204,155,63,0.7)" />
         </motion.p>
 
         <motion.h2 variants={zoomIn} className="mt-2 mb-2"

@@ -3,36 +3,39 @@
 import { motion, useInView, type Variants } from "framer-motion";
 import { useRef } from "react";
 
+// ─── Premium easing ─────────────────────────────────────────────────────────
+const SMOOTH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
 // ─── Variant presets ────────────────────────────────────────────────────────
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 40, filter: "blur(4px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: SMOOTH_EASE } },
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  hidden: { opacity: 0, y: -30, filter: "blur(4px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: SMOOTH_EASE } },
 };
 
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -40 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  hidden: { opacity: 0, x: -40, filter: "blur(3px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: SMOOTH_EASE } },
 };
 
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 40 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  hidden: { opacity: 0, x: 40, filter: "blur(3px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: SMOOTH_EASE } },
 };
 
 export const zoomIn: Variants = {
-  hidden: { opacity: 0, scale: 0.82 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.65, ease: "easeOut" } },
+  hidden: { opacity: 0, scale: 0.82, filter: "blur(4px)" },
+  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.85, ease: SMOOTH_EASE } },
 };
 
 export const zoomInUp: Variants = {
-  hidden: { opacity: 0, scale: 0.88, y: 24 },
-  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  hidden: { opacity: 0, scale: 0.88, y: 24, filter: "blur(3px)" },
+  visible: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: SMOOTH_EASE } },
 };
 
 // Clip-path reveal (from bottom, like a curtain pulling up)
@@ -41,14 +44,14 @@ export const revealUp: Variants = {
   visible: {
     clipPath: "inset(0% 0% 0% 0%)",
     opacity: 1,
-    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] },
   },
 };
 
 // Line expand (for decorative lines)
 export const lineExpand: Variants = {
   hidden: { scaleX: 0, opacity: 0 },
-  visible: { scaleX: 1, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+  visible: { scaleX: 1, opacity: 1, transition: { duration: 1.0, ease: SMOOTH_EASE } },
 };
 
 // Stagger container
@@ -56,14 +59,14 @@ export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.13, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.18, delayChildren: 0.08 },
   },
 };
 
 // Default item (used by SectionWrapper children)
 export const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 28, filter: "blur(3px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: SMOOTH_EASE } },
 };
 
 // ─── Animated text (word by word) ───────────────────────────────────────────
@@ -78,7 +81,7 @@ interface AnimatedWordsProps {
 
 const wordVariants: Variants = {
   hidden: { opacity: 0, y: 16, filter: "blur(4px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: SMOOTH_EASE } },
 };
 
 export function AnimatedWords({

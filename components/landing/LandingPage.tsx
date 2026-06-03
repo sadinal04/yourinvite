@@ -7,7 +7,7 @@ import Image from "next/image";
 import {
   MessageCircle, Palette, Rocket, Sparkles, Music, Timer,
   MapPin, Smartphone, Link2, Wand2, Mail, CheckCircle, Star,
-  ArrowRight, ChevronDown,
+  ArrowRight, ChevronDown, ShieldCheck, Heart,
 } from "lucide-react";
 
 // ─── WA Config ────────────────────────────────────────────────────────────────
@@ -71,7 +71,7 @@ const FEATURES = [
 // ─── Single testimonial ───────────────────────────────────────────────────────
 const TESTIMONIAL = {
   name: "Haris & Cut Chairunnisa",
-  text: "Sangat puas! Undangannya premium banget, animasinya smooth dan musik latarnya bikin hati adem. Link langsung bisa dibagikan ke grup WhatsApp dan tamu-tamu pun bisa lihat semua info lengkap. Terima kasih yourinvite! 🤍",
+  text: "Sangat puas! Undangannya premium banget, animasinya smooth dan musik latarnya bikin hati adem. Link langsung bisa dibagikan ke grup WhatsApp dan tamu-tamu pun bisa lihat semua info lengkap. Terima kasih yourinvite!",
   loc: "Bireuen, Aceh",
   link: "/haris-icut",
 };
@@ -458,8 +458,8 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="p-6 text-center" style={{ background: "rgba(209,250,229,0.03)" }}>
-                  <div style={{ color: "rgba(209,250,229,0.4)", fontSize: 13, marginBottom: 12, fontFamily: "sans-serif" }}>
-                    🔒 Undangan aman & personal
+                  <div className="flex items-center gap-1.5" style={{ color: "rgba(209,250,229,0.4)", fontSize: 13, marginBottom: 12, fontFamily: "sans-serif" }}>
+                    <ShieldCheck size={13} /> Undangan aman &amp; personal
                   </div>
                   <div className="text-lg font-bold mb-1" style={{ color: "#d1fae5", fontFamily: "monospace" }}>yourinvite.site</div>
                   <div className="text-xl font-bold" style={{ color: "#6ee7b7", fontFamily: "monospace" }}>/haris-icut</div>

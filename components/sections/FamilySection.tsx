@@ -75,7 +75,7 @@ export default function FamilySection({ data }: FamilySectionProps) {
   return (
     <section
       id="family"
-      className="section-px py-14 relative"
+      className="section-snap-tall section-px py-14 relative"
       style={{ background: "linear-gradient(180deg, #ffffff 0%, #fdf5ec 100%)" }}
     >
       <div ref={ref} className="text-center mb-8">

@@ -17,11 +17,13 @@ const PersonCard = ({
   role,
   direction,
   delay,
+  childOfText,
 }: {
   person: { name: string; father: string; mother: string };
   role: string;
   direction: "left" | "right";
   delay: number;
+  childOfText: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px 0px" });
@@ -95,7 +97,7 @@ const PersonCard = ({
       {/* Parents */}
       <p className="text-xs leading-relaxed"
         style={{ fontFamily: "'Lora', serif", color: "#6a4e30", fontStyle: "italic" }}>
-        Putra/i dari<br />
+        {childOfText} dari<br />
         Bapak {person.father}<br />
         dan Ibu {person.mother}
       </p>
@@ -110,7 +112,7 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
   return (
     <section
       id="couple"
-      className="section-px py-14 relative"
+      className="section-snap-tall section-px py-14 relative"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #fbecd9 40%, #fdf5ec 100%)" }}
     >
       {/* Header */}
@@ -132,7 +134,13 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
 
       {/* Cards */}
       <div className="space-y-4">
-        <PersonCard person={data.groom} role="Mempelai Pria" direction="left" delay={0} />
+        <PersonCard
+          person={data.groom}
+          role="Mempelai Pria"
+          direction="left"
+          delay={0}
+          childOfText="Anak Ketiga"
+        />
 
         {/* & connecting */}
         <motion.div
@@ -151,7 +159,13 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
           </motion.p>
         </motion.div>
 
-        <PersonCard person={data.bride} role="Mempelai Wanita" direction="right" delay={0} />
+        <PersonCard
+          person={data.bride}
+          role="Mempelai Wanita"
+          direction="right"
+          delay={0}
+          childOfText="Anak Pertama"
+        />
       </div>
     </section>
   );

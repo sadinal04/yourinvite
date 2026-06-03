@@ -15,13 +15,13 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.18, delayChildren: 0.08 },
   },
 };
 
 export const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 28, filter: "blur(3px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export default function SectionWrapper({ children, className = "", style, delay = 0, id }: SectionWrapperProps) {

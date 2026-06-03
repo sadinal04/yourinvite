@@ -14,8 +14,10 @@ import EventSection from "@/components/sections/EventSection";
 import LocationSection from "@/components/sections/LocationSection";
 import QuranSection from "@/components/sections/QuranSection";
 import FamilySection from "@/components/sections/FamilySection";
+import LoveStorySection from "@/components/sections/LoveStorySection";
 import ClosingSection from "@/components/sections/ClosingSection";
 import { useAudio } from "@/hooks/useAudio";
+import { useSnapScroll } from "@/hooks/useSnapScroll";
 
 interface InvitationClientProps {
   data: InvitationData;
@@ -48,6 +50,9 @@ export default function InvitationClient({
     play(); // silently skips if audio unavailable
   }, [play]);
 
+  // Activate JS snap-scroll once invitation is opened
+  useSnapScroll(isOpen);
+
   return (
     <div className="invitation-wrapper">
       {/* Background particles — always visible */}
@@ -78,6 +83,7 @@ export default function InvitationClient({
             <LocationSection data={data} />
             <QuranSection data={data} />
             <FamilySection data={data} />
+            <LoveStorySection />
             <ClosingSection data={data} guestName={guestName} />
           </motion.main>
         )}

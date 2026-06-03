@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import { fadeDown, fadeUp, zoomIn, zoomInUp, staggerContainer, SectionLabel } from "@/components/ui/Animations";
+import { Sparkles } from "lucide-react";
 
 interface ClosingSectionProps {
   data: InvitationData;
@@ -70,7 +71,7 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
     <section
       ref={ref}
       id="closing"
-      className="section-px py-16 relative overflow-hidden"
+      className="section-snap section-px py-16 relative overflow-hidden"
       style={{ background: "linear-gradient(160deg, #2a1a0a 0%, #1a0f05 50%, #2a1a0a 100%)" }}
     >
       {/* Gold particles */}
@@ -169,10 +170,12 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
         </motion.div>
 
         {/* Footer */}
-        <motion.p className="text-xs mt-8"
+        <motion.p className="flex items-center justify-center gap-2 text-xs mt-8"
           variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.75 }}
           style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(204,155,63,0.3)", letterSpacing: "0.15em" }}>
-          ✦ Undangan Digital Premium ✦
+          <Sparkles size={10} color="rgba(204,155,63,0.3)" />
+          Undangan Digital Premium
+          <Sparkles size={10} color="rgba(204,155,63,0.3)" />
         </motion.p>
       </div>
     </section>

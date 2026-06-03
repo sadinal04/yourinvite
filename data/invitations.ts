@@ -26,12 +26,12 @@ export const invitations: InvitationsMap = {
     event: {
       akad: {
         date: "Kamis, 02 Juli 2026",
-        dateISO: "2026-07-02T09:00:00+07:00",
-        time: "09.00 WIB",
+        dateISO: "2026-07-02T08:00:00+07:00",
+        time: "08.00 WIB",
         timezone: "WIB",
         venue: "Masjid Agung Sultan Jeumpa",
         address: "Bireuen, Aceh",
-        mapsUrl: "https://maps.app.goo.gl/in3AA9G5zewCVpWc6",
+        mapsUrl: "https://maps.app.goo.gl/69DqqFJBSYVGT4BJ8",
       },
       resepsi: {
         date: "Kamis, 02 Juli 2026",

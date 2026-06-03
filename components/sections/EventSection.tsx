@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
-import { CalendarDays, Clock, MapPin } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Navigation, Heart, Gem } from "lucide-react";
 import { fadeLeft, fadeRight, fadeDown, zoomIn, staggerContainer, SectionLabel, GoldOrnamentDivider } from "@/components/ui/Animations";
 
 interface EventSectionProps {
@@ -60,15 +60,19 @@ const EventCard = ({
 
       {/* Badge */}
       <motion.div variants={zoomIn} className="inline-block mb-4">
-        <div className="rounded-full px-4 py-1.5" style={{ background: isAkad ? "linear-gradient(135deg, #CC9B3F, #B5832A)" : "linear-gradient(135deg, #65081F, #8a1530)" }}>
-          <p className="text-xs tracking-[0.2em] uppercase text-white" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-            {isAkad ? "✦ Akad Nikah ✦" : "✦ Resepsi ✦"}
-          </p>
-        </div>
+          <div className="rounded-full px-4 py-1.5" style={{ background: isAkad ? "linear-gradient(135deg, #CC9B3F, #B5832A)" : "linear-gradient(135deg, #65081F, #8a1530)" }}>
+            <p className="text-xs tracking-[0.2em] uppercase text-white flex items-center justify-center gap-1.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              {isAkad ? (
+                <><Gem size={12} /> Akad Nikah</>
+              ) : (
+                <><Heart size={12} /> Resepsi</>
+              )}
+            </p>
+          </div>
       </motion.div>
 
       {/* Details */}
-      <div className="space-y-3 mb-4">
+      <div className="space-y-4 mb-4">
         {[
           { Icon: CalendarDays, label: "Tanggal", value: event.date },
           { Icon: Clock, label: "Waktu", value: `${event.time} – Selesai` },
@@ -79,11 +83,47 @@ const EventCard = ({
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             transition={{ delay: (delay ?? 0) + 0.15 * i + 0.2 }}>
-            <Icon size={15} style={{ color: "#CC9B3F", marginTop: "3px", flexShrink: 0 }} />
-            <div>
-              <p className="text-xs uppercase tracking-wide mb-0.5" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#B5832A" }}>{label}</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", fontWeight: 600, color: "#5a3e28" }}>{value}</p>
-              {sub && <p className="text-xs mt-0.5" style={{ fontFamily: "'Lora', serif", color: "#8a6a4a", fontStyle: "italic" }}>{sub}</p>}
+            {/* Icon circle */}
+            <div style={{
+              width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
+              background: "rgba(204,155,63,0.1)",
+              border: "1px solid rgba(204,155,63,0.25)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <Icon size={14} style={{ color: "#CC9B3F" }} />
+            </div>
+            <div style={{ paddingTop: 2 }}>
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.6rem",
+                letterSpacing: "0.28em",
+                textTransform: "uppercase",
+                color: "#B5832A",
+                marginBottom: "0.2rem",
+                opacity: 0.8,
+              }}>
+                {label}
+              </p>
+              <p style={{
+                fontFamily: "'Lora', serif",
+                fontSize: "0.95rem",
+                fontWeight: 600,
+                color: "#2a1a0a",
+                lineHeight: 1.35,
+              }}>
+                {value}
+              </p>
+              {sub && (
+                <p style={{
+                  fontFamily: "'Lora', serif",
+                  fontSize: "0.78rem",
+                  color: "#6a4e30",
+                  marginTop: "0.15rem",
+                  lineHeight: 1.4,
+                }}>
+                  {sub}
+                </p>
+              )}
             </div>
           </motion.div>
         ))}
@@ -93,12 +133,13 @@ const EventCard = ({
       {event.mapsUrl && (
         <motion.a
           href={event.mapsUrl} target="_blank" rel="noopener noreferrer"
-          className="block w-full text-center py-2.5 rounded-xl mt-1"
+          className="block w-full text-center py-2.5 rounded-xl mt-1 flex items-center justify-center gap-2"
           style={{ border: "1px solid rgba(204,155,63,0.35)", background: "rgba(204,155,63,0.05)", fontFamily: "'Cormorant Garamond', serif", fontSize: "0.875rem", color: "#B5832A", letterSpacing: "0.1em", textDecoration: "none" }}
           whileHover={{ scale: 1.02, background: "rgba(204,155,63,0.1)" }}
           whileTap={{ scale: 0.98 }}
         >
-          🗺️ Buka Google Maps
+          <Navigation size={14} />
+          Buka Google Maps
         </motion.a>
       )}
     </motion.div>
@@ -110,7 +151,7 @@ export default function EventSection({ data }: EventSectionProps) {
   const isInView = useInView(ref, { once: true, margin: "-60px 0px" });
 
   return (
-    <section id="event" className="section-px py-14 relative"
+    <section id="event" className="section-snap-tall section-px py-14 relative"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #ffffff 100%)" }}>
 
       <div ref={ref} className="text-center mb-8">

@@ -20,7 +20,7 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
     <section
       ref={ref}
       id="opening"
-      className="section-px py-16 text-center relative overflow-hidden"
+      className="section-snap section-px text-center relative overflow-hidden"
       style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #fdf5ec 100%)" }}
     >
       {/* Decorative bg sunflowers */}
@@ -92,7 +92,7 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
           transition={{ delay: 0.55 }}
         >
           {data.opening?.subtitle ||
-            "Dengan memohon rahmat dan ridha Allah Subhanahu Wa Ta'ala, kami bermaksud menyelenggarakan syukuran pernikahan putra-putri kami."}
+            "Dengan memohon rahmat dan ridha Allah Subhanahu Wa Ta'ala, kami bermaksud menyelenggarakan resepsi pernikahan putra-putri kami."}
         </motion.p>
       </div>
 
