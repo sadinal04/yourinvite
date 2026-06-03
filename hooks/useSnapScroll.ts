@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback } from "react";
 
 const SECTION_IDS = [
   "opening", "couple", "countdown", "event",
-  "quran", "love-story", "closing",
+  "quran", "love-story", "wishes", "closing",
 ];
 
 const SCROLL_COOLDOWN = 900; // ms between snaps

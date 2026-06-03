@@ -14,6 +14,7 @@ import EventSection from "@/components/sections/EventSection";
 import QuranSection from "@/components/sections/QuranSection";
 import LoveStorySection from "@/components/sections/LoveStorySection";
 import ClosingSection from "@/components/sections/ClosingSection";
+import WishesSection from "@/components/sections/WishesSection";
 import { useAudio } from "@/hooks/useAudio";
 import { useSnapScroll } from "@/hooks/useSnapScroll";
 
@@ -100,6 +101,7 @@ export default function InvitationClient({
     { id: "event",      Component: () => <EventSection data={data} /> },
     { id: "quran",      Component: () => <QuranSection data={data} /> },
     { id: "love-story", Component: () => <LoveStorySection /> },
+    { id: "wishes",     Component: () => <WishesSection slug={data.slug} guestName={guestName} /> },
     { id: "closing",    Component: () => <ClosingSection data={data} guestName={guestName} /> },
   ];
 

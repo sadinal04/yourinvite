@@ -21,7 +21,7 @@ export const invitations: InvitationsMap = {
     opening: {
       title: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم",
       subtitle:
-        "Dengan memohon rahmat dan ridha Allah Subhanahu Wa Ta'ala, kami bermaksud menyelenggarakan syukuran pernikahan putra-putri kami.",
+        "Dengan memohon rahmat dan ridha Allah Subhanahu Wa Ta'ala, kami bermaksud menyelenggarakan resepsi pernikahan putra-putri kami.",
     },
     event: {
       akad: {

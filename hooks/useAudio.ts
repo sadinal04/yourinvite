@@ -68,7 +68,9 @@ export function useAudio(src: string) {
 
   const play = useCallback(() => {
     if (audioRef.current && isAvailable) {
-      audioRef.current.currentTime = 10;
+      if (audioRef.current.currentTime < 1) {
+        audioRef.current.currentTime = 10;
+      }
       audioRef.current
         .play()
         .then(() => {
