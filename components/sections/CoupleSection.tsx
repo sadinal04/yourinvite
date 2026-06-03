@@ -147,6 +147,20 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
       className="section-snap section-px py-4 relative flex flex-col justify-center gap-y-2 h-dvh overflow-hidden"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #fbecd9 40%, #fdf5ec 100%)" }}
     >
+      {/* Corner Floral Ornaments */}
+      <div
+        className="absolute top-0 left-0 pointer-events-none w-[120px] h-[120px] opacity-[0.14] select-none"
+        style={{ transform: "rotate(180deg)" }}
+      >
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div
+        className="absolute bottom-0 right-0 pointer-events-none w-[120px] h-[120px] opacity-[0.14] select-none"
+        style={{ transform: "rotate(0deg)" }}
+      >
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+
       {/* Header */}
       <div ref={ref} className="text-center mb-1">
         <SectionLabel text="Mempelai" />

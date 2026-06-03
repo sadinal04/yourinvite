@@ -35,7 +35,7 @@ function SectionSlide({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, {
-    once: false,
+    once: true,
     margin: "-5% 0px -5% 0px",
   });
 

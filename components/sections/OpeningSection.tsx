@@ -23,6 +23,20 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
       className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
       style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #fdf5ec 100%)" }}
     >
+      {/* Corner Floral Ornaments */}
+      <div
+        className="absolute top-0 left-0 pointer-events-none w-[120px] h-[120px] opacity-[0.16] select-none"
+        style={{ transform: "rotate(180deg)" }}
+      >
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div
+        className="absolute bottom-0 right-0 pointer-events-none w-[120px] h-[120px] opacity-[0.16] select-none"
+        style={{ transform: "rotate(0deg)" }}
+      >
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+
       {/* Decorative bg sunflowers */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <svg className="absolute top-0 right-0 opacity-[0.04] w-56 h-56" viewBox="0 0 200 200">

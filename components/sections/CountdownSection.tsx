@@ -77,6 +77,20 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
       className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center"
       style={{ background: "linear-gradient(160deg, #5a3e28 0%, #3a2510 50%, #2a1a0a 100%)" }}
     >
+      {/* Corner Floral Ornaments */}
+      <div
+        className="absolute top-0 left-0 pointer-events-none w-[120px] h-[120px] opacity-[0.2] select-none"
+        style={{ transform: "rotate(180deg)" }}
+      >
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div
+        className="absolute bottom-0 right-0 pointer-events-none w-[120px] h-[120px] opacity-[0.2] select-none"
+        style={{ transform: "rotate(0deg)" }}
+      >
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+
       {/* Shimmer particles */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {SHIMMER_PARTICLES.map((p) => (

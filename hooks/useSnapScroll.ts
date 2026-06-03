@@ -7,11 +7,13 @@ const SECTION_IDS = [
   "quran", "love-story", "wishes", "closing",
 ];
 
-const SCROLL_COOLDOWN = 900; // ms between snaps
+const SCROLL_COOLDOWN = 500; // ms between snaps
 
 export function useSnapScroll(enabled: boolean) {
   const cooldown = useRef(false);
   const touchStartY = useRef(0);
+  const scrollAnimRef = useRef<number | null>(null);
+  const activeElementRef = useRef<HTMLElement | null>(null);
 
   const getWrapper = () =>
     document.querySelector(".invitation-wrapper") as HTMLElement | null;
@@ -20,6 +22,17 @@ export function useSnapScroll(enabled: boolean) {
     SECTION_IDS.map((id) => document.getElementById(id)).filter(
       Boolean
     ) as HTMLElement[];
+
+  const cleanupScroll = useCallback(() => {
+    if (scrollAnimRef.current !== null) {
+      cancelAnimationFrame(scrollAnimRef.current);
+      scrollAnimRef.current = null;
+    }
+    if (activeElementRef.current) {
+      activeElementRef.current.style.overflowY = "";
+      activeElementRef.current = null;
+    }
+  }, []);
 
   /**
    * Find which section is currently "in view" based on scroll position.
@@ -42,41 +55,66 @@ export function useSnapScroll(enabled: boolean) {
   const animateScroll = useCallback((
     element: HTMLElement,
     targetPosition: number,
-    duration: number
+    duration: number,
+    onComplete?: () => void
   ) => {
+    cleanupScroll();
+
+    activeElementRef.current = element;
+    element.style.overflowY = "hidden"; // Lock native scrolling momentum to prevent jitter
+
     const startPosition = element.scrollTop;
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
 
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+    const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
 
     const animation = (currentTime: number) => {
       if (startTime === null) startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
-      const easedProgress = easeOutCubic(progress);
+      const easedProgress = easeOutQuart(progress);
 
       element.scrollTop = startPosition + distance * easedProgress;
 
       if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
+        scrollAnimRef.current = requestAnimationFrame(animation);
+      } else {
+        element.style.overflowY = "";
+        scrollAnimRef.current = null;
+        activeElementRef.current = null;
+        if (onComplete) onComplete();
       }
     };
 
-    requestAnimationFrame(animation);
-  }, []);
+    scrollAnimRef.current = requestAnimationFrame(animation);
+  }, [cleanupScroll]);
 
   const scrollToIndex = useCallback((index: number) => {
     const wrapper = getWrapper();
     const sections = getSections();
     if (!wrapper || !sections[index]) return;
 
+    const currentIndex = getCurrentIndex();
+    const isScrollingUp = index < currentIndex;
+    const targetSection = sections[index];
+    const viewportHeight = wrapper.clientHeight;
+    const sectionHeight = targetSection.offsetHeight;
+    const isTall = sectionHeight > viewportHeight + 10;
+
+    let targetScrollTop = targetSection.offsetTop;
+
+    // Jika scroll ke atas masuk ke section yang tinggi (tall),
+    // daratkan user di bagian bawah section tersebut agar transisi mulus.
+    if (isScrollingUp && isTall) {
+      targetScrollTop = targetSection.offsetTop + sectionHeight - viewportHeight;
+    }
+
     cooldown.current = true;
-    animateScroll(wrapper, sections[index].offsetTop, 550);
-    setTimeout(() => {
+    animateScroll(wrapper, targetScrollTop, 480, () => {
       cooldown.current = false;
-    }, SCROLL_COOLDOWN);
-  }, [animateScroll]);
+    });
+  }, [animateScroll, getCurrentIndex]);
 
   /**
    * Decide whether to navigate based on direction.
@@ -89,6 +127,9 @@ export function useSnapScroll(enabled: boolean) {
   const navigate = useCallback(
     (direction: 1 | -1, source: "wheel" | "touch"): boolean => {
       if (cooldown.current) return true;
+      if (typeof document !== "undefined" && document.body.classList.contains("modal-open")) {
+        return false;
+      }
       const wrapper = getWrapper();
       const sections = getSections();
       if (!wrapper) return false;
@@ -119,10 +160,9 @@ export function useSnapScroll(enabled: boolean) {
               scrollTop + 220,
               sectionBottom - viewportHeight
             );
-            animateScroll(wrapper, target, 320);
-            setTimeout(() => {
+            animateScroll(wrapper, target, 280, () => {
               cooldown.current = false;
-            }, 280);
+            });
             return true;
           }
           // For touch, let natural scroll happen
@@ -140,10 +180,9 @@ export function useSnapScroll(enabled: boolean) {
             // Smooth custom sub-scroll inside tall section for desktop mouse wheel
             cooldown.current = true;
             const target = Math.max(scrollTop - 220, sectionTop);
-            animateScroll(wrapper, target, 320);
-            setTimeout(() => {
+            animateScroll(wrapper, target, 280, () => {
               cooldown.current = false;
-            }, 280);
+            });
             return true;
           }
           // For touch, let natural scroll happen
@@ -184,14 +223,26 @@ export function useSnapScroll(enabled: boolean) {
       navigate(dy > 0 ? 1 : -1, "touch");
     };
 
+    // Mencegah gerakan swipe bawaan bentrok dengan animasi scroll halaman
+    const handleTouchMove = (e: TouchEvent) => {
+      if (cooldown.current) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      }
+    };
+
     wrapper.addEventListener("wheel", handleWheel, { passive: false });
     wrapper.addEventListener("touchstart", handleTouchStart, { passive: true });
+    wrapper.addEventListener("touchmove", handleTouchMove, { passive: false });
     wrapper.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       wrapper.removeEventListener("wheel", handleWheel);
       wrapper.removeEventListener("touchstart", handleTouchStart);
+      wrapper.removeEventListener("touchmove", handleTouchMove);
       wrapper.removeEventListener("touchend", handleTouchEnd);
+      cleanupScroll();
     };
-  }, [enabled, navigate]);
+  }, [enabled, navigate, cleanupScroll]);
 }
