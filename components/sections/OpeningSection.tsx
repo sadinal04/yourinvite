@@ -20,7 +20,7 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
     <section
       ref={ref}
       id="opening"
-      className="section-snap section-px text-center relative overflow-hidden"
+      className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
       style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #fdf5ec 100%)" }}
     >
       {/* Decorative bg sunflowers */}

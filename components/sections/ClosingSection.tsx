@@ -71,7 +71,7 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
     <section
       ref={ref}
       id="closing"
-      className="section-snap section-px py-16 relative overflow-hidden"
+      className="section-snap section-px py-20 relative overflow-hidden flex flex-col justify-center"
       style={{ background: "linear-gradient(160deg, #2a1a0a 0%, #1a0f05 50%, #2a1a0a 100%)" }}
     >
       {/* Gold particles */}
@@ -106,7 +106,7 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
       {/* Border */}
       <div className="absolute inset-3 pointer-events-none" style={{ border: "1px solid rgba(204,155,63,0.12)", borderRadius: "2px" }} />
 
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-center flex flex-col gap-y-6 justify-center">
         {/* Rotating sunflower */}
         <motion.div className="flex justify-center mb-6" variants={zoomIn} initial="hidden" animate={isInView ? "visible" : "hidden"}>
           <motion.div animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>

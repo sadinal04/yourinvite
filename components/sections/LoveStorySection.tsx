@@ -45,45 +45,43 @@ function StoryCard({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-      animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-      transition={{ duration: 0.9, ease: EASE, delay: 0.08 }}
-    >
-      {/* Timeline dot + connector */}
-      <div className="flex flex-col items-center mb-4">
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={isInView ? { scale: 1, opacity: 1 } : {}}
-          transition={{ duration: 0.45, delay: 0.1 }}
-          style={{
-            width: 10, height: 10, borderRadius: "50%",
-            background: "linear-gradient(135deg, #CC9B3F, #E0B96A)",
-            boxShadow: "0 0 12px rgba(204,155,63,0.7)",
-            marginBottom: 8,
-          }}
-        />
-        {/* Date */}
-        <p style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "0.62rem",
-          letterSpacing: "0.28em",
-          textTransform: "uppercase",
-          color: "rgba(204,155,63,0.45)",
-        }}>
-          {item.date}
-        </p>
-      </div>
+    <div ref={ref} className="w-full flex flex-col items-center">
+      {/* Connector Line from previous card */}
+      {index > 0 && (
+        <div className="w-px h-10 relative overflow-hidden mb-2.5" style={{ background: "rgba(204,155,63,0.12)" }}>
+          <motion.div
+            initial={{ height: 0 }}
+            animate={isInView ? { height: "100%" } : { height: 0 }}
+            transition={{ duration: 0.65, ease: EASE }}
+            style={{
+              width: "100%",
+              background: "linear-gradient(to bottom, #CC9B3F, #E0B96A)",
+            }}
+          />
+        </div>
+      )}
+
+      {/* Timeline dot */}
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={isInView ? { scale: 1, opacity: 1 } : {}}
+        transition={{ duration: 0.45, delay: index > 0 ? 0.45 : 0.1 }}
+        style={{
+          width: 10, height: 10, borderRadius: "50%",
+          background: "linear-gradient(135deg, #CC9B3F, #E0B96A)",
+          boxShadow: "0 0 12px rgba(204,155,63,0.7)",
+          marginBottom: 10,
+        }}
+      />
 
       {/* Story title */}
       <motion.p
         initial={{ opacity: 0, y: -8 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
+        transition={{ duration: 0.7, delay: index > 0 ? 0.55 : 0.2, ease: EASE }}
         style={{
           fontFamily: "'Cormorant Garamond', serif",
           fontSize: "1.25rem",
@@ -99,13 +97,19 @@ function StoryCard({
       </motion.p>
 
       {/* Photo card — simple clean border */}
-      <div style={{
-        borderRadius: "0.875rem",
-        overflow: "hidden",
-        border: "1px solid rgba(204,155,63,0.3)",
-        background: "#0d0804",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(204,155,63,0.08) inset",
-      }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+        animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+        transition={{ duration: 0.8, delay: index > 0 ? 0.65 : 0.3, ease: EASE }}
+        className="w-full"
+        style={{
+          borderRadius: "0.875rem",
+          overflow: "hidden",
+          border: "1px solid rgba(204,155,63,0.3)",
+          background: "#0d0804",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(204,155,63,0.08) inset",
+        }}
+      >
         {/* Photo — full landscape 16:9, no crop */}
         <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", background: "#080503" }}>
           <Image
@@ -137,8 +141,8 @@ function StoryCard({
           </span>
           <Heart size={10} color="rgba(204,155,63,0.35)" />
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -227,24 +231,6 @@ export default function LoveStorySection() {
 
       {/* ─── Timeline ─── */}
       <div className="relative z-10">
-        {/* Vertical gold line */}
-        <motion.div
-          initial={{ scaleY: 0 }}
-          animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ duration: 2.2, ease: EASE, delay: 0.3 }}
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: 0,
-            bottom: 0,
-            width: 1,
-            transformOrigin: "top center",
-            transform: "translateX(-50%)",
-            background: "linear-gradient(to bottom, transparent, rgba(204,155,63,0.3) 8%, rgba(204,155,63,0.3) 92%, transparent)",
-            pointerEvents: "none",
-          }}
-        />
-
         {/* Story cards */}
         <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem", paddingBottom: "2rem" }}>
           {LOVE_STORIES.map((item, index) => (
@@ -276,6 +262,7 @@ export default function LoveStorySection() {
           Dan kini, saatnya menjadi satu…
         </p>
       </motion.div>
+      <div className="h-28" /> {/* Extra bottom spacing */}
     </section>
   );
 }

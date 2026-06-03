@@ -23,7 +23,7 @@ export default function QuranSection({ data }: QuranSectionProps) {
     <section
       ref={ref}
       id="quran"
-      className="section-snap section-px py-14 text-center relative overflow-hidden"
+      className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
       style={{ background: "linear-gradient(160deg, #fdf5ec 0%, #fbecd9 50%, #fdf5ec 100%)" }}
     >
       {/* Decorative watermark */}

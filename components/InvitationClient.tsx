@@ -13,7 +13,6 @@ import CountdownSection from "@/components/sections/CountdownSection";
 import EventSection from "@/components/sections/EventSection";
 import LocationSection from "@/components/sections/LocationSection";
 import QuranSection from "@/components/sections/QuranSection";
-import FamilySection from "@/components/sections/FamilySection";
 import LoveStorySection from "@/components/sections/LoveStorySection";
 import ClosingSection from "@/components/sections/ClosingSection";
 import { useAudio } from "@/hooks/useAudio";
@@ -82,7 +81,6 @@ export default function InvitationClient({
             <EventSection data={data} />
             <LocationSection data={data} />
             <QuranSection data={data} />
-            <FamilySection data={data} />
             <LoveStorySection />
             <ClosingSection data={data} guestName={guestName} />
           </motion.main>

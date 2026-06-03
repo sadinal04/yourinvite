@@ -172,6 +172,7 @@ export default function EventSection({ data }: EventSectionProps) {
         <EventCard type="akad" event={data.event.akad} direction="left" delay={0.1} />
         <EventCard type="resepsi" event={data.event.resepsi} direction="right" delay={0.1} />
       </div>
+      <div className="h-28" /> {/* Extra bottom spacing */}
     </section>
   );
 }

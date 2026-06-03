@@ -4,13 +4,18 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import { useCountdown } from "@/hooks/useCountdown";
-import { fadeDown, fadeUp, zoomIn, zoomInUp, staggerContainer, SectionLabel } from "@/components/ui/Animations";
+import {
+  fadeDown, fadeUp, fadeLeft, fadeRight, zoomIn, zoomInUp,
+  staggerContainer, SectionLabel
+} from "@/components/ui/Animations";
 import { useMemo } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Calendar } from "lucide-react";
 
 interface CountdownSectionProps {
   data: InvitationData;
 }
+
+const CALENDAR_URL = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Haris+%26+Cut&dates=20260702T010000Z/20260702T060000Z&details=Pernikahan+Haris+%26+Cut.%0AAkad+Nikah:+08.00+WIB+di+Masjid+Agung+Sultan+Jeumpa+Bireuen.%0AResepsi:+10.00+WIB+di+Kediaman+Mempelai+Pria.&location=Kediaman+Mempelai+Pria,+Krueng+Juli+Timu,+Kuala,+Bireuen,+Aceh";
 
 const SHIMMER_PARTICLES = Array.from({ length: 22 }, (_, i) => ({
   id: i,
@@ -69,7 +74,7 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
     <section
       ref={ref}
       id="countdown"
-      className="section-snap section-px py-14 text-center relative overflow-hidden"
+      className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center"
       style={{ background: "linear-gradient(160deg, #5a3e28 0%, #3a2510 50%, #2a1a0a 100%)" }}
     >
       {/* Shimmer particles */}
@@ -101,66 +106,90 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
         </svg>
       </div>
 
-      {/* Header */}
+      {/* Main staggered animation container */}
       <motion.div
-        className="relative z-10"
+        className="relative z-10 flex flex-col gap-y-8"
         variants={staggerContainer}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
-        <motion.p variants={fadeDown}
-          className="flex items-center justify-center gap-2"
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.7rem", letterSpacing: "0.35em", color: "rgba(204,155,63,0.8)", textTransform: "uppercase" }}>
-          <Sparkles size={10} color="rgba(204,155,63,0.7)" />
-          Menuju Hari Bahagia
-          <Sparkles size={10} color="rgba(204,155,63,0.7)" />
-        </motion.p>
+        {/* Header */}
+        <div>
+          <motion.p variants={fadeDown}
+            className="flex items-center justify-center gap-2"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.7rem", letterSpacing: "0.35em", color: "rgba(204,155,63,0.8)", textTransform: "uppercase" }}>
+            <Sparkles size={10} color="rgba(204,155,63,0.7)" />
+            Menuju Hari Bahagia
+            <Sparkles size={10} color="rgba(204,155,63,0.7)" />
+          </motion.p>
 
-        <motion.h2 variants={zoomIn} className="mt-2 mb-2"
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", fontWeight: 600, color: "#E0B96A", fontStyle: "italic" }}>
-          Hitung Mundur
-        </motion.h2>
+          <motion.h2 variants={zoomIn} className="mt-2.5 mb-2"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", fontWeight: 600, color: "#E0B96A", fontStyle: "italic" }}>
+            Hitung Mundur
+          </motion.h2>
 
-        <motion.p variants={fadeUp} className="text-xs mb-8"
-          style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.65)" }}>
-          {formatted}
-        </motion.p>
-      </motion.div>
+          <motion.p variants={fadeUp} className="text-xs"
+            style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.65)" }}>
+            {formatted}
+          </motion.p>
+        </div>
 
-      {/* Countdown boxes */}
-      {countdown.isPast ? (
-        <motion.div className="text-center relative z-10" variants={zoomIn} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-          <p style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.8rem", color: "#CC9B3F" }}>Alhamdulillah</p>
-          <p className="text-sm mt-2" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.8)", fontStyle: "italic" }}>
-            Semoga menjadi keluarga sakinah mawaddah warahmah
-          </p>
-        </motion.div>
-      ) : (
-        <motion.div
-          className="flex gap-2 justify-center relative z-10"
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          transition={{ delay: 0.3 }}
-        >
-          <CountdownBox value={countdown.days} label="Hari" />
-          <Colon />
-          <CountdownBox value={countdown.hours} label="Jam" />
-          <Colon />
-          <CountdownBox value={countdown.minutes} label="Menit" />
-          <Colon />
-          <CountdownBox value={countdown.seconds} label="Detik" />
-        </motion.div>
-      )}
+        {/* Countdown boxes and Calendar button */}
+        {countdown.isPast ? (
+          <motion.div className="text-center" variants={zoomIn}>
+            <p style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.8rem", color: "#CC9B3F" }}>Alhamdulillah</p>
+            <p className="text-sm mt-2" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.8)", fontStyle: "italic" }}>
+              Semoga menjadi keluarga sakinah mawaddah warahmah
+            </p>
+          </motion.div>
+        ) : (
+          <div className="flex flex-col gap-y-7">
+            {/* Box container */}
+            <div className="flex gap-2 justify-center">
+              <CountdownBox value={countdown.days} label="Hari" />
+              <Colon />
+              <CountdownBox value={countdown.hours} label="Jam" />
+              <Colon />
+              <CountdownBox value={countdown.minutes} label="Menit" />
+              <Colon />
+              <CountdownBox value={countdown.seconds} label="Detik" />
+            </div>
 
-      {/* Bottom sparkle divider */}
-      <motion.div className="flex items-center justify-center gap-3 mt-8 relative z-10"
-        variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.5 }}>
-        <motion.div variants={fadeDown} style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.5))" }} />
-        <motion.svg variants={zoomIn} width="12" height="12" viewBox="0 0 20 20" fill="none">
-          <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z" fill="#CC9B3F" opacity="0.7" />
-        </motion.svg>
-        <motion.div variants={fadeDown} style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, rgba(204,155,63,0.5), transparent)" }} />
+            {/* Simpan Tanggal Button */}
+            <motion.div variants={fadeUp} className="flex justify-center">
+              <motion.a
+                href={CALENDAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 py-2.5 px-6 rounded-full text-xs transition-all duration-300"
+                style={{
+                  background: "rgba(204,155,63,0.15)",
+                  border: "1px solid rgba(204,155,63,0.4)",
+                  color: "#E0B96A",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
+                }}
+                whileHover={{ scale: 1.05, background: "rgba(204,155,63,0.25)", borderColor: "#E0B96A", boxShadow: "0 6px 20px rgba(204,155,63,0.2)" }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <Calendar size={13} color="#E0B96A" />
+                Simpan Tanggal
+              </motion.a>
+            </motion.div>
+          </div>
+        )}
+
+        {/* Bottom sparkle divider */}
+        <div className="flex items-center justify-center gap-3">
+          <motion.div variants={fadeLeft} style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.5))" }} />
+          <motion.svg variants={zoomIn} width="12" height="12" viewBox="0 0 20 20" fill="none">
+            <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z" fill="#CC9B3F" opacity="0.7" />
+          </motion.svg>
+          <motion.div variants={fadeRight} style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, rgba(204,155,63,0.5), transparent)" }} />
+        </div>
       </motion.div>
     </section>
   );

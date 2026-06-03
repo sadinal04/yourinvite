@@ -182,6 +182,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
           Buka Google Maps
         </motion.a>
       )}
+      <div className="h-28" /> {/* Extra bottom spacing */}
     </SectionWrapper>
     </section>
   );
