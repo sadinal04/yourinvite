@@ -39,17 +39,44 @@ export function useSnapScroll(enabled: boolean) {
     return idx;
   }, []);
 
+  const animateScroll = useCallback((
+    element: HTMLElement,
+    targetPosition: number,
+    duration: number
+  ) => {
+    const startPosition = element.scrollTop;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const easedProgress = easeOutCubic(progress);
+
+      element.scrollTop = startPosition + distance * easedProgress;
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  }, []);
+
   const scrollToIndex = useCallback((index: number) => {
     const wrapper = getWrapper();
     const sections = getSections();
     if (!wrapper || !sections[index]) return;
 
     cooldown.current = true;
-    wrapper.scrollTo({ top: sections[index].offsetTop, behavior: "smooth" });
+    animateScroll(wrapper, sections[index].offsetTop, 550);
     setTimeout(() => {
       cooldown.current = false;
     }, SCROLL_COOLDOWN);
-  }, []);
+  }, [animateScroll]);
 
   /**
    * Decide whether to navigate based on direction.
@@ -60,7 +87,7 @@ export function useSnapScroll(enabled: boolean) {
    * false if we should let the default scroll happen.
    */
   const navigate = useCallback(
-    (direction: 1 | -1): boolean => {
+    (direction: 1 | -1, source: "wheel" | "touch"): boolean => {
       if (cooldown.current) return true;
       const wrapper = getWrapper();
       const sections = getSections();
@@ -85,7 +112,20 @@ export function useSnapScroll(enabled: boolean) {
       if (direction === 1) {
         // Scrolling down
         if (isTall && remainingInSection > 20) {
-          // Still content below in this section — let CSS/natural scroll handle it
+          if (source === "wheel") {
+            // Smooth custom sub-scroll inside tall section for desktop mouse wheel
+            cooldown.current = true;
+            const target = Math.min(
+              scrollTop + 220,
+              sectionBottom - viewportHeight
+            );
+            animateScroll(wrapper, target, 320);
+            setTimeout(() => {
+              cooldown.current = false;
+            }, 280);
+            return true;
+          }
+          // For touch, let natural scroll happen
           return false;
         }
         // At bottom of section (or full-screen section) → snap to next
@@ -96,7 +136,17 @@ export function useSnapScroll(enabled: boolean) {
       } else {
         // Scrolling up
         if (isTall && scrolledIntoSection > 20) {
-          // Still content above in this section — let CSS/natural scroll handle it
+          if (source === "wheel") {
+            // Smooth custom sub-scroll inside tall section for desktop mouse wheel
+            cooldown.current = true;
+            const target = Math.max(scrollTop - 220, sectionTop);
+            animateScroll(wrapper, target, 320);
+            setTimeout(() => {
+              cooldown.current = false;
+            }, 280);
+            return true;
+          }
+          // For touch, let natural scroll happen
           return false;
         }
         // At top of section → snap to prev
@@ -107,7 +157,7 @@ export function useSnapScroll(enabled: boolean) {
       }
       return false;
     },
-    [getCurrentIndex, scrollToIndex]
+    [getCurrentIndex, scrollToIndex, animateScroll]
   );
 
   useEffect(() => {
@@ -117,7 +167,7 @@ export function useSnapScroll(enabled: boolean) {
 
     // ── Wheel (desktop) ─────────────────────────────────────────────────────
     const handleWheel = (e: WheelEvent) => {
-      const snapped = navigate(e.deltaY > 0 ? 1 : -1);
+      const snapped = navigate(e.deltaY > 0 ? 1 : -1, "wheel");
       if (snapped) {
         e.preventDefault();
       }
@@ -131,7 +181,7 @@ export function useSnapScroll(enabled: boolean) {
     const handleTouchEnd = (e: TouchEvent) => {
       const dy = touchStartY.current - e.changedTouches[0].clientY;
       if (Math.abs(dy) < 30) return; // ignore tiny swipes
-      navigate(dy > 0 ? 1 : -1);
+      navigate(dy > 0 ? 1 : -1, "touch");
     };
 
     wrapper.addEventListener("wheel", handleWheel, { passive: false });
