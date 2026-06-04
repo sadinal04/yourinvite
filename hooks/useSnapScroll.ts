@@ -59,9 +59,6 @@ export function useSnapScroll(enabled: boolean) {
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
 
-    // Kunci overflow agar momentum scroll bawaan (scroll bocor) mati saat JS mengambil alih
-    element.style.overflowY = "hidden";
-
     // Easing yang lebih lembut (Quintic) untuk menghindari patah-patah
     const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
 
@@ -77,7 +74,6 @@ export function useSnapScroll(enabled: boolean) {
         scrollAnimRef.current = requestAnimationFrame(animation);
       } else {
         scrollAnimRef.current = null;
-        element.style.overflowY = "scroll"; // Kembalikan scroll native setelah animasi selesai
         if (onComplete) onComplete();
       }
     };
@@ -106,7 +102,7 @@ export function useSnapScroll(enabled: boolean) {
     }
 
     cooldown.current = true;
-    animateScroll(wrapper, targetScrollTop, 800, () => {
+    animateScroll(wrapper, targetScrollTop, 500, () => {
       setTimeout(() => {
         cooldown.current = false;
       }, 200); // Ekstra jeda 200ms setelah animasi untuk mencegah scroll beruntun

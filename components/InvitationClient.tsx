@@ -47,17 +47,6 @@ function SectionSlide({
       style={{
         position: "relative",
         zIndex: 10 + index,
-        willChange: "transform, opacity",
-      }}
-      initial={{ opacity: 0, y: 60, scale: 0.97 }}
-      animate={
-        isInView
-          ? { opacity: 1, y: 0, scale: 1 }
-          : { opacity: 0, y: 60, scale: 0.97 }
-      }
-      transition={{
-        duration: 0.65,
-        ease: [0.22, 1, 0.36, 1],
       }}
     >
       {children}
