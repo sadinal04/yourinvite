@@ -59,13 +59,17 @@ export function useSnapScroll(enabled: boolean) {
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
 
-    const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+    // Kunci overflow agar momentum scroll bawaan (scroll bocor) mati saat JS mengambil alih
+    element.style.overflowY = "hidden";
+
+    // Easing yang lebih lembut (Quintic) untuk menghindari patah-patah
+    const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
 
     const animation = (currentTime: number) => {
       if (startTime === null) startTime = currentTime;
       const timeElapsed = currentTime - startTime;
       const progress = Math.min(timeElapsed / duration, 1);
-      const easedProgress = easeOutQuart(progress);
+      const easedProgress = easeOutQuint(progress);
 
       element.scrollTop = startPosition + distance * easedProgress;
 
@@ -73,6 +77,7 @@ export function useSnapScroll(enabled: boolean) {
         scrollAnimRef.current = requestAnimationFrame(animation);
       } else {
         scrollAnimRef.current = null;
+        element.style.overflowY = "scroll"; // Kembalikan scroll native setelah animasi selesai
         if (onComplete) onComplete();
       }
     };
@@ -101,8 +106,10 @@ export function useSnapScroll(enabled: boolean) {
     }
 
     cooldown.current = true;
-    animateScroll(wrapper, targetScrollTop, 480, () => {
-      cooldown.current = false;
+    animateScroll(wrapper, targetScrollTop, 800, () => {
+      setTimeout(() => {
+        cooldown.current = false;
+      }, 200); // Ekstra jeda 200ms setelah animasi untuk mencegah scroll beruntun
     });
   }, [animateScroll, getCurrentIndex]);
 
@@ -169,8 +176,8 @@ export function useSnapScroll(enabled: boolean) {
           if (source === "wheel") {
             // Smooth custom sub-scroll inside tall section for desktop mouse wheel
             cooldown.current = true;
-            const target = Math.max(scrollTop - 220, sectionTop);
-            animateScroll(wrapper, target, 280, () => {
+            const target = Math.max(scrollTop - 300, sectionTop);
+            animateScroll(wrapper, target, 400, () => {
               cooldown.current = false;
             });
             return true;
