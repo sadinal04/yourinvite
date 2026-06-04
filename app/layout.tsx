@@ -63,9 +63,18 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body
-        className={`${cormorantGaramond.variable} ${lora.variable} ${italianno.variable}`}
+        className={`${cormorantGaramond.variable} ${lora.variable} ${italianno.variable} bg-[#110a06] flex justify-center min-h-[100dvh]`}
       >
-        {children}
+        <div 
+          className="relative w-full max-w-[480px] min-h-[100dvh] bg-white shadow-2xl overflow-x-hidden"
+          style={{ 
+            // This CSS trick forces fixed-position children (like CoverScreen and MusicController)
+            // to be constrained within this max-w container instead of the whole viewport.
+            transform: "translateZ(0)" 
+          }}
+        >
+          {children}
+        </div>
       </body>
     </html>
   );

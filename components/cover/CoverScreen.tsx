@@ -317,7 +317,7 @@ export default function CoverScreen({
                 fontFamily: "'Lora', serif",
                 color: "#CC9B3F",
                 textShadow: "0 0 20px rgba(204,155,63,0.5), 0 0 40px rgba(204,155,63,0.2)",
-                opacity: isOverlay ? 0 : 1,
+                visibility: isOverlay ? "hidden" : "visible",
               }}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -337,7 +337,7 @@ export default function CoverScreen({
                 borderBottomLeftRadius: "0px",
                 borderBottomRightRadius: "0px",
                 boxShadow: "0 10px 30px rgba(0,0,0,0.4), inset 0 0 25px rgba(204,155,63,0.04)",
-                opacity: isOverlay ? 0 : 1,
+                visibility: isOverlay ? "hidden" : "visible",
               }}
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -451,6 +451,7 @@ export default function CoverScreen({
                 background: "rgba(204,155,63,0.08)",
                 border: "1px solid rgba(204,155,63,0.25)",
                 boxShadow: "0 0 20px rgba(204,155,63,0.06) inset",
+                visibility: isOverlay ? "hidden" : "visible",
               }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -601,7 +602,7 @@ export default function CoverScreen({
             style={{ willChange: "transform" }}
           >
             <div 
-              className="w-[100vw] h-[100vh] absolute top-0 left-0 flex flex-col items-center justify-center"
+              className="w-[200%] h-full absolute top-0 left-0 flex flex-col items-center justify-center"
               style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
             >
               {renderContent(false)}
@@ -629,7 +630,7 @@ export default function CoverScreen({
             style={{ willChange: "transform" }}
           >
             <div 
-              className="w-[100vw] h-[100vh] absolute top-0 right-0 flex flex-col items-center justify-center"
+              className="w-[200%] h-full absolute top-0 right-0 flex flex-col items-center justify-center"
               style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
             >
               {renderContent(false)}
