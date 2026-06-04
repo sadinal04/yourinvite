@@ -191,22 +191,10 @@ export default function CoverScreen({
     timeZone: "Asia/Jakarta",
   });
 
-  return (
-    <AnimatePresence>
-      {!isOpen && (
-        <motion.div
-          key="cover"
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(160deg, #0d0804 0%, #1a0f05 35%, #150c04 65%, #0a0603 100%)",
-          }}
-          exit={{
-            opacity: 0,
-            scale: 1.05,
-            transition: { duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] },
-          }}
-        >
+  const renderContent = (isOverlay: boolean) => (
+    <>
+      {!isOverlay && (
+        <>
           {/* Radial golden glow center */}
           <div
             className="absolute inset-0 pointer-events-none"
@@ -265,6 +253,7 @@ export default function CoverScreen({
               fill
               sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
+              priority
             />
           </div>
 
@@ -279,6 +268,7 @@ export default function CoverScreen({
               fill
               sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
+              priority
             />
           </div>
 
@@ -293,6 +283,7 @@ export default function CoverScreen({
               fill
               sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
+              priority
             />
           </div>
 
@@ -313,9 +304,11 @@ export default function CoverScreen({
               borderRadius: "2px",
             }}
           />
+        </>
+      )}
 
-          {/* ─── Main content ─── */}
-          <div className="relative z-10 flex flex-col items-center text-center px-8 max-w-sm w-full">
+      {/* ─── Main content ─── */}
+      <div className="relative z-10 flex flex-col items-center text-center px-8 max-w-sm w-full pointer-events-none">
 
             {/* Bismillah */}
             <motion.p
@@ -324,6 +317,7 @@ export default function CoverScreen({
                 fontFamily: "'Lora', serif",
                 color: "#CC9B3F",
                 textShadow: "0 0 20px rgba(204,155,63,0.5), 0 0 40px rgba(204,155,63,0.2)",
+                opacity: isOverlay ? 0 : 1,
               }}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -343,6 +337,7 @@ export default function CoverScreen({
                 borderBottomLeftRadius: "0px",
                 borderBottomRightRadius: "0px",
                 boxShadow: "0 10px 30px rgba(0,0,0,0.4), inset 0 0 25px rgba(204,155,63,0.04)",
+                opacity: isOverlay ? 0 : 1,
               }}
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -488,7 +483,10 @@ export default function CoverScreen({
             </motion.div>
 
             {/* Open button with pointing hand guide */}
-            <div className="relative">
+            <motion.div 
+              className={`relative ${isOverlay ? 'pointer-events-auto' : 'pointer-events-none opacity-0'}`}
+              exit={{ scale: 0, opacity: 0, transition: { duration: 0.15 } }}
+            >
               <motion.button
                 className="btn-gold flex items-center gap-2 py-2 px-6 text-sm relative z-10"
                 onClick={onOpen}
@@ -563,11 +561,11 @@ export default function CoverScreen({
                 />
                 <Pointer size={22} style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))", transform: "rotate(-10deg)" }} />
               </motion.div>
-            </div>
+            </motion.div>
 
             {/* Tap Instruction */}
             <motion.p
-              className="mt-2 text-[11px]"
+              className={`mt-2 text-[11px] ${isOverlay ? 'opacity-100' : 'opacity-0'}`}
               style={{
                 color: "rgba(204,155,63,0.4)",
                 fontFamily: "'Lora', serif",
@@ -575,11 +573,89 @@ export default function CoverScreen({
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
               transition={{ duration: 0.6, delay: 1.4 }}
             >
               Tap untuk membuka undangan
             </motion.p>
           </div>
+    </>
+  );
+
+  return (
+    <AnimatePresence>
+      {!isOpen && (
+        <motion.div
+          key="cover-wrapper"
+          className="fixed inset-0 z-[100] flex pointer-events-none"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, delay: 2.0 }} // Wait for doors to finish sliding (2.2s) before unmounting
+        >
+          {/* Left Half */}
+          <motion.div
+            className="w-1/2 h-full relative overflow-hidden pointer-events-auto"
+            initial={{ x: 0 }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ duration: 2.2, ease: [0.8, 0, 0.1, 1] }}
+            style={{ willChange: "transform" }}
+          >
+            <div 
+              className="w-[100vw] h-[100vh] absolute top-0 left-0 flex flex-col items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
+            >
+              {renderContent(false)}
+            </div>
+            {/* Glowing Golden Edge (Right side of left half) */}
+            <motion.div 
+              className="absolute top-0 right-0 w-[2px] h-full z-[200]"
+              style={{
+                background: "linear-gradient(to bottom, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
+                boxShadow: "-10px 0 40px 5px rgba(204,155,63,0.5)"
+              }}
+              initial={{ opacity: 0 }}
+              exit={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            />
+          </motion.div>
+
+          {/* Right Half */}
+          <motion.div
+            className="w-1/2 h-full relative overflow-hidden pointer-events-auto"
+            initial={{ x: 0 }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 2.2, ease: [0.8, 0, 0.1, 1] }}
+            style={{ willChange: "transform" }}
+          >
+            <div 
+              className="w-[100vw] h-[100vh] absolute top-0 right-0 flex flex-col items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
+            >
+              {renderContent(false)}
+            </div>
+            {/* Glowing Golden Edge (Left side of right half) */}
+            <motion.div 
+              className="absolute top-0 left-0 w-[2px] h-full z-[200]"
+              style={{
+                background: "linear-gradient(to bottom, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
+                boxShadow: "10px 0 40px 5px rgba(204,155,63,0.5)"
+              }}
+              initial={{ opacity: 0 }}
+              exit={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            />
+          </motion.div>
+
+          {/* SINGLE Unified Overlay for Interactive Elements (Button) */}
+          <motion.div 
+             className="absolute inset-0 z-[300] flex flex-col items-center justify-center pointer-events-none"
+             exit={{ opacity: 0 }}
+             transition={{ duration: 0.15 }}
+          >
+             {renderContent(true)}
+          </motion.div>
+
         </motion.div>
       )}
     </AnimatePresence>
