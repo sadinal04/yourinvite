@@ -206,7 +206,6 @@
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
   overflow-y: scroll;
   overflow-x: hidden;
-  scroll-behavior: smooth;
   /* Reserve scrollbar space so it never causes layout shift */
   scrollbar-gutter: stable;
   /* Custom scrollbar — thin gold */
