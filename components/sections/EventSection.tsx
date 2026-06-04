@@ -5,6 +5,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { InvitationData } from "@/types/invitation";
 import { CalendarDays, Clock, MapPin, Navigation } from "lucide-react";
+import { ScrollCue } from "@/components/ui/Animations";
 
 interface EventSectionProps {
   data: InvitationData;
@@ -212,7 +213,7 @@ const ArchCard = ({
               padding: "0.55rem 1.5rem",
               border: "1px solid rgba(204,155,63,0.42)",
               borderRadius: "2rem",
-              background: "transparent",
+              background: "rgba(204,155,63,0)",
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "0.78rem",
               color: "#B5832A",
@@ -425,57 +426,7 @@ export default function EventSection({ data }: EventSectionProps) {
           </div>
         </motion.div>
 
-        {/* Mini location cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem", marginBottom: "1.2rem" }}>
-          {[
-            { type: "Akad Nikah", color: "#CC9B3F", ...data.event.akad },
-            { type: "Resepsi",    color: "#65081F", ...data.event.resepsi },
-          ].map((loc, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: i === 0 ? -18 : 18 }}
-              animate={mapInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.58, delay: 0.1 * i + 0.15, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                background: "rgba(255,255,255,0.88)",
-                border: "1px solid rgba(204,155,63,0.2)",
-                borderRadius: "0.875rem",
-                padding: "0.9rem 1rem",
-                position: "relative",
-                overflow: "hidden",
-                backdropFilter: "blur(6px)",
-              }}
-            >
-              <div style={{
-                position: "absolute", top: 0, left: 0, right: 0, height: 2,
-                background: `linear-gradient(90deg, transparent, ${loc.color} 30%, ${loc.color} 70%, transparent)`,
-              }} />
-              <p style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "0.58rem",
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                color: loc.color,
-                marginBottom: "0.28rem",
-                opacity: 0.85,
-              }}>{loc.type}</p>
-              <p style={{ fontFamily: "'Lora', serif", fontSize: "0.9rem", fontWeight: 700, color: "#2a1a0a", marginBottom: "0.18rem" }}>{loc.venue}</p>
-              <p style={{ fontFamily: "'Lora', serif", fontSize: "0.74rem", color: "#6a4e30", lineHeight: 1.5, marginBottom: "0.55rem" }}>{loc.address}</p>
-              {loc.mapsUrl && (
-                <a href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" style={{
-                  display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                  padding: "0.38rem 0.85rem", borderRadius: "2rem",
-                  border: "1px solid rgba(204,155,63,0.32)", background: "rgba(204,155,63,0.06)",
-                  color: "#B5832A", fontSize: "0.68rem",
-                  fontFamily: "'Cormorant Garamond', serif", letterSpacing: "0.08em", textDecoration: "none",
-                }}>
-                  <Navigation size={10} />
-                  Lihat di Google Maps
-                </a>
-              )}
-            </motion.div>
-          ))}
-        </div>
+
 
         {/* Map embed */}
         <motion.div
@@ -526,6 +477,7 @@ export default function EventSection({ data }: EventSectionProps) {
       </div>
 
       <div style={{ height: "7rem" }} />
+      <ScrollCue />
     </section>
   );
 }

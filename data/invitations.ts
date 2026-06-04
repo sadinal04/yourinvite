@@ -52,9 +52,9 @@ export const invitations: InvitationsMap = {
     },
     closing: {
       message:
-        "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada putra-putri kami. Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i, kami mengucapkan terima kasih.",
+        "Dalam perjalanan hidup, Bapak/Ibu/Saudara/i adalah bagian dari orang-orang yang berarti bagi kami.\n\nPada hari bahagia ini, kami berharap kehadiran dan doa restu Bapak/Ibu/Saudara/i dapat melengkapi kebahagiaan kami serta menjadi keberkahan bagi langkah baru yang kami mulai.",
       signature: "Haris & Cut",
     },
-    music: "/audio/background.mp3",
+    music: "/audio/NUCA - MASA INI, NANTI, DAN MASA INDAH LAINNYA (OFFICIAL LYRIC VIDEO).mp3",
   },
 };

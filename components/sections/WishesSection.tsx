@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { SectionLabel, GoldOrnamentDivider, fadeUp } from "@/components/ui/Animations";
+import { SectionLabel, GoldOrnamentDivider, fadeUp, ScrollCue } from "@/components/ui/Animations";
 import { MessageSquare, Send, Heart, X } from "lucide-react";
 
 interface WishItem {
@@ -522,6 +522,7 @@ export default function WishesSection({ slug, guestName }: WishesSectionProps) {
           </motion.div>
         )}
       </AnimatePresence>
+      <ScrollCue />
     </section>
   );
 }

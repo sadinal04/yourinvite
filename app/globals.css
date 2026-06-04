@@ -37,12 +37,15 @@
   }
 
   body {
-    background-color: var(--color-cream-light);
-    color: var(--color-text-dark);
-    font-family: 'Lora', Georgia, serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .theme-invitation {
+    background-color: var(--color-cream-light);
+    color: var(--color-text-dark);
+    font-family: 'Lora', Georgia, serif;
   }
 
   /* Scroll lock when cover is shown */
@@ -203,6 +206,8 @@
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
   overflow-y: scroll;
   overflow-x: hidden;
+  /* Reserve scrollbar space so it never causes layout shift */
+  scrollbar-gutter: stable;
   /* Custom scrollbar — thin gold */
   scrollbar-width: thin;
   scrollbar-color: rgba(204, 155, 63, 0.2) transparent;
@@ -362,14 +367,14 @@
    RESPONSIVE DESKTOP SIDE DECORATION
    ============================================ */
 @media (min-width: 520px) {
-  body {
+  .theme-invitation {
     background: linear-gradient(160deg, #f7e8d2 0%, #fbecd9 50%, #f7e8d2 100%);
     min-height: 100dvh;
   }
 
   /* Clean cream side panels — no flowers, just warmth */
-  body::before,
-  body::after {
+  .theme-invitation::before,
+  .theme-invitation::after {
     content: '';
     position: fixed;
     top: 0;
@@ -386,8 +391,8 @@
     );
   }
 
-  body::before { left: 0; }
-  body::after  { right: 0; }
+  .theme-invitation::before { left: 0; }
+  .theme-invitation::after  { right: 0; }
 }
 
 /* Ensure invitation wrapper stays above side panels */

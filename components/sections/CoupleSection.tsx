@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import {
   fadeLeft, fadeRight, fadeDown, fadeUp, zoomIn,
-  SectionLabel, GoldOrnamentDivider,
+  SectionLabel, GoldOrnamentDivider, ScrollCue,
 } from "@/components/ui/Animations";
 
 interface CoupleSectionProps {
@@ -213,6 +213,7 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
           childOfText="Anak Pertama"
         />
       </div>
+      <ScrollCue />
     </section>
   );
 }

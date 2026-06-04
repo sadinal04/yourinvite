@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
-import { fadeDown, fadeUp, zoomIn, zoomInUp, staggerContainer, SectionLabel } from "@/components/ui/Animations";
+import { fadeDown, fadeUp, zoomIn, staggerContainer, ScrollCue } from "@/components/ui/Animations";
 import { Sparkles } from "lucide-react";
 
 interface ClosingSectionProps {
@@ -21,7 +21,7 @@ const CLOSING_PARTICLES = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 const SunflowerGold = () => (
-  <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+  <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
     {Array.from({ length: 16 }, (_, i) => {
       const angle = (i * 360) / 16;
       return (
@@ -64,14 +64,12 @@ const SunflowerGold = () => (
 export default function ClosingSection({ data, guestName }: ClosingSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px 0px" });
-  const groomFirst = data.groom.name.split(",")[0].split(" ")[0];
-  const brideFirst = data.bride.name.split(",")[0].split(" ")[0];
 
   return (
     <section
       ref={ref}
       id="closing"
-      className="section-snap section-px py-20 relative overflow-hidden flex flex-col justify-center"
+      className="section-snap section-px py-8 relative overflow-hidden flex flex-col justify-center"
       style={{ background: "linear-gradient(160deg, #2a1a0a 0%, #1a0f05 50%, #2a1a0a 100%)" }}
     >
       {/* Gold particles */}
@@ -85,99 +83,114 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
         ))}
       </div>
 
-      {/* Corner ornaments */}
-      {[
-        "absolute top-4 left-4 opacity-20",
-        "absolute top-4 right-4 opacity-20",
-        "absolute bottom-4 left-4 opacity-20",
-        "absolute bottom-4 right-4 opacity-20",
-      ].map((cls, i) => (
-        <div key={i} className={cls} style={{
-          transform: i === 1 ? "scaleX(-1)" : i === 2 ? "scaleY(-1)" : i === 3 ? "scale(-1)" : undefined,
-        }}>
-          <svg width="44" height="44" viewBox="0 0 50 50" fill="none">
-            <path d="M5 5 Q15 5 15 15" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/>
-            <path d="M5 5 Q5 15 15 15" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/>
-            <circle cx="5" cy="5" r="2" fill="#CC9B3F"/>
-          </svg>
-        </div>
-      ))}
+      {/* Corner floral ornaments */}
+      <div className="absolute top-0 left-0 pointer-events-none select-none"
+        style={{ width: "120px", height: "120px", opacity: 0.18, transform: "rotate(180deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute top-0 right-0 pointer-events-none select-none"
+        style={{ width: "120px", height: "120px", opacity: 0.18, transform: "rotate(270deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-0 left-0 pointer-events-none select-none"
+        style={{ width: "120px", height: "120px", opacity: 0.18, transform: "rotate(90deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-0 right-0 pointer-events-none select-none"
+        style={{ width: "120px", height: "120px", opacity: 0.18, transform: "rotate(0deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
 
       {/* Border */}
-      <div className="absolute inset-3 pointer-events-none" style={{ border: "1px solid rgba(204,155,63,0.12)", borderRadius: "2px" }} />
+      <div className="absolute inset-3 pointer-events-none"
+        style={{ border: "1px solid rgba(204,155,63,0.12)", borderRadius: "2px" }} />
 
-      <div className="relative z-10 text-center flex flex-col gap-y-6 justify-center">
+      <div className="relative z-10 text-center flex flex-col gap-y-3 justify-center">
+
         {/* Rotating sunflower */}
-        <motion.div className="flex justify-center mb-6" variants={zoomIn} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-          <motion.div animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>
+        <motion.div className="flex justify-center"
+          variants={zoomIn} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+          <motion.div animate={{ rotate: 360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>
             <SunflowerGold />
           </motion.div>
         </motion.div>
 
         {/* Guest greeting */}
-        <motion.div className="mb-5" variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.2 }}>
-          <motion.p variants={fadeDown} className="text-xs tracking-[0.25em] uppercase mb-2"
+        <motion.div
+          variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"}
+          transition={{ delay: 0.2 }}>
+          <motion.p variants={fadeDown} className="text-xs tracking-[0.25em] uppercase mb-1"
             style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(204,155,63,0.6)" }}>
             Kepada yang terhormat
           </motion.p>
           <motion.p variants={zoomIn}
-            style={{ fontFamily: "'Italianno', cursive", fontSize: "2.8rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)" }}>
+            style={{ fontFamily: "'Italianno', cursive", fontSize: "2.4rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)", lineHeight: 1.1 }}>
             {guestName}
           </motion.p>
         </motion.div>
 
         {/* Gold divider */}
-        <motion.div className="flex items-center gap-3 justify-center mb-6"
-          variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.35 }}>
-          <motion.div variants={fadeDown} style={{ height: "1px", width: "60px", background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.5))" }} />
-          <motion.svg variants={zoomIn} width="12" height="12" viewBox="0 0 20 20" fill="none">
+        <motion.div className="flex items-center gap-3 justify-center"
+          variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"}
+          transition={{ delay: 0.35 }}>
+          <motion.div variants={fadeDown}
+            style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.5))" }} />
+          <motion.svg variants={zoomIn} width="10" height="10" viewBox="0 0 20 20" fill="none">
             <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z" fill="#CC9B3F" opacity="0.7" />
           </motion.svg>
-          <motion.div variants={fadeDown} style={{ height: "1px", width: "60px", background: "linear-gradient(90deg, rgba(204,155,63,0.5), transparent)" }} />
+          <motion.div variants={fadeDown}
+            style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, rgba(204,155,63,0.5), transparent)" }} />
         </motion.div>
 
         {/* Message */}
-        <motion.p className="text-sm leading-relaxed mb-6 mx-1"
-          variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.45 }}
-          style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.7)", fontStyle: "italic" }}>
+        <motion.p className="text-xs leading-relaxed mx-1"
+          variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}
+          transition={{ delay: 0.45 }}
+          style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.7)", fontStyle: "italic", whiteSpace: "pre-line" }}>
           {data.closing?.message ||
-            "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu."}
+            "Dalam perjalanan hidup, Bapak/Ibu/Saudara/i adalah bagian dari orang-orang yang berarti bagi kami."}
         </motion.p>
 
         {/* Couple signature */}
-        <motion.div className="mb-7"
-          variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.55 }}>
-          <motion.p variants={fadeDown} className="tracking-[0.2em] text-xs uppercase mb-2"
+        <motion.div
+          variants={staggerContainer} initial="hidden" animate={isInView ? "visible" : "hidden"}
+          transition={{ delay: 0.55 }}>
+          <motion.p variants={fadeDown} className="tracking-[0.2em] text-xs uppercase mb-1"
             style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(204,155,63,0.6)" }}>
             Hormat Kami
           </motion.p>
           <motion.p variants={zoomIn}
-            style={{ fontFamily: "'Italianno', cursive", fontSize: "3.5rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)", lineHeight: 1.3 }}>
-            Haris & Icut
+            style={{ fontFamily: "'Italianno', cursive", fontSize: "3rem", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.3)", lineHeight: 1.2 }}>
+            Haris &amp; Icut
           </motion.p>
         </motion.div>
 
         {/* Dua card */}
-        <motion.div className="rounded-2xl p-5"
-          variants={zoomIn} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.65 }}
+        <motion.div className="rounded-2xl px-4 py-3"
+          variants={zoomIn} initial="hidden" animate={isInView ? "visible" : "hidden"}
+          transition={{ delay: 0.65 }}
           style={{ background: "rgba(204,155,63,0.07)", border: "1px solid rgba(204,155,63,0.2)" }}>
-          <p className="text-base mb-2" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.9)" }}>
+          <p className="text-sm mb-1" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.9)" }}>
             بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
           </p>
-          <p className="text-xs" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.55)", fontStyle: "italic" }}>
+          <p className="text-[10px]" style={{ fontFamily: "'Lora', serif", color: "rgba(224,185,106,0.55)", fontStyle: "italic" }}>
             &ldquo;Semoga Allah memberkahi kalian berdua, menurunkan berkah atas kalian, dan mengumpulkan kalian dalam kebaikan.&rdquo;
           </p>
         </motion.div>
 
-        {/* Footer */}
-        <motion.p className="flex items-center justify-center gap-2 text-xs mt-8"
-          variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.75 }}
+        {/* Bottom label */}
+        <motion.p className="flex items-center justify-center gap-2 text-xs"
+          variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}
+          transition={{ delay: 0.75 }}
           style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(204,155,63,0.3)", letterSpacing: "0.15em" }}>
           <Sparkles size={10} color="rgba(204,155,63,0.3)" />
           Undangan Digital Premium
           <Sparkles size={10} color="rgba(204,155,63,0.3)" />
         </motion.p>
+
       </div>
+      <ScrollCue />
     </section>
   );
 }

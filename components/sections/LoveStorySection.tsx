@@ -4,24 +4,24 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { Heart, Sparkles, MapPin } from "lucide-react";
-import { SectionLabel } from "@/components/ui/Animations";
+import { SectionLabel, ScrollCue } from "@/components/ui/Animations";
 
 // ─── Story data ────────────────────────────────────────────────────────────
 const LOVE_STORIES = [
-  { img: "1.jpg",  title: "Awal Pertemuan",      date: "2024"          },
-  { img: "2.jpg",  title: "Saling Mengenal",      date: "2024"          },
-  { img: "3.jpg",  title: "Kedekatan Tumbuh",     date: "2024"          },
-  { img: "4.jpg",  title: "Momen Kebersamaan",    date: "Awal 2025"     },
+  { img: "1.jpg",  title: "Kedekatan Tumbuh",      date: "2024"          },
+  { img: "2.jpg",  title: "Suatu Kebetulan",      date: "2024"          },
+  { img: "3.jpg",  title: "Momen Kebersamaan",     date: "2024"          },
+  { img: "4.jpg",  title: "Satu Ruang",    date: "Awal 2025"     },
   { img: "5.jpg",  title: "Cerita Kita",          date: "Februari 2025" },
-  { img: "6.jpg",  title: "Hari-Hari Indah",      date: "Maret 2025"    },
-  { img: "7.jpg",  title: "Tawa & Canda",         date: "April 2025"    },
-  { img: "8.jpg",  title: "Semakin Dekat",        date: "Mei 2025"      },
-  { img: "9.jpg",  title: "Jalan Bersama",        date: "Juni 2025"     },
-  { img: "10.jpg", title: "Kenangan Manis",       date: "Juli 2025"     },
-  { img: "11.jpg", title: "Masa Indah",           date: "Agustus 2025"  },
-  { img: "12.jpg", title: "Siap Melangkah",       date: "Oktober 2025"  },
-  { img: "13.jpg", title: "Lamaran",              date: "November 2025" },
-  { img: "14.jpg", title: "Menuju Pelaminan",     date: "2026"          },
+  { img: "6.jpg",  title: "Keberanian",      date: "Maret 2025"    },
+  { img: "7.jpg",  title: "Hari-Hari Indah",         date: "April 2025"    },
+  { img: "8.jpg",  title: "Berpetualang",        date: "Mei 2025"      },
+  { img: "9.jpg",  title: "Semakin Dekat",        date: "Juni 2025"     },
+  { img: "10.jpg", title: "Surat Kabar",       date: "Juli 2025"     },
+  { img: "11.jpg", title: "Jalan Bersama",           date: "Agustus 2025"  },
+  { img: "12.jpg", title: "Janji Temu",       date: "Oktober 2025"  },
+  { img: "13.jpg", title: "Masa Indah",              date: "November 2025" },
+  { img: "14.jpg", title: "Tepi Pantai",     date: "2026"          },
 ] as const;
 
 // ─── Gold particles ─────────────────────────────────────────────────────────
@@ -263,6 +263,7 @@ export default function LoveStorySection() {
         </p>
       </motion.div>
       <div className="h-28" /> {/* Extra bottom spacing */}
+      <ScrollCue />
     </section>
   );
 }

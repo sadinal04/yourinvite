@@ -22,11 +22,18 @@ export default function LocationSection({ data }: LocationSectionProps) {
   return (
     <section id="location" className="section-snap-tall">
     <SectionWrapper
-      className="section-px py-14 relative"
+      className="section-px py-16 relative overflow-hidden"
       style={{
         background: "linear-gradient(180deg, #ffffff 0%, #fbecd9 100%)",
       } as React.CSSProperties}
     >
+      {/* Background Floral Ornaments */}
+      <div className="absolute top-0 left-0 w-64 h-64 opacity-[0.07] pointer-events-none" style={{ transform: "rotate(180deg) translate(20%, 20%)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-10 right-0 w-72 h-72 opacity-[0.07] pointer-events-none" style={{ transform: "rotate(0deg) translate(20%, 20%)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
       <motion.div variants={itemVariants} className="text-center mb-8">
         <p
           className="tracking-[0.3em] text-xs uppercase mb-1"
@@ -55,107 +62,44 @@ export default function LocationSection({ data }: LocationSectionProps) {
         </div>
       </motion.div>
 
-      {/* Location cards */}
-      <div className="space-y-4 mb-6">
-        {[
-          { type: "Akad Nikah", ...data.event.akad },
-          { type: "Resepsi", ...data.event.resepsi },
-        ].map((loc, i) => (
-          <motion.div
-            key={i}
-            variants={itemVariants}
-            className="glass-card p-5 relative overflow-hidden"
-          >
-            <div
-              className="absolute top-0 left-0 right-0 h-0.5"
-              style={{
-                background:
-                  i === 0
-                     ? "linear-gradient(90deg, transparent, #CC9B3F 30%, #CC9B3F 70%, transparent)"
-                    : "linear-gradient(90deg, transparent, #65081F 30%, #65081F 70%, transparent)",
-              }}
-            />
-            {/* Type label */}
-            <p style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.6rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: i === 0 ? "#B5832A" : "#65081F",
-              marginBottom: "0.5rem",
-              opacity: 0.85,
-            }}>
-              {loc.type}
-            </p>
-            {/* Venue name */}
-            <p style={{
-              fontFamily: "'Lora', serif",
-              fontSize: "1rem",
-              fontWeight: 700,
-              color: "#2a1a0a",
-              lineHeight: 1.3,
-              marginBottom: "0.35rem",
-            }}>
-              {loc.venue}
-            </p>
-            {/* Address */}
-            <p style={{
-              fontFamily: "'Lora', serif",
-              fontSize: "0.78rem",
-              color: "#6a4e30",
-              lineHeight: 1.5,
-            }}>
-              {loc.address}
-            </p>
-            {loc.mapsUrl && (
-              <a
-                href={loc.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 mt-3 py-1.5 px-3 rounded-full text-xs transition-all"
-                style={{
-                  background: "rgba(204,155,63,0.1)",
-                  border: "1px solid rgba(204,155,63,0.3)",
-                  color: "#B5832A",
-                  fontFamily: "'Cormorant Garamond', serif",
-                  letterSpacing: "0.05em",
-                  textDecoration: "none",
-                }}
-              >
-                <Navigation size={11} />
-                Lihat di Google Maps
-              </a>
-            )}
-          </motion.div>
-        ))}
-      </div>
 
-      {/* Map iframe */}
+
+      {/* Map iframe wrapped in an Arch frame */}
       <motion.div
         variants={itemVariants}
-        className="rounded-2xl overflow-hidden relative"
+        className="overflow-hidden relative mt-10 p-2"
         style={{
-          border: "1px solid rgba(204,155,63,0.3)",
-          boxShadow: "0 4px 24px rgba(204,155,63,0.15)",
+          background: "linear-gradient(145deg, #ffffff, #fdf5ec)",
+          border: "2px solid rgba(204,155,63,0.6)",
+          boxShadow: "0 15px 45px rgba(204,155,63,0.2), inset 0 2px 10px rgba(255,255,255,1)",
+          borderRadius: "50% 50% 16px 16px / 70px 70px 16px 16px",
+          paddingTop: "2.5rem"
         }}
       >
-        <div
-          className="absolute inset-0 pointer-events-none z-10"
-          style={{
-            borderRadius: "1rem",
-            border: "2px solid rgba(204,155,63,0.2)",
-          }}
+        <div 
+          className="absolute inset-[6px] pointer-events-none z-20" 
+          style={{ 
+            borderRadius: "50% 50% 10px 10px / 65px 65px 10px 10px",
+            border: "1px solid rgba(204,155,63,0.3)" 
+          }} 
         />
-        <iframe
-          src={`https://maps.google.com/maps?q=${encodeURIComponent("Krueng Juli Timu, Kuala, Bireuen, Aceh")}&output=embed&z=15`}
-          width="100%"
-          height="220"
-          style={{ border: 0, display: "block" }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Lokasi Utama"
-        />
+
+        <div className="overflow-hidden relative z-10" style={{ 
+          borderRadius: "50% 50% 12px 12px / 60px 60px 12px 12px",
+          border: "1px solid rgba(204,155,63,0.25)" 
+        }}>
+          <div className="absolute inset-0 z-10 pointer-events-none" style={{ boxShadow: "inset 0 0 20px rgba(204,155,63,0.4)" }} />
+          <iframe
+            src={`https://maps.google.com/maps?q=${encodeURIComponent("Krueng Juli Timu, Kuala, Bireuen, Aceh")}&output=embed&z=15`}
+            width="100%"
+            height="260"
+            style={{ border: 0, display: "block", filter: "contrast(1.1) sepia(0.2) hue-rotate(-5deg)" }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Lokasi Utama"
+          />
+        </div>
       </motion.div>
 
       {/* Main Maps button */}
@@ -165,20 +109,24 @@ export default function LocationSection({ data }: LocationSectionProps) {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full text-center py-3.5 rounded-2xl mt-5 transition-all duration-300"
+          className="flex items-center justify-center gap-2 w-full text-center py-4 rounded-[2rem] mt-6 relative overflow-hidden transition-all duration-300"
           style={{
-            background: "linear-gradient(135deg, #CC9B3F, #B5832A)",
+            background: "linear-gradient(135deg, #DFB976 0%, #B5832A 100%)",
+            border: "1px solid rgba(255,255,255,0.4)",
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "1rem",
+            fontSize: "1.1rem",
+            fontWeight: 700,
             color: "#ffffff",
-            letterSpacing: "0.1em",
+            letterSpacing: "0.15em",
             textDecoration: "none",
-            boxShadow: "0 4px 16px rgba(204,155,63,0.35)",
+            boxShadow: "0 8px 24px rgba(181,131,42,0.4), inset 0 2px 4px rgba(255,255,255,0.4)",
+            textTransform: "uppercase"
           }}
-          whileHover={{ scale: 1.02 }}
+          whileHover={{ scale: 1.02, boxShadow: "0 12px 28px rgba(181,131,42,0.5), inset 0 2px 4px rgba(255,255,255,0.5)" }}
           whileTap={{ scale: 0.98 }}
         >
-          <Navigation size={16} />
+          <div className="absolute inset-0 bg-white/20 blur-xl opacity-0 hover:opacity-100 transition-opacity" />
+          <Navigation size={18} strokeWidth={2.5} />
           Buka Google Maps
         </motion.a>
       )}

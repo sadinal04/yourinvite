@@ -136,37 +136,56 @@ function PhoneMockup() {
           }}
         >
           <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-5 rounded-full z-10" style={{ background: "#064e3b" }} />
-          <div className="absolute inset-0 m-1 rounded-[2.2rem] overflow-hidden" style={{ background: "#fdf5ec" }}>
-            <div className="w-full h-full flex flex-col items-center justify-center text-center px-4"
-              style={{ background: "linear-gradient(160deg, #fdf5ec 0%, #fbecd9 60%, #fdf5ec 100%)" }}>
-              <div className="absolute top-8 left-0 right-0 flex justify-center">
-                <div style={{ width: 60, height: 1, background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)" }} />
+          <div className="absolute inset-0 m-1 rounded-[2.2rem] overflow-hidden" style={{ background: "#0d0804" }}>
+            <div className="relative w-full h-full flex flex-col items-center justify-center text-center px-5"
+              style={{ background: "linear-gradient(180deg, #1a0f05 0%, #0d0804 100%)" }}>
+              
+              {/* Corner Ornaments */}
+              <div className="absolute top-1 left-1 w-24 h-24 opacity-80" style={{ transform: "rotate(180deg)" }}>
+                <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
               </div>
-              <p className="text-xs mb-1" style={{ color: "#B5832A", fontFamily: "serif", letterSpacing: "0.2em" }}>بِسْمِ اللَّهِ</p>
-              <div style={{ width: 40, height: 1, background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)", margin: "6px auto" }} />
-              <p className="text-xs mb-2" style={{ color: "#8a6a4a", fontFamily: "serif" }}>Undangan Pernikahan</p>
-              <p className="font-bold mb-1" style={{ color: "#2a1a0a", fontFamily: "'Georgia', serif", fontSize: 13 }}>Haris Akbar</p>
-              <p style={{ color: "#CC9B3F", fontSize: 18, fontFamily: "cursive" }}>&</p>
-              <p className="font-bold" style={{ color: "#2a1a0a", fontFamily: "'Georgia', serif", fontSize: 13 }}>Cut Chairunnisa</p>
-              <div style={{ width: 40, height: 1, background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)", margin: "8px auto" }} />
-              <p style={{ color: "#8a6a4a", fontSize: 9, letterSpacing: "0.15em" }}>KAMIS, 02 JULI 2026</p>
-              <p style={{ color: "#8a6a4a", fontSize: 9 }}>Bireuen, Aceh</p>
-              <div className="mt-3">
-                <svg width="28" height="28" viewBox="0 0 60 60">
-                  {Array.from({ length: 12 }, (_, i) => {
-                    const angle = (i * 360) / 12;
-                    const rad = (angle * Math.PI) / 180;
-                    return (
-                      <ellipse key={i} cx={30 + 16 * Math.cos(rad)} cy={30 + 16 * Math.sin(rad)} rx={4} ry={8}
-                        fill="#CC9B3F" transform={`rotate(${angle + 90}, ${30 + 16 * Math.cos(rad)}, ${30 + 16 * Math.sin(rad)})`} opacity={0.7} />
-                    );
-                  })}
-                  <circle cx={30} cy={30} r={9} fill="#B5832A" opacity={0.8} />
-                </svg>
+              <div className="absolute top-1 right-1 w-24 h-24 opacity-80" style={{ transform: "rotate(270deg)" }}>
+                <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
               </div>
-              <div className="mt-3 px-4 py-1 rounded-full text-white"
-                style={{ background: "linear-gradient(135deg, #CC9B3F, #B5832A)", fontSize: 9, letterSpacing: "0.1em" }}>
-                BUKA UNDANGAN
+              <div className="absolute bottom-1 left-1 w-24 h-24 opacity-80" style={{ transform: "rotate(90deg)" }}>
+                <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+              </div>
+              <div className="absolute bottom-1 right-1 w-24 h-24 opacity-80" style={{ transform: "rotate(0deg)" }}>
+                <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+              </div>
+
+              {/* Thin Border Frame */}
+              <div className="absolute inset-2 border border-[rgba(204,155,63,0.25)] pointer-events-none rounded-[1.8rem]" />
+
+              {/* Content Container (pt-8 clears the notch) */}
+              <div className="relative z-10 w-full flex flex-col items-center pt-8 pb-3">
+                {/* Bismillah */}
+                <p className="text-[12px] mb-4 text-center" style={{ color: "#CC9B3F", fontFamily: "serif" }}>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
+                
+                {/* Arch Container */}
+                <div className="relative w-[90%] border border-[rgba(204,155,63,0.3)] border-b-0 rounded-t-[100px] flex flex-col items-center pt-6 pb-5 px-2" style={{ background: "rgba(204,155,63,0.02)" }}>
+                  <p className="text-[7px] mb-2 tracking-[0.2em] text-center" style={{ color: "#B5832A", fontFamily: "serif" }}>THE WEDDING OF</p>
+                  
+                  <p className="font-bold text-[32px] text-center" style={{ color: "#CC9B3F", fontFamily: "'Italianno', cursive", lineHeight: 0.9 }}>Haris Akbar</p>
+                  <p style={{ color: "#E0B96A", fontSize: 18, fontFamily: "'Italianno', cursive", margin: "2px 0" }}>&</p>
+                  <p className="font-bold text-[32px] text-center" style={{ color: "#CC9B3F", fontFamily: "'Italianno', cursive", lineHeight: 0.9 }}>Cut Chairunnisa</p>
+                  
+                  <p className="mt-6 font-bold text-center" style={{ color: "#E0B96A", fontSize: 10, letterSpacing: "0.05em", fontFamily: "serif" }}>Kamis, 2 Juli 2026</p>
+                </div>
+                
+                {/* Tamu Box */}
+                <div className="w-[90%] mt-4 py-2.5 border border-[rgba(204,155,63,0.2)] rounded-xl flex flex-col items-center justify-center" style={{ background: "rgba(255,255,255,0.02)" }}>
+                   <p className="text-[7px] tracking-[0.2em] mb-1 opacity-70 text-center" style={{ color: "#CC9B3F", fontFamily: "serif" }}>KEPADA YTH.</p>
+                   <p className="font-bold text-[12px] text-center" style={{ color: "#E0B96A", fontFamily: "serif" }}>Tamu Undangan</p>
+                </div>
+                
+                {/* Button */}
+                <div className="mt-4 w-[80%] py-2.5 rounded-full text-white font-bold flex items-center justify-center gap-1.5"
+                  style={{ background: "linear-gradient(135deg, #CC9B3F, #996e23)", fontSize: 10, letterSpacing: "0.05em", boxShadow: "0 0 20px rgba(204,155,63,0.3)", color: "#fff" }}>
+                  Buka Undangan <ChevronDown size={12} />
+                </div>
+                
+                <p className="mt-3 text-[8px] italic opacity-60 text-center" style={{ color: "#CC9B3F", fontFamily: "serif" }}>Tap untuk membuka undangan</p>
               </div>
             </div>
           </div>

@@ -75,7 +75,7 @@ const LottieButterflies = () => {
       {/* First butterfly: bottom-left to top-left */}
       <div 
         className="absolute w-full h-full max-w-[700px] aspect-[700/1000]"
-        style={{ filter: "sepia(100%) hue-rotate(-15deg) saturate(320%) brightness(115%) opacity(0.32)" }}
+        style={{ filter: "brightness(0) invert(69%) sepia(21%) saturate(1512%) hue-rotate(3deg) brightness(97%) contrast(92%) opacity(0.35)" }}
       >
         <Lottie
           animationData={butterflyAnimation}
@@ -88,7 +88,7 @@ const LottieButterflies = () => {
       {showSecond && (
         <div 
           className="absolute w-full h-full max-w-[700px] aspect-[700/1000]" 
-          style={{ transform: "scaleX(-1)", filter: "sepia(100%) hue-rotate(-15deg) saturate(320%) brightness(115%) opacity(0.32)" }}
+          style={{ transform: "scaleX(-1)", filter: "brightness(0) invert(69%) sepia(21%) saturate(1512%) hue-rotate(3deg) brightness(97%) contrast(92%) opacity(0.35)" }}
         >
           <Lottie
             animationData={butterflyAnimation}
@@ -248,6 +248,7 @@ export default function CoverScreen({
               src="/desain/goldfloral.png"
               alt=""
               fill
+              sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
               priority
             />
@@ -262,6 +263,7 @@ export default function CoverScreen({
               src="/desain/goldfloral.png"
               alt=""
               fill
+              sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
             />
           </div>
@@ -275,6 +277,7 @@ export default function CoverScreen({
               src="/desain/goldfloral.png"
               alt=""
               fill
+              sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
             />
           </div>
@@ -288,6 +291,7 @@ export default function CoverScreen({
               src="/desain/goldfloral.png"
               alt=""
               fill
+              sizes="(max-width: 768px) 42vw, 220px"
               style={{ objectFit: "contain", opacity: 0.75 }}
             />
           </div>

@@ -3,11 +3,60 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
-import { fadeUp, fadeDown, zoomIn, zoomInUp, staggerContainer, SectionLabel, GoldOrnamentDivider } from "@/components/ui/Animations";
+import {
+  fadeUp, fadeDown, zoomIn, zoomInUp, staggerContainer,
+  SectionLabel, GoldOrnamentDivider, ScrollCue,
+} from "@/components/ui/Animations";
 
 interface QuranSectionProps {
   data: InvitationData;
 }
+
+// ── Deterministic floating leaves ────────────────────────────────────────────
+const LEAVES = Array.from({ length: 12 }, (_, i) => ({
+  id: i,
+  left: ((i * 8.3 + 4) % 94).toFixed(1),
+  size: 14 + (i % 4) * 5,
+  dur: 6 + (i % 5) * 1.4,
+  delay: (i * 0.85) % 6,
+  rotate: (i * 47) % 360,
+  rotateDelta: i % 2 === 0 ? 30 : -30,
+  opacity: 0.12 + (i % 3) * 0.06,
+}));
+
+// SVG leaf shape
+function Leaf({ size, color = "#CC9B3F" }: { size: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
+      <path
+        d="M20 2 C28 2, 38 10, 38 20 C38 32, 28 38, 20 38 C12 38, 2 30, 2 20 C2 10, 12 2, 20 2 Z"
+        fill={color}
+        opacity="0.85"
+      />
+      <path
+        d="M20 2 C20 20, 20 38, 20 38"
+        stroke="rgba(255,255,255,0.3)"
+        strokeWidth="1"
+        fill="none"
+      />
+      <path
+        d="M20 10 C25 14, 30 14, 33 18"
+        stroke="rgba(255,255,255,0.2)"
+        strokeWidth="0.8"
+        fill="none"
+      />
+      <path
+        d="M20 18 C15 22, 10 22, 7 18"
+        stroke="rgba(255,255,255,0.2)"
+        strokeWidth="0.8"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+// Golden tones for leaves to match the theme
+const LEAF_COLORS = ["#CC9B3F", "#E0B96A", "#B5832A", "#D4A373", "#C28E46"];
 
 export default function QuranSection({ data }: QuranSectionProps) {
   const ref = useRef<HTMLElement>(null);
@@ -26,10 +75,58 @@ export default function QuranSection({ data }: QuranSectionProps) {
       className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
       style={{ background: "linear-gradient(160deg, #fdf5ec 0%, #fbecd9 50%, #fdf5ec 100%)" }}
     >
-      {/* Decorative watermark */}
+      {/* ── Floating animated leaves ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        {LEAVES.map((leaf) => (
+          <motion.div
+            key={leaf.id}
+            className="absolute"
+            style={{
+              left: `${leaf.left}%`,
+              bottom: "-40px",
+              opacity: leaf.opacity,
+            }}
+            animate={{
+              y: ["0px", "-110dvh"],
+              rotate: [leaf.rotate, leaf.rotate + leaf.rotateDelta, leaf.rotate - leaf.rotateDelta, leaf.rotate],
+              x: [0, 12, -8, 4, 0],
+            }}
+            transition={{
+              duration: leaf.dur,
+              repeat: Infinity,
+              delay: leaf.delay,
+              ease: "linear",
+              x: { duration: leaf.dur, repeat: Infinity, ease: "easeInOut" },
+              rotate: { duration: leaf.dur * 0.7, repeat: Infinity, ease: "easeInOut" },
+            }}
+          >
+            <Leaf size={leaf.size} color={LEAF_COLORS[leaf.id % LEAF_COLORS.length]} />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ── Corner goldfloral ornaments ── */}
+      <div className="absolute top-0 left-0 pointer-events-none select-none"
+        style={{ width: "100px", height: "100px", opacity: 0.15, transform: "rotate(180deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute top-0 right-0 pointer-events-none select-none"
+        style={{ width: "100px", height: "100px", opacity: 0.15, transform: "rotate(270deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-0 left-0 pointer-events-none select-none"
+        style={{ width: "100px", height: "100px", opacity: 0.15, transform: "rotate(90deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-0 right-0 pointer-events-none select-none"
+        style={{ width: "100px", height: "100px", opacity: 0.15, transform: "rotate(0deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+
+      {/* ── Watermark mandala ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
         <motion.div
-          style={{ opacity: 0.04 }}
+          style={{ opacity: 0.035 }}
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
         >
@@ -50,16 +147,16 @@ export default function QuranSection({ data }: QuranSectionProps) {
         </motion.div>
       </div>
 
-      {/* Header */}
+      {/* ── Header ── */}
       <SectionLabel text="Ayat Al-Qur'an" />
 
+      {/* ── Quran card ── */}
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         className="relative z-10"
       >
-        {/* Quran card */}
         <motion.div
           variants={zoomInUp}
           className="rounded-2xl p-6 mx-auto mt-4 relative"
@@ -70,18 +167,19 @@ export default function QuranSection({ data }: QuranSectionProps) {
           }}
         >
           {/* Corner ornaments inside card */}
-          <div className="absolute top-3 left-3 w-5 h-5 opacity-30">
-            <svg viewBox="0 0 20 20" fill="none"><path d="M2 2 Q10 2 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/><path d="M2 2 Q2 10 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/></svg>
-          </div>
-          <div className="absolute top-3 right-3 w-5 h-5 opacity-30" style={{ transform: "scaleX(-1)" }}>
-            <svg viewBox="0 0 20 20" fill="none"><path d="M2 2 Q10 2 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/><path d="M2 2 Q2 10 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/></svg>
-          </div>
-          <div className="absolute bottom-3 left-3 w-5 h-5 opacity-30" style={{ transform: "scaleY(-1)" }}>
-            <svg viewBox="0 0 20 20" fill="none"><path d="M2 2 Q10 2 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/><path d="M2 2 Q2 10 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/></svg>
-          </div>
-          <div className="absolute bottom-3 right-3 w-5 h-5 opacity-30" style={{ transform: "scale(-1)" }}>
-            <svg viewBox="0 0 20 20" fill="none"><path d="M2 2 Q10 2 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/><path d="M2 2 Q2 10 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none"/></svg>
-          </div>
+          {[
+            { pos: "top-3 left-3", t: undefined },
+            { pos: "top-3 right-3", t: "scaleX(-1)" },
+            { pos: "bottom-3 left-3", t: "scaleY(-1)" },
+            { pos: "bottom-3 right-3", t: "scale(-1)" },
+          ].map(({ pos, t }, idx) => (
+            <div key={idx} className={`absolute ${pos} w-5 h-5 opacity-25`} style={{ transform: t }}>
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M2 2 Q10 2 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none" />
+                <path d="M2 2 Q2 10 10 10" stroke="#CC9B3F" strokeWidth="1.5" fill="none" />
+              </svg>
+            </div>
+          ))}
 
           {/* Arabic */}
           <motion.p
@@ -93,7 +191,7 @@ export default function QuranSection({ data }: QuranSectionProps) {
             {verse.arabic}
           </motion.p>
 
-          {/* Gold line */}
+          {/* Divider */}
           <GoldOrnamentDivider icon="diamond" delay={0} />
 
           {/* Translation */}
@@ -115,6 +213,9 @@ export default function QuranSection({ data }: QuranSectionProps) {
           </motion.p>
         </motion.div>
       </motion.div>
+
+      {/* ── Scroll cue ── */}
+      <ScrollCue />
     </section>
   );
 }

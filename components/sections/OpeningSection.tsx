@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import {
   fadeDown, fadeUp, fadeLeft, fadeRight, zoomIn, zoomInUp,
-  staggerContainer, itemVariants, SectionLabel, GoldOrnamentDivider, AnimatedWords,
+  staggerContainer, itemVariants, SectionLabel, GoldOrnamentDivider, AnimatedWords, ScrollCue,
 } from "@/components/ui/Animations";
 
 interface OpeningSectionProps {
@@ -128,26 +128,21 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
       </motion.div>
 
       {/* Scroll cue */}
-      <motion.p
-        className="text-xs tracking-[0.2em] uppercase"
-        style={{ fontFamily: "'Cormorant Garamond', serif", color: "#8a6a4a" }}
+      <motion.div
         variants={fadeUp}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         transition={{ delay: 0.75 }}
+        className="absolute bottom-16 left-0 right-0 flex flex-col items-center justify-center"
       >
-        Scroll untuk membuka undangan
-      </motion.p>
-
-      <motion.div
-        className="flex justify-center mt-2"
-        animate={{ y: [0, 7, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M8 3 L8 13 M4 9 L8 13 L12 9" stroke="#CC9B3F" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
+        <p
+          className="text-xs tracking-[0.2em] uppercase mb-1"
+          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#8a6a4a" }}
+        >
+          Scroll untuk lanjut
+        </p>
       </motion.div>
+      <ScrollCue />
     </section>
   );
 }

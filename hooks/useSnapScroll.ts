@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback } from "react";
 
 const SECTION_IDS = [
   "opening", "couple", "countdown", "event",
-  "quran", "love-story", "wishes", "closing",
+  "quran", "love-story", "wishes", "gift", "closing",
 ];
 
 const SCROLL_COOLDOWN = 500; // ms between snaps
@@ -13,7 +13,6 @@ export function useSnapScroll(enabled: boolean) {
   const cooldown = useRef(false);
   const touchStartY = useRef(0);
   const scrollAnimRef = useRef<number | null>(null);
-  const activeElementRef = useRef<HTMLElement | null>(null);
 
   const getWrapper = () =>
     document.querySelector(".invitation-wrapper") as HTMLElement | null;
@@ -27,10 +26,6 @@ export function useSnapScroll(enabled: boolean) {
     if (scrollAnimRef.current !== null) {
       cancelAnimationFrame(scrollAnimRef.current);
       scrollAnimRef.current = null;
-    }
-    if (activeElementRef.current) {
-      activeElementRef.current.style.overflowY = "";
-      activeElementRef.current = null;
     }
   }, []);
 
@@ -60,9 +55,6 @@ export function useSnapScroll(enabled: boolean) {
   ) => {
     cleanupScroll();
 
-    activeElementRef.current = element;
-    element.style.overflowY = "hidden"; // Lock native scrolling momentum to prevent jitter
-
     const startPosition = element.scrollTop;
     const distance = targetPosition - startPosition;
     let startTime: number | null = null;
@@ -80,9 +72,7 @@ export function useSnapScroll(enabled: boolean) {
       if (timeElapsed < duration) {
         scrollAnimRef.current = requestAnimationFrame(animation);
       } else {
-        element.style.overflowY = "";
         scrollAnimRef.current = null;
-        activeElementRef.current = null;
         if (onComplete) onComplete();
       }
     };

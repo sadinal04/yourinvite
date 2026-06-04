@@ -6,7 +6,7 @@ import { InvitationData } from "@/types/invitation";
 import { useCountdown } from "@/hooks/useCountdown";
 import {
   fadeDown, fadeUp, fadeLeft, fadeRight, zoomIn, zoomInUp,
-  staggerContainer, SectionLabel
+  staggerContainer, SectionLabel, ScrollCue
 } from "@/components/ui/Animations";
 import { useMemo } from "react";
 import { Sparkles, Calendar } from "lucide-react";
@@ -205,6 +205,7 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
           <motion.div variants={fadeRight} style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, rgba(204,155,63,0.5), transparent)" }} />
         </div>
       </motion.div>
+      <ScrollCue />
     </section>
   );
 }

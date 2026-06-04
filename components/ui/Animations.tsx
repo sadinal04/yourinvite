@@ -257,3 +257,39 @@ export function GoldOrnamentDivider({ delay = 0, icon = "star" }: GoldDividerPro
     </motion.div>
   );
 }
+// ─── Scroll cue (animated arrow at bottom of sections) ──────────────────────
+
+export function ScrollCue({ color = "#CC9B3F" }: { color?: string }) {
+  return (
+    <div
+      className="absolute bottom-5 left-0 right-0 flex flex-col items-center gap-1 pointer-events-none select-none"
+      aria-hidden="true"
+    >
+      {/* Three stacked chevrons fading in sequence */}
+      {[0, 1, 2].map((i) => (
+        <motion.svg
+          key={i}
+          width="18"
+          height="10"
+          viewBox="0 0 18 10"
+          fill="none"
+          animate={{ opacity: [0, 0.55, 0], y: [0, 4, 0] }}
+          transition={{
+            duration: 1.6,
+            repeat: Infinity,
+            delay: i * 0.22,
+            ease: "easeInOut",
+          }}
+        >
+          <path
+            d="M2 2 L9 8 L16 2"
+            stroke={color}
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </motion.svg>
+      ))}
+    </div>
+  );
+}
