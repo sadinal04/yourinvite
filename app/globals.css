@@ -194,6 +194,23 @@
   50% { text-shadow: 0 0 25px rgba(204, 155, 63, 0.7), 0 0 50px rgba(204, 155, 63, 0.2); }
 }
 
+@keyframes leaf-fall {
+  0% {
+    transform: translate3d(0, -50px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--tx), 110vh, 0) rotate(var(--tr));
+    opacity: 0;
+  }
+}
+
 /* ============================================
    DESKTOP WRAPPER
    ============================================ */

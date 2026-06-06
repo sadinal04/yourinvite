@@ -36,32 +36,37 @@ function SectionSlide({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, {
-    once: true,
+    once: false,
     margin: "-5% 0px -5% 0px",
   });
 
   return (
-    <motion.div
-      ref={ref}
+    <div
       id={id}
+      ref={ref}
       style={{
         position: "relative",
         zIndex: 10 + index,
-        willChange: "transform, opacity",
-      }}
-      initial={{ opacity: 0, y: 60, scale: 0.97 }}
-      animate={
-        isInView
-          ? { opacity: 1, y: 0, scale: 1 }
-          : { opacity: 0, y: 60, scale: 0.97 }
-      }
-      transition={{
-        duration: 0.65,
-        ease: [0.22, 1, 0.36, 1],
       }}
     >
-      {children}
-    </motion.div>
+      <motion.div
+        style={{
+          willChange: "transform, opacity",
+        }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={
+          isInView
+            ? { opacity: 1, y: 0 }
+            : { opacity: 0, y: 40 }
+        }
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+        }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }
 
@@ -70,9 +75,30 @@ export default function InvitationClient({
   guestName,
 }: InvitationClientProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mountedSections, setMountedSections] = useState(0); // 0 means completely empty background
   const { isPlaying, isAvailable, play, toggle } = useAudio(
     data.music || "/audio/background.mp3"
   );
+
+  // Progressive mounting to guarantee buttery smooth door animation
+  useEffect(() => {
+    if (isOpen) {
+      // 1. Let the doors slide in an empty vacuum for 1.0s, then gracefully bloom the OpeningSection while doors are still sliding!
+      const timer1 = setTimeout(() => {
+        setMountedSections(1);
+      }, 1000);
+      
+      // 2. Silently mount all remaining heavy sections after the OpeningSection animation has settled
+      const timer2 = setTimeout(() => {
+        setMountedSections(99);
+      }, 4500);
+
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
+  }, [isOpen]);
 
   // Lock scroll when cover is showing
   useEffect(() => {
@@ -104,22 +130,26 @@ export default function InvitationClient({
 
   // Section definitions with IDs matching snap-scroll hook
   const sections = [
-    { id: "opening",    Component: () => <OpeningSection data={data} /> },
-    { id: "couple",     Component: () => <CoupleSection data={data} /> },
-    { id: "countdown",  Component: () => <CountdownSection data={data} /> },
-    { id: "event",      Component: () => <EventSection data={data} /> },
-    { id: "quran",      Component: () => <QuranSection data={data} /> },
-    { id: "love-story", Component: () => <LoveStorySection /> },
-    { id: "wishes",     Component: () => <WishesSection slug={data.slug} guestName={guestName} /> },
-    { id: "gift",       Component: () => <GiftSection /> },
-    { id: "closing",    Component: () => <ClosingSection data={data} guestName={guestName} /> },
+    { id: "opening",    content: <OpeningSection data={data} /> },
+    { id: "couple",     content: <CoupleSection data={data} /> },
+    { id: "countdown",  content: <CountdownSection data={data} /> },
+    { id: "event",      content: <EventSection data={data} /> },
+    { id: "quran",      content: <QuranSection data={data} /> },
+    { id: "closing",    content: <ClosingSection data={data} guestName={guestName} /> },
+    { id: "love-story", content: <LoveStorySection /> },
+    { id: "wishes",     content: <WishesSection slug={data.slug} guestName={guestName} /> },
+    { id: "gift",       content: <GiftSection /> },
   ];
 
   return (
     <div className="invitation-wrapper">
-      {/* Background particles — always visible */}
-      <FloatingParticles />
-      <FloatingFlowers />
+      {/* Background particles — deferred to save GPU during door split */}
+      {mountedSections > 0 && (
+        <>
+          <FloatingParticles />
+          <FloatingFlowers />
+        </>
+      )}
 
       {/* Cover Screen */}
       <CoverScreen
@@ -138,14 +168,15 @@ export default function InvitationClient({
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            {sections.map((s, i) => (
+            {sections.slice(0, mountedSections).map((s, i) => (
               <SectionSlide key={s.id} index={i} id={s.id}>
-                <s.Component />
+                {s.content}
               </SectionSlide>
             ))}
 
-            {/* ── Promotional Footer ── */}
-            <footer
+            {/* ── Promotional Footer (Only show when all sections mounted) ── */}
+            {mountedSections > 1 && (
+              <footer
               style={{
                 background: "linear-gradient(180deg, #1a0f05 0%, #0d0804 100%)",
                 borderTop: "1px solid rgba(204,155,63,0.15)",
@@ -325,6 +356,7 @@ export default function InvitationClient({
                 </a>
               </p>
             </footer>
+            )}
           </motion.main>
         )}
       </AnimatePresence>

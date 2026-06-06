@@ -204,27 +204,29 @@ export default function CoverScreen({
             }}
           />
 
-          {/* Gold shimmer particles */}
-          <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-            {SHIMMER_PARTICLES.map((p) => (
-              <motion.div
-                key={p.id}
-                className="absolute rounded-full"
-                style={{
-                  width: `${p.size}px`,
-                  height: `${p.size}px`,
-                  left: `${p.left}%`,
-                  top: `${p.top}%`,
-                  background: "#CC9B3F",
-                }}
-                animate={{ opacity: [0.05, 0.55, 0.05], scale: [0.8, 1.4, 0.8] }}
-                transition={{ duration: p.dur, repeat: Infinity, delay: p.delay }}
-              />
-            ))}
-          </div>
+          {/* Gold shimmer particles - removed during slide to optimize framerate */}
+          {!isOpen && (
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+              {SHIMMER_PARTICLES.map((p) => (
+                <motion.div
+                  key={p.id}
+                  className="absolute rounded-full"
+                  style={{
+                    width: `${p.size}px`,
+                    height: `${p.size}px`,
+                    left: `${p.left}%`,
+                    top: `${p.top}%`,
+                    background: "#CC9B3F",
+                  }}
+                  animate={{ opacity: [0.05, 0.55, 0.05], scale: [0.8, 1.4, 0.8] }}
+                  transition={{ duration: p.dur, repeat: Infinity, delay: p.delay }}
+                />
+              ))}
+            </div>
+          )}
 
-          {/* Butterflies (horizontal) + falling leaves */}
-          <CoverAmbient />
+          {/* Butterflies (horizontal) + falling leaves - removed during slide to optimize framerate */}
+          {!isOpen && <CoverAmbient />}
 
           {/* ─── Corner Floral Ornaments (goldfloral.png) ─── */}
           {/* Top-left */}
@@ -485,7 +487,8 @@ export default function CoverScreen({
 
             {/* Open button with pointing hand guide */}
             <motion.div 
-              className={`relative ${isOverlay ? 'pointer-events-auto' : 'pointer-events-none opacity-0'}`}
+              className={`relative ${isOverlay ? 'pointer-events-auto' : 'pointer-events-none'}`}
+              style={{ visibility: isOverlay ? "visible" : "hidden" }}
               exit={{ scale: 0, opacity: 0, transition: { duration: 0.15 } }}
             >
               <motion.button
@@ -566,11 +569,12 @@ export default function CoverScreen({
 
             {/* Tap Instruction */}
             <motion.p
-              className={`mt-2 text-[11px] ${isOverlay ? 'opacity-100' : 'opacity-0'}`}
+              className="mt-2 text-[11px]"
               style={{
                 color: "rgba(204,155,63,0.4)",
                 fontFamily: "'Lora', serif",
                 fontStyle: "italic",
+                visibility: isOverlay ? "visible" : "hidden",
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -590,7 +594,7 @@ export default function CoverScreen({
           key="cover-wrapper"
           className="fixed inset-0 z-[100] flex pointer-events-none"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, delay: 2.0 }} // Wait for doors to finish sliding (2.2s) before unmounting
+          transition={{ duration: 0.5, delay: 2.8 }} // Wait for doors to finish sliding (3.0s) before unmounting
         >
           {/* Left Half */}
           <motion.div
@@ -598,11 +602,11 @@ export default function CoverScreen({
             initial={{ x: 0 }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
-            transition={{ duration: 2.2, ease: [0.8, 0, 0.1, 1] }}
+            transition={{ duration: 3.0, ease: [0.8, 0, 0.1, 1] }}
             style={{ willChange: "transform" }}
           >
             <div 
-              className="w-[200%] h-full absolute top-0 left-0 flex flex-col items-center justify-center"
+              className="w-[100vw] h-[100vh] absolute top-0 left-0 flex flex-col items-center justify-center"
               style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
             >
               {renderContent(false)}
@@ -612,7 +616,7 @@ export default function CoverScreen({
               className="absolute top-0 right-0 w-[2px] h-full z-[200]"
               style={{
                 background: "linear-gradient(to bottom, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
-                boxShadow: "-10px 0 40px 5px rgba(204,155,63,0.5)"
+                boxShadow: "-4px 0 15px 2px rgba(204,155,63,0.4)"
               }}
               initial={{ opacity: 0 }}
               exit={{ opacity: 1 }}
@@ -626,11 +630,11 @@ export default function CoverScreen({
             initial={{ x: 0 }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 2.2, ease: [0.8, 0, 0.1, 1] }}
+            transition={{ duration: 3.0, ease: [0.8, 0, 0.1, 1] }}
             style={{ willChange: "transform" }}
           >
             <div 
-              className="w-[200%] h-full absolute top-0 right-0 flex flex-col items-center justify-center"
+              className="w-[100vw] h-[100vh] absolute top-0 right-0 flex flex-col items-center justify-center"
               style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
             >
               {renderContent(false)}
@@ -640,7 +644,7 @@ export default function CoverScreen({
               className="absolute top-0 left-0 w-[2px] h-full z-[200]"
               style={{
                 background: "linear-gradient(to bottom, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
-                boxShadow: "10px 0 40px 5px rgba(204,155,63,0.5)"
+                boxShadow: "4px 0 15px 2px rgba(204,155,63,0.4)"
               }}
               initial={{ opacity: 0 }}
               exit={{ opacity: 1 }}

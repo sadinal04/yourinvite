@@ -12,9 +12,17 @@ export function useAudio(src: string) {
   useEffect(() => {
     if (!src) return;
     const audio = new Audio();
-    audio.loop = true;
+    // Disable native loop, we will handle it manually to loop from 10s
+    audio.loop = false;
     audio.volume = 0.5;
     audio.preload = "none";
+
+    // Handle custom looping from 10 seconds
+    const handleEnded = () => {
+      audio.currentTime = 10;
+      audio.play().catch(() => {});
+    };
+    audio.addEventListener("ended", handleEnded);
 
     const checkAvailability = async () => {
       try {
@@ -31,6 +39,7 @@ export function useAudio(src: string) {
     audioRef.current = audio;
 
     return () => {
+      audio.removeEventListener("ended", handleEnded);
       audio.pause();
       audio.src = "";
       audioRef.current = null;
@@ -68,10 +77,13 @@ export function useAudio(src: string) {
 
   const play = useCallback(() => {
     if (audioRef.current && isAvailable) {
-
       audioRef.current
         .play()
         .then(() => {
+          // If it's starting from the beginning, jump to 10 seconds
+          if (audioRef.current && audioRef.current.currentTime < 10) {
+            audioRef.current.currentTime = 10;
+          }
           setIsPlaying(true);
           wasPlayingRef.current = true;
         })
