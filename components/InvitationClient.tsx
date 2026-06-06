@@ -34,16 +34,9 @@ function SectionSlide({
   index: number;
   id: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, {
-    once: false,
-    margin: "-5% 0px -5% 0px",
-  });
-
   return (
     <div
       id={id}
-      ref={ref}
       className="section-snap"
       style={{
         position: "relative",
