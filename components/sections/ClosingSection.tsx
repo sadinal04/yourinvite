@@ -180,14 +180,21 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
         </motion.div>
 
         {/* Bottom label */}
-        <motion.p className="flex items-center justify-center gap-2 text-xs"
+        <motion.div className="flex flex-col items-center justify-center gap-1 mt-2"
           variants={fadeUp} initial="hidden" animate={isInView ? "visible" : "hidden"}
-          transition={{ delay: 0.75 }}
-          style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(204,155,63,0.3)", letterSpacing: "0.15em" }}>
-          <Sparkles size={10} color="rgba(204,155,63,0.3)" />
-          Undangan Digital Premium
-          <Sparkles size={10} color="rgba(204,155,63,0.3)" />
-        </motion.p>
+          transition={{ delay: 0.75 }}>
+          <p className="flex items-center justify-center gap-2 text-[11px]"
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(204,155,63,0.35)", letterSpacing: "0.15em" }}>
+            <Sparkles size={10} color="rgba(204,155,63,0.35)" />
+            Undangan Digital Premium
+            <Sparkles size={10} color="rgba(204,155,63,0.35)" />
+          </p>
+          <a href="https://yourinvite.site" target="_blank" rel="noopener noreferrer" 
+            className="text-[9px] uppercase tracking-[0.15em] transition-colors duration-300 hover:text-[#CC9B3F]"
+            style={{ fontFamily: "'Lora', serif", color: "rgba(204,155,63,0.25)", textDecoration: "none" }}>
+            made by <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", textTransform: "lowercase", fontSize: "11px" }}>yourinvite.site</span>
+          </a>
+        </motion.div>
 
       </div>
       <ScrollCue />

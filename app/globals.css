@@ -212,17 +212,20 @@
 }
 
 /* ============================================
-   DESKTOP WRAPPER
+   DESKTOP WRAPPER & SCROLL SNAPPING
    ============================================ */
 .invitation-wrapper {
   max-width: var(--max-width);
   margin: 0 auto;
   position: relative;
+  height: 100vh;
   height: 100dvh;
   background-color: var(--color-white);
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
   /* Reserve scrollbar space so it never causes layout shift */
   scrollbar-gutter: stable;
   /* Custom scrollbar — thin gold */
@@ -244,6 +247,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  scroll-snap-align: start end;
+  scroll-snap-stop: always;
+}
+
+footer {
+  scroll-snap-align: end;
 }
 
 /* Tall section — natural height, JS handles snap at boundaries */

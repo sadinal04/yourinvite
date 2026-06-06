@@ -44,6 +44,7 @@ function SectionSlide({
     <div
       id={id}
       ref={ref}
+      className="section-snap"
       style={{
         position: "relative",
         zIndex: 10 + index,
@@ -88,10 +89,10 @@ export default function InvitationClient({
         setMountedSections(1);
       }, 1000);
       
-      // 2. Silently mount all remaining heavy sections after the OpeningSection animation has settled
+      // 2. Silently mount all remaining heavy sections right as the doors finish opening (2.8s) so the user can scroll immediately.
       const timer2 = setTimeout(() => {
         setMountedSections(99);
-      }, 4500);
+      }, 2800);
 
       return () => {
         clearTimeout(timer1);
@@ -162,12 +163,7 @@ export default function InvitationClient({
       {/* Main Content — revealed after open */}
       <AnimatePresence>
         {isOpen && (
-          <motion.main
-            key="main-content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
+          <>
             {sections.slice(0, mountedSections).map((s, i) => (
               <SectionSlide key={s.id} index={i} id={s.id}>
                 {s.content}
@@ -357,7 +353,7 @@ export default function InvitationClient({
               </p>
             </footer>
             )}
-          </motion.main>
+          </>
         )}
       </AnimatePresence>
 

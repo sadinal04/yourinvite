@@ -61,7 +61,7 @@ const PersonCard = ({
       variants={direction === "left" ? fadeLeft : fadeRight}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      transition={{ delay }}
+      transition={{ delay, duration: 2.5, ease: [0.25, 1, 0.5, 1] }}
     >
       {/* Inner thin decorative border following the leaf shape */}
       <div 
@@ -184,7 +184,7 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
           person={data.groom}
           role="Mempelai Pria"
           direction="left"
-          delay={0}
+          delay={0.4}
           childOfText="Anak Ketiga"
         />
 
@@ -195,6 +195,7 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px 0px" }}
+          transition={{ delay: 1.6, duration: 1.5 }}
         >
           <motion.p
             style={{ fontFamily: "'Italianno', cursive", fontSize: "2rem", color: "#CC9B3F", lineHeight: 1 }}
@@ -209,7 +210,7 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
           person={data.bride}
           role="Mempelai Wanita"
           direction="right"
-          delay={0}
+          delay={2.5}
           childOfText="Anak Pertama"
         />
       </div>
