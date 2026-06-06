@@ -606,7 +606,7 @@ export default function CoverScreen({
             style={{ willChange: "transform" }}
           >
             <div 
-              className="w-[100vw] h-[100vh] absolute top-0 left-0 flex flex-col items-center justify-center"
+              className="w-[100vw] h-full absolute top-0 left-0 flex flex-col items-center justify-center"
               style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
             >
               {renderContent(false)}
@@ -634,7 +634,7 @@ export default function CoverScreen({
             style={{ willChange: "transform" }}
           >
             <div 
-              className="w-[100vw] h-[100vh] absolute top-0 right-0 flex flex-col items-center justify-center"
+              className="w-[100vw] h-full absolute top-0 right-0 flex flex-col items-center justify-center"
               style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
             >
               {renderContent(false)}
