@@ -261,9 +261,7 @@ export default function WishesSection({ slug, guestName }: WishesSectionProps) {
         {/* Wishes Form Card (Frosted Glassmorphism) */}
         <motion.div
           style={{
-            background: "rgba(255, 255, 255, 0.78)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
+            background: "rgba(255, 255, 255, 0.95)",
             border: "1.5px solid rgba(204, 155, 63, 0.28)",
             boxShadow: "0 6px 20px rgba(204, 155, 63, 0.06)",
             borderRadius: "16px",
@@ -336,9 +334,7 @@ export default function WishesSection({ slug, guestName }: WishesSectionProps) {
         {/* Wishes List Card (Frosted Glassmorphism) */}
         <motion.div
           style={{
-            background: "rgba(253, 245, 236, 0.75)",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
+            background: "rgba(255, 255, 255, 0.92)",
             border: "1.5px solid rgba(204, 155, 63, 0.24)",
             boxShadow: "0 6px 20px rgba(204, 155, 63, 0.06)",
             borderRadius: "16px",

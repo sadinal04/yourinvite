@@ -97,7 +97,7 @@ const LuxuriousPetalFall = ({ isInView }: { isInView: boolean }) => {
               } as React.CSSProperties
             }
           >
-            <svg width={p.size} height={p.size} viewBox="0 0 24 24" fill={p.isGold ? "#FFFFFF" : "#FFB6C1"} style={{ filter: "drop-shadow(0px 2px 4px rgba(255, 182, 193, 0.25))" }}>
+            <svg width={p.size} height={p.size} viewBox="0 0 24 24" fill={p.isGold ? "#FFFFFF" : "#FFB6C1"}>
               <path d="M12 2C8 2 4 6 4 12C4 18 12 22 12 22C12 22 20 18 20 12C20 6 16 2 12 2Z" opacity={p.isGold ? "0.85" : "0.7"}/>
               <path d="M12 4C9 4 6 7 6 12C6 16 12 19 12 19C12 19 18 16 18 12C18 7 15 4 12 4Z" fill={p.isGold ? "#F8F8FF" : "#FFC0CB"} opacity={p.isGold ? "0.6" : "0.5"}/>
             </svg>

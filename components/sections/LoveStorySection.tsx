@@ -98,8 +98,8 @@ function StoryCard({
 
       {/* Photo card — simple clean border */}
       <motion.div
-        initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
-        animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, delay: index > 0 ? 0.65 : 0.3, ease: EASE }}
         className="w-full"
         style={{
@@ -185,8 +185,8 @@ export default function LoveStorySection() {
         <SectionLabel text="Our Journey" color="rgba(204,155,63,0.55)" />
 
         <motion.h2
-          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.0, delay: 0.15, ease: EASE }}
           style={{
             fontFamily: "'Cormorant Garamond', serif",
