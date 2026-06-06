@@ -8,20 +8,20 @@ import { SectionLabel, ScrollCue } from "@/components/ui/Animations";
 
 // ─── Story data ────────────────────────────────────────────────────────────
 const LOVE_STORIES = [
-  { img: "1.jpg",  title: "Kedekatan Tumbuh",      date: "2024"          },
-  { img: "2.jpg",  title: "Suatu Kebetulan",      date: "2024"          },
-  { img: "3.jpg",  title: "Momen Kebersamaan",     date: "2024"          },
+  { img: "1.jpg",  title: "Cerita Kami",      date: "2024"          },
+  { img: "2.jpg",  title: "Saling Kenal",      date: "2024"          },
+  { img: "3.jpg",  title: "Suatu Kebetulan",     date: "2024"          },
   { img: "4.jpg",  title: "Satu Ruang",    date: "Awal 2025"     },
-  { img: "5.jpg",  title: "Cerita Kita",          date: "Februari 2025" },
-  { img: "6.jpg",  title: "Keberanian",      date: "Maret 2025"    },
-  { img: "7.jpg",  title: "Hari-Hari Indah",         date: "April 2025"    },
-  { img: "8.jpg",  title: "Berpetualang",        date: "Mei 2025"      },
-  { img: "9.jpg",  title: "Semakin Dekat",        date: "Juni 2025"     },
-  { img: "10.jpg", title: "Surat Kabar",       date: "Juli 2025"     },
-  { img: "11.jpg", title: "Jalan Bersama",           date: "Agustus 2025"  },
-  { img: "12.jpg", title: "Janji Temu",       date: "Oktober 2025"  },
-  { img: "13.jpg", title: "Masa Indah",              date: "November 2025" },
-  { img: "14.jpg", title: "Tepi Pantai",     date: "2026"          },
+  { img: "5.jpg",  title: "Keberanian",          date: "Februari 2025" },
+  { img: "6.jpg",  title: "Jalan Berbeda",      date: "Maret 2025"    },
+  { img: "7.jpg",  title: "Berpetualang",         date: "April 2025"    },
+  { img: "8.jpg",  title: "Surat Kabar",        date: "Mei 2025"      },
+  { img: "9.jpg",  title: "Janji Temu",        date: "Juni 2025"     },
+  { img: "10.jpg", title: "Nostalgia",       date: "Juli 2025"     },
+  { img: "11.jpg", title: "Tepi Pantai",           date: "Agustus 2025"  },
+  { img: "12.jpg", title: "Satu Tujuan",       date: "Oktober 2025"  },
+  { img: "13.jpg", title: "Memetik Bunga",              date: "November 2025" },
+  { img: "14.jpg", title: "Selamat Datang",     date: "2026"          },
 ] as const;
 
 // ─── Gold particles ─────────────────────────────────────────────────────────
