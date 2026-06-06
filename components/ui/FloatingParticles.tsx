@@ -108,7 +108,7 @@ export default function FloatingParticles() {
     window.addEventListener("resize", resize);
 
     // Initialize particles
-    const count = 28;
+    const count = 15; // Reduced from 28 for ultra-lightweight performance
     particlesRef.current = Array.from({ length: count }, () =>
       createParticle(canvas.width)
     );
@@ -159,7 +159,6 @@ export default function FloatingParticles() {
     <canvas
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-0"
-      style={{ mixBlendMode: "multiply" }}
       aria-hidden="true"
     />
   );

@@ -264,6 +264,8 @@ export default function LoveStorySection() {
       </motion.div>
       <div className="h-28" /> {/* Extra bottom spacing */}
       <ScrollCue />
+      {/* Invisible bottom anchor for upward scrolling */}
+      <div className="snap-anchor-bottom" />
     </section>
   );
 }

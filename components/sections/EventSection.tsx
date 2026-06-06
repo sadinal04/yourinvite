@@ -478,6 +478,8 @@ export default function EventSection({ data }: EventSectionProps) {
 
       <div style={{ height: "7rem" }} />
       <ScrollCue />
+      {/* Invisible bottom anchor for upward scrolling */}
+      <div className="snap-anchor-bottom" />
     </section>
   );
 }

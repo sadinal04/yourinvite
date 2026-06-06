@@ -224,7 +224,6 @@
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
   overflow-x: hidden;
-  scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
   /* Reserve scrollbar space so it never causes layout shift */
   scrollbar-gutter: stable;
@@ -247,8 +246,18 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  scroll-snap-align: start end;
+  scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+/* Invisible bottom anchor for tall sections so upward scrolling snaps to the bottom edge */
+.snap-anchor-bottom {
+  scroll-snap-align: end;
+  scroll-snap-stop: always;
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+  background: transparent;
 }
 
 footer {

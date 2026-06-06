@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface FloralItem {
@@ -112,26 +111,18 @@ export default function FloatingFlowers() {
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       {florals.map((f) => (
-        <motion.div
+        <div
           key={f.id}
           className="absolute"
-          style={{ left: `${f.x}%`, top: "-5%" }}
-          animate={{
-            y: ["0vh", "110vh"],
-            x: [0, f.drift, f.drift * 0.5, f.drift * 1.2, 0],
-            rotate: [0, 180, 360],
-            opacity: [0, f.opacity, f.opacity, f.opacity * 0.5, 0],
-          }}
-          transition={{
-            duration: f.duration,
-            delay: f.delay,
-            repeat: Infinity,
-            ease: "linear",
-            x: {
-              duration: f.duration,
-              ease: "easeInOut",
-            },
-          }}
+          style={{ 
+            left: `${f.x}%`, 
+            top: "-5%",
+            // Custom CSS variables for the keyframes
+            "--tx": `${f.drift}px`,
+            "--tr": `360deg`,
+            animation: `leaf-fall ${f.duration}s linear ${f.delay}s infinite`,
+            opacity: 0, // Starts hidden until keyframe takes over
+          } as React.CSSProperties}
         >
           {f.type === "sunflower" && (
             <SunflowerSVG size={f.size} opacity={f.opacity} />
@@ -145,7 +136,7 @@ export default function FloatingFlowers() {
           {f.type === "leaf" && (
             <LeafSVG size={f.size} opacity={f.opacity} />
           )}
-        </motion.div>
+        </div>
       ))}
     </div>
   );
