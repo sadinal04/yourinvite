@@ -418,7 +418,7 @@ export default function EventSection({ data }: EventSectionProps) {
             fontSize: "2.8rem",
             color: "#CC9B3F",
             lineHeight: 1,
-          }}>Lokasi</p>
+          }}>Lokasi Resepsi</p>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", marginTop: "0.65rem" }}>
             <div style={{ height: 1, width: 45, background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.6))" }} />
             <svg width="7" height="7" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3" fill="#CC9B3F" opacity="0.6" /></svg>

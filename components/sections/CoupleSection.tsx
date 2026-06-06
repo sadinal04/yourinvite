@@ -115,7 +115,7 @@ const PersonCard = ({
       {/* Title/Gelar (using same Italianno font, but slightly smaller) */}
       {suffix && (
         <p className="leading-none mt-0 mb-0.5 whitespace-nowrap"
-          style={{ fontFamily: "'Italianno', cursive", fontSize: "1.7rem", color: "#CC9B3F", opacity: 0.85 }}>
+          style={{ fontFamily: "'Italianno', cursive", fontSize: "1.7rem", color: "#CC9B3F" }}>
           {suffix}
         </p>
       )}

@@ -39,7 +39,7 @@ const CountdownBox = ({ value, label }: { value: number; label: string }) => (
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.35, type: "spring", stiffness: 200 }}
       style={{
-        fontFamily: "'Cormorant Garamond', serif",
+        fontFamily: "'Times New Roman', Times, serif",
         fontSize: "2.4rem",
         fontWeight: 700,
         color: "#CC9B3F",
