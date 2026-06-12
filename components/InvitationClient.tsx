@@ -60,20 +60,16 @@ export default function InvitationClient({
   // Progressive mounting to guarantee buttery smooth door animation
   useEffect(() => {
     if (isOpen) {
-      // 1. Let the cover slide up in an empty vacuum for 0.8s, then gracefully bloom the OpeningSection!
-      const timer1 = setTimeout(() => {
-        setMountedSections(1);
-      }, 800);
+      // 1. Instantly mount the very first section (WeddingTitleSection) so its static background and floral ornaments are physically there behind the sliding doors. 
+      // Doing this at 0.0s prevents the mid-slide stutter that occurred when we tried to mount it at 1.0s.
+      setMountedSections(1);
       
-      // 2. Silently mount all remaining heavy sections right as the cover finishes sliding (1.8s)
-      const timer2 = setTimeout(() => {
+      // 2. Silently mount all remaining heavy sections right as the doors finish opening (2.8s) so the user can scroll immediately.
+      const timer = setTimeout(() => {
         setMountedSections(99);
-      }, 1800);
+      }, 2800);
 
-      return () => {
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-      };
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 

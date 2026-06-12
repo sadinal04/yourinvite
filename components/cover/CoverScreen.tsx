@@ -565,7 +565,7 @@ export default function CoverScreen({
           key="cover-wrapper"
           className="fixed inset-0 z-[100] flex pointer-events-none"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, delay: 1.8 }} // Wait for slide up to finish (1.8s) before unmounting
+          transition={{ duration: 0.5, delay: 2.8 }} // Wait for doors to finish sliding (3.0s) before unmounting
         >
           {/* Unified Ambient Background (Lottie, Leaves, Shimmer) - Renders ONLY ONCE */}
           <motion.div 
@@ -592,29 +592,55 @@ export default function CoverScreen({
             </div>
             <CoverAmbient />
           </motion.div>
-          {/* Unified Cover Content (Slide Up) */}
+          {/* Left Half */}
           <motion.div
-            className="w-full h-full relative overflow-hidden pointer-events-auto"
-            initial={{ y: 0 }}
-            animate={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ duration: 1.8, ease: [0.8, 0, 0.1, 1] }}
-            style={{ 
-              willChange: "transform",
-              background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)",
-              boxShadow: "0px 10px 30px rgba(0,0,0,0.5)"
-            }}
+            className="w-1/2 h-full relative overflow-hidden pointer-events-auto"
+            initial={{ x: 0 }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ duration: 3.0, ease: [0.8, 0, 0.1, 1] }}
+            style={{ willChange: "transform" }}
           >
-            <div className="w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center">
+            <div 
+              className="w-[100vw] h-full absolute top-0 left-0 flex flex-col items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
+            >
               {renderContent(false)}
             </div>
-            
-            {/* Glowing Golden Bottom Edge (visible as it slides up) */}
+            {/* Glowing Golden Edge (Right side of left half) */}
             <motion.div 
-              className="absolute bottom-0 left-0 w-full h-[2px] z-[200]"
+              className="absolute top-0 right-0 w-[2px] h-full z-[200]"
               style={{
-                background: "linear-gradient(to right, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
-                boxShadow: "0 -4px 15px 2px rgba(204,155,63,0.4)"
+                background: "linear-gradient(to bottom, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
+                boxShadow: "-4px 0 15px 2px rgba(204,155,63,0.4)"
+              }}
+              initial={{ opacity: 0 }}
+              exit={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            />
+          </motion.div>
+
+          {/* Right Half */}
+          <motion.div
+            className="w-1/2 h-full relative overflow-hidden pointer-events-auto"
+            initial={{ x: 0 }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 3.0, ease: [0.8, 0, 0.1, 1] }}
+            style={{ willChange: "transform" }}
+          >
+            <div 
+              className="w-[100vw] h-full absolute top-0 right-0 flex flex-col items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #1f140d 0%, #0a0604 100%)" }}
+            >
+              {renderContent(false)}
+            </div>
+            {/* Glowing Golden Edge (Left side of right half) */}
+            <motion.div 
+              className="absolute top-0 left-0 w-[2px] h-full z-[200]"
+              style={{
+                background: "linear-gradient(to bottom, transparent, #DFB976, #CC9B3F, #DFB976, transparent)",
+                boxShadow: "4px 0 15px 2px rgba(204,155,63,0.4)"
               }}
               initial={{ opacity: 0 }}
               exit={{ opacity: 1 }}

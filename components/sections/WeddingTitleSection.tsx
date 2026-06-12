@@ -70,7 +70,11 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
       contentControls.start("visible");
     };
 
-    sequence();
+    const timer = setTimeout(() => {
+      sequence();
+    }, 2800);
+
+    return () => clearTimeout(timer);
   }, [isInView, mandalaControls, contentControls]);
 
   const akadDate = new Date(data.event.akad.dateISO);
