@@ -7,6 +7,7 @@ import {
   fadeLeft, fadeRight, fadeDown, fadeUp, zoomIn,
   SectionLabel, GoldOrnamentDivider, ScrollCue,
 } from "@/components/ui/Animations";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 
 interface CoupleSectionProps {
   data: InvitationData;
@@ -147,6 +148,8 @@ export default function CoupleSection({ data }: CoupleSectionProps) {
       className="section-snap section-px py-4 relative flex flex-col justify-center gap-y-2 h-dvh overflow-hidden"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #fbecd9 40%, #fdf5ec 100%)" }}
     >
+      <AmbientBackground type="fireflies" />
+
       {/* Corner Floral Ornaments */}
       <div
         className="absolute top-0 left-0 pointer-events-none w-[120px] h-[120px] opacity-[0.14] select-none"

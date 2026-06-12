@@ -4,8 +4,11 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { InvitationData } from "@/types/invitation";
+import {  fadeUp, fadeDown, zoomIn, fadeLeft, fadeRight,
+  SectionLabel, ScrollCue,
+} from "@/components/ui/Animations";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 import { CalendarDays, Clock, MapPin, Navigation } from "lucide-react";
-import { ScrollCue } from "@/components/ui/Animations";
 
 interface EventSectionProps {
   data: InvitationData;
@@ -86,17 +89,24 @@ const ArchCard = ({
       {/* Card */}
       <div style={{
         position: "relative",
-        background: "linear-gradient(160deg, #fffdf8 0%, #fff9f0 100%)",
+        background: "linear-gradient(160deg, #fffdf8 0%, #fdf5ec 50%, #fff9f0 100%)",
         border: "2px solid rgba(204,155,63,0.65)",
         borderRadius,
+        overflow: "hidden",
         paddingTop,
         paddingBottom,
         paddingLeft: "1.9rem",
         paddingRight: "1.9rem",
         textAlign: "center",
         boxShadow: "0 12px 48px rgba(204,155,63,0.18), 0 4px 16px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.9)",
-        overflow: "hidden",
       }}>
+        {/* Glossy / Mengkilap Shine Overlay */}
+        <div style={{
+          position: "absolute",
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.2) 25%, transparent 45%, rgba(204,155,63,0.1) 100%)",
+          pointerEvents: "none",
+        }} />
         {/* Animated gold shimmer bar — top (akad) or bottom (resepsi) */}
         {isAkad ? (
           <motion.div style={{
@@ -315,6 +325,8 @@ export default function EventSection({ data }: EventSectionProps) {
       className="section-snap-tall section-px py-14 relative"
       style={{ background: "linear-gradient(180deg, #fffdf9 0%, #fdf5ec 40%, #ffffff 100%)" }}
     >
+      <AmbientBackground type="sparkles-large" />
+
       {/* Background sunflower watermarks */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <svg className="absolute top-0 left-0 opacity-[0.022] w-52 h-52" viewBox="0 0 200 200">

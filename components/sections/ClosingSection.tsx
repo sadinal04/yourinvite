@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import { fadeDown, fadeUp, zoomIn, staggerContainer, ScrollCue } from "@/components/ui/Animations";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 import { Sparkles } from "lucide-react";
 
 interface ClosingSectionProps {
@@ -72,6 +73,8 @@ export default function ClosingSection({ data, guestName }: ClosingSectionProps)
       className="section-snap section-px py-8 relative overflow-hidden flex flex-col justify-center"
       style={{ background: "linear-gradient(160deg, #2a1a0a 0%, #1a0f05 50%, #2a1a0a 100%)" }}
     >
+      <AmbientBackground type="leaves" variant="dark" opacity={0.15} />
+
       {/* Gold particles */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {CLOSING_PARTICLES.map((p) => (

@@ -7,6 +7,7 @@ import {
   fadeDown, fadeUp, fadeLeft, fadeRight, zoomIn, zoomInUp,
   staggerContainer, itemVariants, SectionLabel, GoldOrnamentDivider, AnimatedWords,
 } from "@/components/ui/Animations";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 
 interface OpeningSectionProps {
   data: InvitationData;
@@ -25,6 +26,8 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
       className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #FFFFFF 100%)" }}
     >
+      <AmbientBackground type="leaves" opacity={0.08} />
+
       {/* ── Static golden border frame ── */}
       <div className="absolute pointer-events-none"
         style={{ inset: "20px", border: "1px solid rgba(204,155,63,0.35)", borderRadius: "20px", boxShadow: "inset 0 0 30px rgba(204,155,63,0.04)" }}>

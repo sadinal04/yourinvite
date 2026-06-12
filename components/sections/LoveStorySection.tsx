@@ -4,7 +4,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { Heart, Sparkles, MapPin } from "lucide-react";
-import { SectionLabel, ScrollCue } from "@/components/ui/Animations";
+import { fadeDown, SectionLabel, ScrollCue } from "@/components/ui/Animations";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 
 // ─── Story data ────────────────────────────────────────────────────────────
 const LOVE_STORIES = [
@@ -158,6 +159,8 @@ export default function LoveStorySection() {
       className="section-snap-tall section-px py-16 relative overflow-hidden"
       style={{ background: "linear-gradient(180deg, #1a0f05 0%, #0d0804 40%, #1a0f05 80%, #2a1a0a 100%)" }}
     >
+      <AmbientBackground type="sparkles" />
+
       {/* Gold particles */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {PARTICLES.map((p) => (
