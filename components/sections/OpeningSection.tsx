@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { InvitationData } from "@/types/invitation";
 import {
   fadeDown, fadeUp, fadeLeft, fadeRight, zoomIn, zoomInUp,
-  staggerContainer, itemVariants, SectionLabel, GoldOrnamentDivider, AnimatedWords, ScrollCue,
+  staggerContainer, itemVariants, SectionLabel, GoldOrnamentDivider, AnimatedWords,
 } from "@/components/ui/Animations";
 
 interface OpeningSectionProps {
@@ -66,47 +66,6 @@ const MagicalOpeningAnimation = ({ isInView }: { isInView: boolean }) => {
   );
 };
 
-const PETALS = Array.from({ length: 18 }).map((_, i) => ({
-  id: i,
-  left: (i * 17.5) % 100,
-  delay: (i * 0.4) % 3,
-  duration: 6 + (i % 4),
-  size: 15 + (i % 3) * 5,
-  isGold: i % 3 === 0,
-}));
-
-const LuxuriousPetalFall = ({ isInView }: { isInView: boolean }) => {
-  if (!isInView) return null;
-
-  return (
-    <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-      {PETALS.map((p) => {
-        const tx = (p.id % 2 === 0 ? p.size * 2 : -p.size * 2) + "px";
-        const tr = (p.id % 2 === 0 ? 360 : -360) + "deg";
-        return (
-          <div
-            key={p.id}
-            className="absolute top-0 pointer-events-none"
-            style={
-              {
-                left: `${p.left}%`,
-                "--tx": tx,
-                "--tr": tr,
-                animation: `leaf-fall ${p.duration}s linear ${p.delay}s infinite`,
-                opacity: 0,
-              } as React.CSSProperties
-            }
-          >
-            <svg width={p.size} height={p.size} viewBox="0 0 24 24" fill={p.isGold ? "#FFFFFF" : "#FFB6C1"}>
-              <path d="M12 2C8 2 4 6 4 12C4 18 12 22 12 22C12 22 20 18 20 12C20 6 16 2 12 2Z" opacity={p.isGold ? "0.85" : "0.7"}/>
-              <path d="M12 4C9 4 6 7 6 12C6 16 12 19 12 19C12 19 18 16 18 12C18 7 15 4 12 4Z" fill={p.isGold ? "#F8F8FF" : "#FFC0CB"} opacity={p.isGold ? "0.6" : "0.5"}/>
-            </svg>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 export default function OpeningSection({ data }: OpeningSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -115,15 +74,12 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
   return (
     <section
       ref={ref}
-      id="opening"
+      id="opening-content"
       className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
-      style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #fdf5ec 100%)" }}
+      style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #FFFFFF 100%)" }}
     >
       {/* ── Magical Opening Effect ── */}
       <MagicalOpeningAnimation isInView={isInView} />
-      
-      {/* ── Luxurious Falling Petals ── */}
-      <LuxuriousPetalFall isInView={isInView} />
 
       {/* Decorative bg sunflowers (z-0 behind everything) */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -215,22 +171,6 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
         <motion.div variants={itemVariants} style={{ height: "1px", width: "50px", background: "linear-gradient(90deg, #CC9B3F, transparent)", transformOrigin: "left" }} />
       </motion.div>
 
-      {/* Scroll cue */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        transition={{ delay: 0.75 }}
-        className="absolute bottom-16 left-0 right-0 flex flex-col items-center justify-center"
-      >
-        <p
-          className="text-xs tracking-[0.2em] uppercase mb-1"
-          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#8a6a4a" }}
-        >
-          Scroll untuk lanjut
-        </p>
-      </motion.div>
-      <ScrollCue />
     </section>
   );
 }

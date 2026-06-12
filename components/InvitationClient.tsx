@@ -7,6 +7,7 @@ import CoverScreen from "@/components/cover/CoverScreen";
 import FloatingParticles from "@/components/ui/FloatingParticles";
 import FloatingFlowers from "@/components/ui/FloatingFlowers";
 import MusicController from "@/components/ui/MusicController";
+import WeddingTitleSection from "@/components/sections/WeddingTitleSection";
 import OpeningSection from "@/components/sections/OpeningSection";
 import CoupleSection from "@/components/sections/CoupleSection";
 import CountdownSection from "@/components/sections/CountdownSection";
@@ -108,15 +109,16 @@ export default function InvitationClient({
 
   // Section definitions with IDs matching snap-scroll hook
   const sections = [
-    { id: "opening",    content: <OpeningSection data={data} /> },
-    { id: "couple",     content: <CoupleSection data={data} /> },
-    { id: "countdown",  content: <CountdownSection data={data} /> },
-    { id: "event",      content: <EventSection data={data} /> },
-    { id: "quran",      content: <QuranSection data={data} /> },
-    { id: "closing",    content: <ClosingSection data={data} guestName={guestName} /> },
-    { id: "love-story", content: <LoveStorySection /> },
-    { id: "wishes",     content: <WishesSection slug={data.slug} guestName={guestName} /> },
-    { id: "gift",       content: <GiftSection /> },
+    { id: "opening",          content: <WeddingTitleSection data={data} /> },
+    { id: "quran",            content: <QuranSection data={data} /> },
+    { id: "opening-content",  content: <OpeningSection data={data} /> },
+    { id: "couple",           content: <CoupleSection data={data} /> },
+    { id: "countdown",        content: <CountdownSection data={data} /> },
+    { id: "event",            content: <EventSection data={data} /> },
+    { id: "closing",          content: <ClosingSection data={data} guestName={guestName} /> },
+    { id: "love-story",       content: <LoveStorySection /> },
+    { id: "wishes",           content: <WishesSection slug={data.slug} guestName={guestName} /> },
+    { id: "gift",             content: <GiftSection /> },
   ];
 
   return (
