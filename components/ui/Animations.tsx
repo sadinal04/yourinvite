@@ -9,41 +9,41 @@ const SMOOTH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 // ─── Variant presets ────────────────────────────────────────────────────────
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 60, scale: 0.95, rotateX: 10, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 60, scale: 0.95, rotateX: 10 },
   visible: { 
-    opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)", 
+    opacity: 1, y: 0, scale: 1, rotateX: 0, 
     transition: { duration: 1.2, ease: SMOOTH_EASE } 
   },
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -40, scale: 0.98, filter: "blur(5px)" },
+  hidden: { opacity: 0, y: -40, scale: 0.98 },
   visible: { 
-    opacity: 1, y: 0, scale: 1, filter: "blur(0px)", 
+    opacity: 1, y: 0, scale: 1, 
     transition: { duration: 1.1, ease: SMOOTH_EASE } 
   },
 };
 
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -60, scale: 0.98, filter: "blur(5px)" },
+  hidden: { opacity: 0, x: -60, scale: 0.98 },
   visible: { 
-    opacity: 1, x: 0, scale: 1, filter: "blur(0px)", 
+    opacity: 1, x: 0, scale: 1, 
     transition: { duration: 1.1, ease: SMOOTH_EASE } 
   },
 };
 
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 60, scale: 0.98, filter: "blur(5px)" },
+  hidden: { opacity: 0, x: 60, scale: 0.98 },
   visible: { 
-    opacity: 1, x: 0, scale: 1, filter: "blur(0px)", 
+    opacity: 1, x: 0, scale: 1, 
     transition: { duration: 1.1, ease: SMOOTH_EASE } 
   },
 };
 
 export const zoomIn: Variants = {
-  hidden: { opacity: 0, scale: 0.75, filter: "blur(6px)" },
+  hidden: { opacity: 0, scale: 0.75 },
   visible: { 
-    opacity: 1, scale: 1, filter: "blur(0px)", 
+    opacity: 1, scale: 1, 
     transition: { duration: 1.2, ease: SMOOTH_EASE } 
   },
 };
