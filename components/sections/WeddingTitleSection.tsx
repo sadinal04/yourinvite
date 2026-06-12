@@ -178,8 +178,36 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
       <div className="absolute pointer-events-none"
         style={{ inset: "18px", border: "1px solid rgba(204,155,63,0.15)" }} />
 
-      {/* ── Main content — appears after mandala settles ── */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 w-full gap-y-0">
+      {/* ── Main content wrapped in beautiful glossy arched card ── */}
+      <motion.div 
+        className="relative z-10 flex flex-col items-center text-center px-8 py-10 w-[88%] max-w-[340px] mx-auto"
+        variants={{
+          hidden: { opacity: 0, scale: 0.95, y: 30 },
+          visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 1.4, ease: [0.22, 1, 0.36, 1] } }
+        }}
+        initial="hidden"
+        animate={contentControls}
+        style={{
+          background: "linear-gradient(160deg, rgba(255,253,248,0.85) 0%, rgba(253,245,236,0.7) 50%, rgba(255,249,240,0.85) 100%)",
+          border: "2px solid rgba(204,155,63,0.5)",
+          borderRadius: "150px 150px 14px 14px / 180px 180px 14px 14px", // Elegant tall arch window shape
+          backdropFilter: "blur(8px)",
+          boxShadow: "0 12px 40px rgba(204,155,63,0.2), 0 4px 16px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.9)",
+          overflow: "hidden"
+        }}
+      >
+        {/* Animated Glossy Shine Overlay */}
+        <motion.div style={{
+          position: "absolute",
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.7) 50%, transparent 65%)",
+          pointerEvents: "none",
+        }}
+          animate={{ x: ["-100%", "200%"] }}
+          transition={{ duration: 4.5, repeat: Infinity, delay: 3.5, ease: "easeInOut" }}
+        />
+        
+        <div className="relative z-10 flex flex-col items-center w-full gap-y-0">
 
         {/* THE WEDDING OF */}
         <motion.p
@@ -304,6 +332,7 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
           {day}, {dateStr}
         </motion.p>
       </div>
+    </motion.div>
 
       {/* Scroll untuk lanjut — positioned absolutely near the bottom above ScrollCue */}
       <motion.p
