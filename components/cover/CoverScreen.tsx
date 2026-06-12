@@ -74,7 +74,7 @@ const LottieButterflies = () => {
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
       {/* First butterfly: bottom-left to top-left */}
       <div 
-        className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-30 mix-blend-screen"
+        className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-35"
       >
         <Lottie
           animationData={butterflyAnimation}
@@ -86,7 +86,7 @@ const LottieButterflies = () => {
       {/* Second butterfly: mirrored, delayed, bottom-right to top-right */}
       {showSecond && (
         <div 
-          className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-30 mix-blend-screen" 
+          className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-35" 
           style={{ transform: "scaleX(-1)" }}
         >
           <Lottie

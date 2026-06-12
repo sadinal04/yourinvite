@@ -100,9 +100,8 @@ export default function FloatingParticles() {
     if (!ctx) return;
 
     const resize = () => {
-      const parent = canvas.parentElement;
-      canvas.width = parent ? parent.clientWidth : window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -170,7 +169,7 @@ export default function FloatingParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0"
+      className="fixed top-0 bottom-0 frame-bound pointer-events-none z-[-1]"
       aria-hidden="true"
       style={{ willChange: "transform", transform: "translateZ(0)" }}
     />

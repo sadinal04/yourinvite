@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface FloralItem {
   id: number;
@@ -86,8 +86,20 @@ const LeafSVG = ({ size, opacity }: { size: number; opacity: number }) => (
 
 export default function FloatingFlowers() {
   const [florals, setFlorals] = useState<FloralItem[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const resize = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.clientWidth;
+        const height = containerRef.current.clientHeight;
+        // Logic for using width/height if needed
+      }
+    };
+    
+    window.addEventListener("resize", resize);
+    resize();
+
     const types: FloralItem["type"][] = [
       "sunflower", "petal", "petal", "leaf", "leaf",
       "sparkle", "sparkle", "sparkle", "petal", "sunflower",
@@ -106,10 +118,12 @@ export default function FloatingFlowers() {
       type: types[i % types.length],
     }));
     setFlorals(items);
+
+    return () => window.removeEventListener("resize", resize);
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div ref={containerRef} className="fixed top-0 bottom-0 frame-bound pointer-events-none z-[1]" aria-hidden="true">
       {florals.map((f) => (
         <div
           key={f.id}

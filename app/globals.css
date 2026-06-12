@@ -288,6 +288,18 @@
   .invitation-wrapper {
     max-width: 420px;
   }
+  .frame-bound {
+    max-width: 420px;
+  }
+}
+
+/* Helper to bound fixed elements to the invitation frame */
+.frame-bound {
+  width: 100%;
+  max-width: min(100%, 65vh);
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }
 
 /* Full-screen section */
