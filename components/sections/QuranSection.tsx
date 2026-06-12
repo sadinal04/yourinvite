@@ -85,6 +85,7 @@ export default function QuranSection({ data }: QuranSectionProps) {
               left: `${leaf.left}%`,
               bottom: "-40px",
               opacity: leaf.opacity,
+              willChange: "transform",
             }}
             animate={{
               y: ["0px", "-110dvh"],

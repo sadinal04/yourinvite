@@ -96,7 +96,7 @@ export default function FloatingParticles() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
     if (!ctx) return;
 
     const resize = () => {
@@ -147,7 +147,19 @@ export default function FloatingParticles() {
       animFrameRef.current = requestAnimationFrame(animate);
     };
 
-    animFrameRef.current = requestAnimationFrame(animate);
+    // Throttle: skip every other frame on mobile to halve GPU load
+    let frameCount = 0;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const animateThrottled = () => {
+      frameCount++;
+      if (!isMobile || frameCount % 2 === 0) {
+        animate();
+      } else {
+        animFrameRef.current = requestAnimationFrame(animateThrottled);
+      }
+    };
+
+    animFrameRef.current = requestAnimationFrame(isMobile ? animateThrottled : animate);
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
@@ -160,6 +172,7 @@ export default function FloatingParticles() {
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-0"
       aria-hidden="true"
+      style={{ willChange: "transform", transform: "translateZ(0)" }}
     />
   );
 }

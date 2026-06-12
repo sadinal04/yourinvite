@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
+import { useRef, useEffect } from "react";
 import { InvitationData } from "@/types/invitation";
 import { ScrollCue } from "@/components/ui/Animations";
 
@@ -9,28 +9,96 @@ interface WeddingTitleSectionProps {
   data: InvitationData;
 }
 
-// Rising gold sparkle stars — float upward slowly, twinkle & fade
+// Rising gold sparkle stars
 const SPARKLES = Array.from({ length: 28 }, (_, i) => ({
   id: i,
   x: ((i * 6.7 + 2.3) % 94),
-  startY: 20 + ((i * 5.3 + 1) % 70), // starts at various positions
+  startY: 20 + ((i * 5.3 + 1) % 70),
   size: 2 + (i % 3) * 1.5,
   dur: 5 + (i % 6) * 1.2,
   delay: (i * 0.45) % 7,
-  opacity: 0.25 + (i % 4) * 0.12,
-  driftX: i % 2 === 0 ? 10 + (i % 3) * 5 : -(10 + (i % 3) * 5),
 }));
-
 
 export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px 0px" });
+
+  // Separate controls: mandala & content
+  const mandalaControls = useAnimation();
+  const contentControls = useAnimation();
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const sequence = async () => {
+      // Phase 1: mandala spin cepat dari 0, opacity naik
+      await mandalaControls.start({
+        rotate: 720,          // 2 putaran penuh
+        opacity: 0.18,        // lebih terlihat saat berputar cepat
+        scale: 1.15,
+        transition: {
+          rotate: { duration: 0.8, ease: [0.2, 0, 0.4, 1] },
+          opacity: { duration: 0.3, ease: "easeOut" },
+          scale:   { duration: 0.8, ease: [0.2, 0, 0.4, 1] },
+        },
+      });
+
+      // Phase 2: melambat & mengecil ke posisi normal, opacity turun ke subtle
+      await mandalaControls.start({
+        rotate: 1080,         // 1 putaran lagi tapi lambat
+        opacity: 0.06,
+        scale: 1,
+        transition: {
+          rotate: { duration: 1.2, ease: [0.6, 0, 0.8, 1] },
+          opacity: { duration: 0.6, ease: "easeOut" },
+          scale:   { duration: 0.8, ease: [0.6, 0, 0.8, 1] },
+        },
+      });
+
+      // Phase 3: terus berputar lambat selamanya
+      mandalaControls.start({
+        rotate: [1080, 1080 + 360],
+        transition: {
+          duration: 90,
+          repeat: Infinity,
+          ease: "linear",
+          repeatType: "loop",
+        },
+      });
+
+      // Mulai tampilkan konten — sedikit overlap dengan akhir phase 2
+      contentControls.start("visible");
+    };
+
+    sequence();
+  }, [isInView, mandalaControls, contentControls]);
 
   const akadDate = new Date(data.event.akad.dateISO);
   const day = akadDate.toLocaleDateString("id-ID", { weekday: "long", timeZone: "Asia/Jakarta" });
   const dateStr = akadDate.toLocaleDateString("id-ID", {
     day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Jakarta",
   });
+
+  // Stagger variants for each text element
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const textVariants: any = {
+    hidden: { opacity: 0, y: 16 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.9, delay: i * 0.22, ease: "easeOut" },
+    }),
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const lineVariants: any = {
+    hidden: { scaleX: 0, opacity: 0 },
+    visible: (i: number) => ({
+      scaleX: 1,
+      opacity: 1,
+      transition: { duration: 0.8, delay: i * 0.22, ease: "easeOut" },
+    }),
+  };
 
   return (
     <section
@@ -44,40 +112,28 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
       {/* ── Rising gold sparkles ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {SPARKLES.map((s) => (
-          <motion.div
+          <div
             key={s.id}
-            className="absolute rounded-full"
+            className="absolute rounded-full sparkle-rise"
             style={{
               left: `${s.x}%`,
               top: `${s.startY}%`,
               width: `${s.size}px`,
               height: `${s.size}px`,
-              background: "radial-gradient(circle, #E0B96A 0%, rgba(204,155,63,0.4) 60%, transparent 100%)",
-            }}
-            animate={{
-              y: [0, -(80 + (s.id % 4) * 30)],
-              x: [0, s.driftX * 0.4, s.driftX * 0.7, s.driftX],
-              opacity: [0, s.opacity, s.opacity * 0.8, 0],
-              scale: [0.4, 1.2, 0.9, 0.3],
-            }}
-            transition={{
-              duration: s.dur,
-              delay: s.delay,
-              repeat: Infinity,
-              ease: "easeOut",
-              x: { duration: s.dur, ease: "easeInOut" },
-              scale: { duration: s.dur * 0.6, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
-            }}
+              background: `radial-gradient(circle, #E0B96A 0%, rgba(204,155,63,0.4) 60%, transparent 100%)`,
+              animationDuration: `${s.dur}s`,
+              animationDelay: `${s.delay}s`,
+              opacity: 0,
+            } as React.CSSProperties}
           />
         ))}
       </div>
 
-      {/* ── Subtle rotating mandala watermark ── */}
+      {/* ── Mandala watermark — spin fast then slow ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
         <motion.div
-          style={{ opacity: 0.04 }}
-          animate={{ rotate: [0, 360] }}
-          transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+          animate={mandalaControls}
+          initial={{ rotate: 0, opacity: 0, scale: 1.3 }}
         >
           <svg width="320" height="320" viewBox="0 0 200 200">
             {Array.from({ length: 18 }, (_, i) => {
@@ -96,7 +152,7 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
         </motion.div>
       </div>
 
-      {/* ── Corner floral ornaments (goldfloral.png) — light ── */}
+      {/* ── Corner floral ornaments ── */}
       <div className="absolute top-0 left-0 pointer-events-none select-none"
         style={{ width: "110px", height: "110px", opacity: 0.14, transform: "rotate(180deg)" }}>
         <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
@@ -118,11 +174,15 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
       <div className="absolute pointer-events-none"
         style={{ inset: "18px", border: "1px solid rgba(204,155,63,0.15)" }} />
 
-      {/* ── Main content ── */}
+      {/* ── Main content — appears after mandala settles ── */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 w-full gap-y-0">
 
         {/* THE WEDDING OF */}
         <motion.p
+          custom={0}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: "0.62rem",
@@ -130,29 +190,30 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             color: "#B5832A",
             textTransform: "uppercase",
           }}
-          initial={{ opacity: 0, y: -10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
         >
           The Wedding of
         </motion.p>
 
-        {/* Long thin gold separator */}
+        {/* Top separator */}
         <motion.div
+          custom={1}
+          variants={lineVariants}
+          initial="hidden"
+          animate={contentControls}
           className="my-3"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={isInView ? { scaleX: 1, opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.4 }}
           style={{
-            height: "1px",
-            width: "60px",
+            height: "1px", width: "60px",
             background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)",
             transformOrigin: "center",
           }}
         />
 
-        {/* Groom Name — large */}
+        {/* Groom Name */}
         <motion.h1
+          custom={2}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           className="leading-none whitespace-nowrap"
           style={{
             fontFamily: "'Italianno', cursive",
@@ -161,19 +222,17 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             textShadow: "0 1px 8px rgba(101, 65, 20, 0.15)",
             marginBottom: "-0.2rem",
           }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           {data.groom.name.split(",")[0]}
         </motion.h1>
 
-        {/* Ornamental ampersand row */}
+        {/* Ampersand row */}
         <motion.div
+          custom={3}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           className="flex items-center gap-3 my-2"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.7 }}
         >
           <div style={{ height: "1px", width: "36px", background: "linear-gradient(90deg, transparent, rgba(204,155,63,0.5))" }} />
           <svg width="10" height="10" viewBox="0 0 10 10">
@@ -188,8 +247,12 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
           <div style={{ height: "1px", width: "36px", background: "linear-gradient(90deg, rgba(204,155,63,0.5), transparent)" }} />
         </motion.div>
 
-        {/* Bride Name — large */}
+        {/* Bride Name */}
         <motion.h2
+          custom={4}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           className="leading-none whitespace-nowrap"
           style={{
             fontFamily: "'Italianno', cursive",
@@ -198,22 +261,19 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             textShadow: "0 1px 8px rgba(101, 65, 20, 0.15)",
             marginTop: "-0.2rem",
           }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.1, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
           {data.bride.name.split(",")[0]}
         </motion.h2>
 
-        {/* Long thin gold separator */}
+        {/* Bottom separator */}
         <motion.div
+          custom={5}
+          variants={lineVariants}
+          initial="hidden"
+          animate={contentControls}
           className="my-3"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={isInView ? { scaleX: 1, opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 1.0 }}
           style={{
-            height: "1px",
-            width: "80px",
+            height: "1px", width: "80px",
             background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)",
             transformOrigin: "center",
           }}
@@ -221,6 +281,10 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
 
         {/* Date */}
         <motion.p
+          custom={6}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           style={{
             fontFamily: "'Lora', serif",
             fontSize: "0.78rem",
@@ -228,34 +292,30 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             letterSpacing: "0.06em",
             fontStyle: "italic",
           }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.1 }}
         >
           {day}, {dateStr}
         </motion.p>
 
-        {/* Bismillah — subtle below date */}
+        {/* Bismillah */}
         <motion.p
+          custom={7}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           className="mt-3 text-lg"
-          style={{
-            fontFamily: "'Lora', serif",
-            color: "rgba(180,130,60,0.6)",
-          }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.25 }}
+          style={{ fontFamily: "'Lora', serif", color: "rgba(180,130,60,0.6)" }}
         >
           بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
         </motion.p>
 
         {/* Scroll untuk lanjut */}
         <motion.p
+          custom={8}
+          variants={textVariants}
+          initial="hidden"
+          animate={contentControls}
           className="mt-4 text-[10px] tracking-[0.3em] uppercase"
           style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(180,130,60,0.45)" }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.4 }}
         >
           Scroll untuk lanjut
         </motion.p>

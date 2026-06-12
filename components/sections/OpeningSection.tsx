@@ -12,59 +12,6 @@ interface OpeningSectionProps {
   data: InvitationData;
 }
 
-const MagicalOpeningAnimation = ({ isInView }: { isInView: boolean }) => {
-  return (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* 1. Rotating Golden Frame that settles into place */}
-      <motion.div
-        initial={{ scale: 0.85, rotate: 4, opacity: 0 }}
-        animate={isInView ? { scale: 1, rotate: 0, opacity: 1 } : { scale: 0.85, rotate: 4, opacity: 0 }}
-        transition={{ duration: 2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-[20px]"
-        style={{
-          border: "1px solid rgba(204,155,63,0.4)",
-          borderRadius: "24px",
-          boxShadow: "inset 0 0 40px rgba(204,155,63,0.05)",
-        }}
-      >
-        {/* Inner delicate line */}
-        <div className="absolute inset-[6px]" style={{ border: "1px solid rgba(204,155,63,0.15)", borderRadius: "18px" }} />
-      </motion.div>
-
-      {/* 2. Blooming Corner Floral Ornaments */}
-      {/* Top Left */}
-      <motion.div
-        initial={{ x: -30, y: -30, scale: 0.6, opacity: 0, rotate: 165 }}
-        animate={isInView ? { x: -20, y: -20, scale: 1, opacity: 0.22, rotate: 180 } : { x: -30, y: -30, scale: 0.6, opacity: 0, rotate: 165 }}
-        transition={{ duration: 2.2, delay: 0.4, ease: "easeOut" }}
-        className="absolute top-0 left-0 w-[150px] h-[150px]"
-      >
-        <img src="/desain/goldfloral.png" className="w-full h-full object-contain drop-shadow-md" alt="" />
-      </motion.div>
-      
-      {/* Bottom Right */}
-      <motion.div
-        initial={{ x: 30, y: 30, scale: 0.6, opacity: 0, rotate: -15 }}
-        animate={isInView ? { x: 20, y: 20, scale: 1, opacity: 0.22, rotate: 0 } : { x: 30, y: 30, scale: 0.6, opacity: 0, rotate: -15 }}
-        transition={{ duration: 2.2, delay: 0.6, ease: "easeOut" }}
-        className="absolute bottom-0 right-0 w-[150px] h-[150px]"
-      >
-        <img src="/desain/goldfloral.png" className="w-full h-full object-contain drop-shadow-md" alt="" />
-      </motion.div>
-
-      {/* 3. Magical Center Light Burst (Portal effect) */}
-      <motion.div
-        initial={{ scale: 0, opacity: 1 }}
-        animate={isInView ? { scale: 4, opacity: 0 } : { scale: 0, opacity: 1 }}
-        transition={{ duration: 1.8, delay: 0.1, ease: "easeOut" }}
-        className="absolute top-1/2 left-1/2 w-[200px] h-[200px] -ml-[100px] -mt-[100px] rounded-full"
-        style={{
-          background: "radial-gradient(circle, rgba(204,155,63,0.3) 0%, rgba(204,155,63,0.1) 40%, transparent 70%)",
-        }}
-      />
-    </div>
-  );
-};
 
 
 export default function OpeningSection({ data }: OpeningSectionProps) {
@@ -78,8 +25,21 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
       className="section-snap section-px py-20 text-center relative overflow-hidden flex flex-col justify-center gap-y-7"
       style={{ background: "linear-gradient(180deg, #fdf5ec 0%, #FFFFFF 100%)" }}
     >
-      {/* ── Magical Opening Effect ── */}
-      <MagicalOpeningAnimation isInView={isInView} />
+      {/* ── Static golden border frame ── */}
+      <div className="absolute pointer-events-none"
+        style={{ inset: "20px", border: "1px solid rgba(204,155,63,0.35)", borderRadius: "20px", boxShadow: "inset 0 0 30px rgba(204,155,63,0.04)" }}>
+        <div className="absolute inset-[6px]" style={{ border: "1px solid rgba(204,155,63,0.13)", borderRadius: "14px" }} />
+      </div>
+
+      {/* ── Static corner ornaments ── */}
+      <div className="absolute top-0 left-0 pointer-events-none select-none w-[130px] h-[130px]"
+        style={{ opacity: 0.18, transform: "translate(-18px,-18px) rotate(180deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
+      <div className="absolute bottom-0 right-0 pointer-events-none select-none w-[130px] h-[130px]"
+        style={{ opacity: 0.18, transform: "translate(18px,18px) rotate(0deg)" }}>
+        <img src="/desain/goldfloral.png" alt="" className="w-full h-full object-contain" />
+      </div>
 
       {/* Decorative bg sunflowers (z-0 behind everything) */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">

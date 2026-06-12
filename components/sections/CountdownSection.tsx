@@ -94,10 +94,14 @@ export default function CountdownSection({ data }: CountdownSectionProps) {
       {/* Shimmer particles */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {SHIMMER_PARTICLES.map((p) => (
-          <motion.div key={p.id} className="absolute rounded-full"
-            style={{ width: `${p.width}px`, height: `${p.width}px`, left: `${p.left}%`, top: `${p.top}%`, background: "#CC9B3F" }}
-            animate={{ opacity: [0.1, 0.8, 0.1], scale: [0.8, 1.3, 0.8] }}
-            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay }}
+          <div key={p.id} className="absolute rounded-full countdown-shimmer"
+            style={{
+              width: `${p.width}px`, height: `${p.width}px`,
+              left: `${p.left}%`, top: `${p.top}%`,
+              background: "#CC9B3F",
+              animationDuration: `${p.duration}s`,
+              animationDelay: `${p.delay}s`,
+            } as React.CSSProperties}
           />
         ))}
       </div>
