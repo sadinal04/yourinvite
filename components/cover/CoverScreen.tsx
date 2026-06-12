@@ -199,30 +199,6 @@ export default function CoverScreen({
             }}
           />
 
-          {/* Gold shimmer particles - removed during slide to optimize framerate */}
-          {!isOpen && (
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-              {SHIMMER_PARTICLES.map((p) => (
-                <div
-                  key={p.id}
-                  className="absolute rounded-full cover-shimmer-pulse"
-                  style={{
-                    width: `${p.size}px`,
-                    height: `${p.size}px`,
-                    left: `${p.left}%`,
-                    top: `${p.top}%`,
-                    background: "#CC9B3F",
-                    animationDuration: `${p.dur}s`,
-                    animationDelay: `${p.delay}s`,
-                  }}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Butterflies (horizontal) + falling leaves - removed during slide to optimize framerate */}
-          {!isOpen && <CoverAmbient />}
-
           {/* ─── Corner Floral Ornaments (goldfloral.png) ─── */}
           {/* Top-left */}
           <div
@@ -591,6 +567,31 @@ export default function CoverScreen({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, delay: 2.8 }} // Wait for doors to finish sliding (3.0s) before unmounting
         >
+          {/* Unified Ambient Background (Lottie, Leaves, Shimmer) - Renders ONLY ONCE */}
+          <motion.div 
+            className="absolute inset-0 z-[150] pointer-events-none"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+              {SHIMMER_PARTICLES.map((p) => (
+                <div
+                  key={p.id}
+                  className="absolute rounded-full cover-shimmer-pulse"
+                  style={{
+                    width: `${p.size}px`,
+                    height: `${p.size}px`,
+                    left: `${p.left}%`,
+                    top: `${p.top}%`,
+                    background: "#CC9B3F",
+                    animationDuration: `${p.dur}s`,
+                    animationDelay: `${p.delay}s`,
+                  }}
+                />
+              ))}
+            </div>
+            <CoverAmbient />
+          </motion.div>
           {/* Left Half */}
           <motion.div
             className="w-1/2 h-full relative overflow-hidden pointer-events-auto"
