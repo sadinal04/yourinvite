@@ -236,6 +236,19 @@
   will-change: opacity, transform;
 }
 
+/* CoverScreen Shimmer Particles */
+@keyframes cover-shimmer {
+  0% { opacity: 0.05; transform: scale(0.8); }
+  50% { opacity: 0.55; transform: scale(1.4); }
+  100% { opacity: 0.05; transform: scale(0.8); }
+}
+.cover-shimmer-pulse {
+  animation-name: cover-shimmer;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  will-change: opacity, transform;
+}
+
 /* ============================================
    DESKTOP WRAPPER & RESPONSIVE LAYOUT
    ============================================ */

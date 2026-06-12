@@ -74,8 +74,7 @@ const LottieButterflies = () => {
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
       {/* First butterfly: bottom-left to top-left */}
       <div 
-        className="absolute w-full h-full max-w-[700px] aspect-[700/1000]"
-        style={{ filter: "brightness(0) invert(69%) sepia(21%) saturate(1512%) hue-rotate(3deg) brightness(97%) contrast(92%) opacity(0.35)" }}
+        className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-30 mix-blend-screen"
       >
         <Lottie
           animationData={butterflyAnimation}
@@ -87,8 +86,8 @@ const LottieButterflies = () => {
       {/* Second butterfly: mirrored, delayed, bottom-right to top-right */}
       {showSecond && (
         <div 
-          className="absolute w-full h-full max-w-[700px] aspect-[700/1000]" 
-          style={{ transform: "scaleX(-1)", filter: "brightness(0) invert(69%) sepia(21%) saturate(1512%) hue-rotate(3deg) brightness(97%) contrast(92%) opacity(0.35)" }}
+          className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-30 mix-blend-screen" 
+          style={{ transform: "scaleX(-1)" }}
         >
           <Lottie
             animationData={butterflyAnimation}
@@ -208,18 +207,18 @@ export default function CoverScreen({
           {!isOpen && (
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
               {SHIMMER_PARTICLES.map((p) => (
-                <motion.div
+                <div
                   key={p.id}
-                  className="absolute rounded-full"
+                  className="absolute rounded-full cover-shimmer-pulse"
                   style={{
                     width: `${p.size}px`,
                     height: `${p.size}px`,
                     left: `${p.left}%`,
                     top: `${p.top}%`,
                     background: "#CC9B3F",
+                    animationDuration: `${p.dur}s`,
+                    animationDelay: `${p.delay}s`,
                   }}
-                  animate={{ opacity: [0.05, 0.55, 0.05], scale: [0.8, 1.4, 0.8] }}
-                  transition={{ duration: p.dur, repeat: Infinity, delay: p.delay }}
                 />
               ))}
             </div>
