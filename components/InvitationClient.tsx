@@ -60,15 +60,15 @@ export default function InvitationClient({
   // Progressive mounting to guarantee buttery smooth door animation
   useEffect(() => {
     if (isOpen) {
-      // 1. Let the doors slide in an empty vacuum for 1.0s, then gracefully bloom the OpeningSection while doors are still sliding!
+      // 1. Let the cover slide up in an empty vacuum for 0.8s, then gracefully bloom the OpeningSection!
       const timer1 = setTimeout(() => {
         setMountedSections(1);
-      }, 1000);
+      }, 800);
       
-      // 2. Silently mount all remaining heavy sections right as the doors finish opening (2.8s) so the user can scroll immediately.
+      // 2. Silently mount all remaining heavy sections right as the cover finishes sliding (1.8s)
       const timer2 = setTimeout(() => {
         setMountedSections(99);
-      }, 2800);
+      }, 1800);
 
       return () => {
         clearTimeout(timer1);
