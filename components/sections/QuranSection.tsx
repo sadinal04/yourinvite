@@ -182,6 +182,15 @@ export default function QuranSection({ data }: QuranSectionProps) {
             </div>
           ))}
 
+          {/* Bismillah */}
+          <motion.p
+            variants={fadeDown}
+            className="text-lg text-center mt-3 mb-6"
+            style={{ fontFamily: "'Lora', serif", color: "rgba(180,130,60,0.7)" }}
+          >
+            بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+          </motion.p>
+
           {/* Arabic */}
           <motion.p
             variants={fadeDown}

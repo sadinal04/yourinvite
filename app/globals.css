@@ -249,6 +249,31 @@
   will-change: opacity, transform;
 }
 
+/* CoverScreen Falling Leaves */
+@keyframes cover-falling-leaf {
+  0% { 
+    transform: translate3d(0, 0, 0) rotate(0deg); 
+    opacity: 0; 
+  }
+  8% { opacity: 0.22; }
+  40% { transform: translate3d(calc(var(--drift) * 0.4), 44vh, 0) rotate(calc(var(--rotate) * 0.4)); }
+  80% { 
+    opacity: 0.22; 
+    transform: translate3d(calc(var(--drift) * 0.8), 88vh, 0) rotate(calc(var(--rotate) * 0.8)); 
+  }
+  95% { opacity: 0.16; }
+  100% { 
+    transform: translate3d(var(--drift), 110vh, 0) rotate(var(--rotate)); 
+    opacity: 0; 
+  }
+}
+.cover-falling-leaf {
+  animation-name: cover-falling-leaf;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  will-change: transform, opacity;
+}
+
 /* ============================================
    DESKTOP WRAPPER & RESPONSIVE LAYOUT
    ============================================ */

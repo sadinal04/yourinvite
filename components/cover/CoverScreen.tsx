@@ -61,11 +61,9 @@ const LottieButterflies = () => {
   const [showSecond, setShowSecond] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const timer = setTimeout(() => {
-      setShowSecond(true);
-    }, 2500);
-    return () => clearTimeout(timer);
+    const timer1 = setTimeout(() => setMounted(true), 1500);
+    const timer2 = setTimeout(() => setShowSecond(true), 3500);
+    return () => { clearTimeout(timer1); clearTimeout(timer2); };
   }, []);
 
   if (!mounted) return null;
@@ -73,28 +71,34 @@ const LottieButterflies = () => {
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
       {/* First butterfly: bottom-left to top-left */}
-      <div 
+      <motion.div 
         className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-35"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.35 }}
+        transition={{ duration: 2 }}
       >
         <Lottie
           animationData={butterflyAnimation}
           loop={true}
           style={{ width: "100%", height: "100%" }}
         />
-      </div>
+      </motion.div>
 
       {/* Second butterfly: mirrored, delayed, bottom-right to top-right */}
       {showSecond && (
-        <div 
+        <motion.div 
           className="absolute w-full h-full max-w-[700px] aspect-[700/1000] opacity-35" 
           style={{ transform: "scaleX(-1)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.35 }}
+          transition={{ duration: 2 }}
         >
           <Lottie
             animationData={butterflyAnimation}
             loop={true}
             style={{ width: "100%", height: "100%" }}
           />
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -114,24 +118,16 @@ const FallingLeaf = ({ x, delay, size, duration, drift, rotate }: {
   x: number; delay: number; size: number;
   duration: number; drift: number; rotate: number;
 }) => (
-  <motion.div
-    className="absolute pointer-events-none"
-    style={{ left: `${x}%`, top: "-40px" }}
-    animate={{
-      y: ["0px", "110vh"],
-      x: [0, drift * 0.4, drift * 0.8, drift * 0.5, drift],
-      rotate: [0, rotate * 0.3, rotate * 0.65, rotate],
-      opacity: [0, 0.22, 0.22, 0.16, 0],
-    }}
-    transition={{
-      duration,
-      delay,
-      repeat: Infinity,
-      ease: "linear",
-      x:      { duration, ease: "easeInOut" },
-      rotate: { duration, ease: "easeInOut" },
-      opacity: { duration, times: [0, 0.08, 0.8, 0.95, 1] },
-    }}
+  <div
+    className="absolute pointer-events-none cover-falling-leaf"
+    style={{ 
+      left: `${x}%`, 
+      top: "-40px",
+      animationDuration: `${duration}s`,
+      animationDelay: `${delay}s`,
+      "--drift": `${drift}px`,
+      "--rotate": `${rotate}deg`,
+    } as React.CSSProperties}
   >
     <svg width={size} height={size * 1.4} viewBox="0 0 24 34" fill="none">
       {/* Leaf body */}
@@ -150,7 +146,7 @@ const FallingLeaf = ({ x, delay, size, duration, drift, rotate }: {
       {/* Stem */}
       <path d="M10 30 Q11 33 12 34" stroke="#6e5d3d" strokeWidth="1" fill="none" opacity={0.22} />
     </svg>
-  </motion.div>
+  </div>
 );
 
 // ── Cover ambient layer (butterflies + leaves, only shown on cover) ────────────

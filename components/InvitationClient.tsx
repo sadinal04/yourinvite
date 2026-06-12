@@ -4,8 +4,6 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { InvitationData } from "@/types/invitation";
 import CoverScreen from "@/components/cover/CoverScreen";
-import FloatingParticles from "@/components/ui/FloatingParticles";
-import FloatingFlowers from "@/components/ui/FloatingFlowers";
 import MusicController from "@/components/ui/MusicController";
 import WeddingTitleSection from "@/components/sections/WeddingTitleSection";
 import OpeningSection from "@/components/sections/OpeningSection";
@@ -123,13 +121,7 @@ export default function InvitationClient({
 
   return (
     <div className="invitation-wrapper">
-      {/* Background particles — deferred to save GPU during door split */}
-      {mountedSections > 0 && (
-        <>
-          <FloatingParticles />
-          <FloatingFlowers />
-        </>
-      )}
+      {/* Background particles — REMOVED per user request */}
 
       {/* Cover Screen */}
       <CoverScreen

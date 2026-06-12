@@ -189,6 +189,7 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             letterSpacing: "0.45em",
             color: "#B5832A",
             textTransform: "uppercase",
+            paddingLeft: "0.45em", // Optical centering fix for letterSpacing
           }}
         >
           The Wedding of
@@ -223,7 +224,7 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             marginBottom: "-0.2rem",
           }}
         >
-          {data.groom.name.split(",")[0]}
+          Haris
         </motion.h1>
 
         {/* Ampersand row */}
@@ -262,7 +263,7 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             marginTop: "-0.2rem",
           }}
         >
-          {data.bride.name.split(",")[0]}
+          Icut
         </motion.h2>
 
         {/* Bottom separator */}
@@ -291,35 +292,24 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             color: "#8a6a4a",
             letterSpacing: "0.06em",
             fontStyle: "italic",
+            paddingLeft: "0.06em",
           }}
         >
           {day}, {dateStr}
         </motion.p>
-
-        {/* Bismillah */}
-        <motion.p
-          custom={7}
-          variants={textVariants}
-          initial="hidden"
-          animate={contentControls}
-          className="mt-3 text-lg"
-          style={{ fontFamily: "'Lora', serif", color: "rgba(180,130,60,0.6)" }}
-        >
-          بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
-        </motion.p>
-
-        {/* Scroll untuk lanjut */}
-        <motion.p
-          custom={8}
-          variants={textVariants}
-          initial="hidden"
-          animate={contentControls}
-          className="mt-4 text-[10px] tracking-[0.3em] uppercase"
-          style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(180,130,60,0.45)" }}
-        >
-          Scroll untuk lanjut
-        </motion.p>
       </div>
+
+      {/* Scroll untuk lanjut — positioned absolutely near the bottom above ScrollCue */}
+      <motion.p
+        custom={7}
+        variants={textVariants}
+        initial="hidden"
+        animate={contentControls}
+        className="absolute bottom-[80px] left-0 w-full text-center text-[10px] tracking-[0.3em] uppercase pl-[0.3em]"
+        style={{ fontFamily: "'Cormorant Garamond', serif", color: "rgba(180,130,60,0.45)", zIndex: 10 }}
+      >
+        Scroll untuk lanjut
+      </motion.p>
 
       <ScrollCue />
     </section>
