@@ -73,7 +73,7 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
         </svg>
       </div>
 
-      {/* Bismillah — zoomIn */}
+      {/* Assalamualaikum Arabic — zoomIn */}
       <motion.p
         className="text-2xl leading-relaxed mb-1"
         style={{ fontFamily: "'Lora', serif", color: "#CC9B3F", textShadow: "0 0 20px rgba(204,155,63,0.4)" }}
@@ -82,7 +82,7 @@ export default function OpeningSection({ data }: OpeningSectionProps) {
         animate={isInView ? "visible" : "hidden"}
         transition={{ delay: 0.1 }}
       >
-        {data.opening?.title || "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم"}
+        السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
       </motion.p>
 
       <GoldOrnamentDivider icon="flower" delay={0.25} />

@@ -201,9 +201,9 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
           variants={lineVariants}
           initial="hidden"
           animate={contentControls}
-          className="my-3"
+          className="my-4"
           style={{
-            height: "1px", width: "60px",
+            height: "1px", width: "80px",
             background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)",
             transformOrigin: "center",
           }}
@@ -218,10 +218,11 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
           className="leading-none whitespace-nowrap"
           style={{
             fontFamily: "'Italianno', cursive",
-            fontSize: "clamp(3.2rem, 10vw, 4rem)",
-            color: "#5a3e28",
-            textShadow: "0 1px 8px rgba(101, 65, 20, 0.15)",
-            marginBottom: "-0.2rem",
+            fontSize: "clamp(4.5rem, 14vw, 6rem)",
+            color: "#4A3320",
+            textShadow: "0 4px 15px rgba(204,155,63,0.25)",
+            marginBottom: "-0.5rem",
+            paddingRight: "0.12em", // Fix optical centering for heavily slanted cursive
           }}
         >
           Haris
@@ -240,7 +241,7 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
             <circle cx="5" cy="5" r="1.5" fill="#CC9B3F" opacity="0.6" />
             <circle cx="5" cy="5" r="4" stroke="#CC9B3F" strokeWidth="0.5" fill="none" opacity="0.25" />
           </svg>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", color: "#CC9B3F", fontStyle: "italic", lineHeight: 1 }}>&</span>
+          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#CC9B3F", fontStyle: "italic", lineHeight: 1 }}>&</span>
           <svg width="10" height="10" viewBox="0 0 10 10">
             <circle cx="5" cy="5" r="1.5" fill="#CC9B3F" opacity="0.6" />
             <circle cx="5" cy="5" r="4" stroke="#CC9B3F" strokeWidth="0.5" fill="none" opacity="0.25" />
@@ -257,10 +258,11 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
           className="leading-none whitespace-nowrap"
           style={{
             fontFamily: "'Italianno', cursive",
-            fontSize: "clamp(3.2rem, 10vw, 4rem)",
-            color: "#5a3e28",
-            textShadow: "0 1px 8px rgba(101, 65, 20, 0.15)",
-            marginTop: "-0.2rem",
+            fontSize: "clamp(4.5rem, 14vw, 6rem)",
+            color: "#4A3320",
+            textShadow: "0 4px 15px rgba(204,155,63,0.25)",
+            marginTop: "-0.5rem",
+            paddingRight: "0.12em", // Fix optical centering for heavily slanted cursive
           }}
         >
           Icut
@@ -272,9 +274,9 @@ export default function WeddingTitleSection({ data }: WeddingTitleSectionProps) 
           variants={lineVariants}
           initial="hidden"
           animate={contentControls}
-          className="my-3"
+          className="my-4"
           style={{
-            height: "1px", width: "80px",
+            height: "1px", width: "100px",
             background: "linear-gradient(90deg, transparent, #CC9B3F, transparent)",
             transformOrigin: "center",
           }}
