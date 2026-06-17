@@ -110,9 +110,9 @@ export default function InvitationClient({
     { id: "countdown",        content: <CountdownSection data={data} /> },
     { id: "event",            content: <EventSection data={data} /> },
     { id: "closing",          content: <ClosingSection data={data} guestName={guestName} /> },
+    { id: "gift",             content: <GiftSection /> },
     { id: "love-story",       content: <LoveStorySection /> },
     { id: "wishes",           content: <WishesSection slug={data.slug} guestName={guestName} /> },
-    { id: "gift",             content: <GiftSection /> },
   ];
 
   return (
