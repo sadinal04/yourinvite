@@ -9,50 +9,50 @@ const SMOOTH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 // ─── Variant presets ────────────────────────────────────────────────────────
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 60, scale: 0.95, rotateX: 10 },
+  hidden: { opacity: 0, y: 40, scale: 0.97 },
   visible: { 
-    opacity: 1, y: 0, scale: 1, rotateX: 0, 
-    transition: { duration: 1.2, ease: SMOOTH_EASE } 
+    opacity: 1, y: 0, scale: 1,
+    transition: { duration: 0.75, ease: SMOOTH_EASE } 
   },
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -40, scale: 0.98 },
+  hidden: { opacity: 0, y: -30, scale: 0.98 },
   visible: { 
     opacity: 1, y: 0, scale: 1, 
-    transition: { duration: 1.1, ease: SMOOTH_EASE } 
+    transition: { duration: 0.7, ease: SMOOTH_EASE } 
   },
 };
 
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -60, scale: 0.98 },
+  hidden: { opacity: 0, x: -40, scale: 0.98 },
   visible: { 
     opacity: 1, x: 0, scale: 1, 
-    transition: { duration: 1.1, ease: SMOOTH_EASE } 
+    transition: { duration: 0.7, ease: SMOOTH_EASE } 
   },
 };
 
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 60, scale: 0.98 },
+  hidden: { opacity: 0, x: 40, scale: 0.98 },
   visible: { 
     opacity: 1, x: 0, scale: 1, 
-    transition: { duration: 1.1, ease: SMOOTH_EASE } 
+    transition: { duration: 0.7, ease: SMOOTH_EASE } 
   },
 };
 
 export const zoomIn: Variants = {
-  hidden: { opacity: 0, scale: 0.75 },
+  hidden: { opacity: 0, scale: 0.85 },
   visible: { 
     opacity: 1, scale: 1, 
-    transition: { duration: 1.2, ease: SMOOTH_EASE } 
+    transition: { duration: 0.75, ease: SMOOTH_EASE } 
   },
 };
 
 export const zoomInUp: Variants = {
-  hidden: { opacity: 0, scale: 0.82, y: 40, rotateX: 15, filter: "blur(6px)" },
+  hidden: { opacity: 0, scale: 0.9, y: 30 },
   visible: { 
-    opacity: 1, scale: 1, y: 0, rotateX: 0, filter: "blur(0px)", 
-    transition: { duration: 1.3, ease: SMOOTH_EASE } 
+    opacity: 1, scale: 1, y: 0,
+    transition: { duration: 0.8, ease: SMOOTH_EASE } 
   },
 };
 
@@ -62,14 +62,14 @@ export const revealUp: Variants = {
   visible: {
     clipPath: "inset(0% 0% 0% 0%)",
     opacity: 1,
-    transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.7, ease: [0.33, 1, 0.68, 1] },
   },
 };
 
 // Line expand (for decorative lines)
 export const lineExpand: Variants = {
   hidden: { scaleX: 0, opacity: 0 },
-  visible: { scaleX: 1, opacity: 1, transition: { duration: 1.0, ease: SMOOTH_EASE } },
+  visible: { scaleX: 1, opacity: 1, transition: { duration: 0.8, ease: SMOOTH_EASE } },
 };
 
 // Stagger container
@@ -77,16 +77,16 @@ export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.25, delayChildren: 0.15 },
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
   },
 };
 
 // Default item (used by SectionWrapper children)
 export const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.96, rotateX: 12, filter: "blur(5px)" },
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
   visible: { 
-    opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)", 
-    transition: { duration: 1.1, ease: SMOOTH_EASE } 
+    opacity: 1, y: 0, scale: 1,
+    transition: { duration: 0.75, ease: SMOOTH_EASE } 
   },
 };
 

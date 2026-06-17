@@ -286,10 +286,10 @@
   height: 100dvh;
   background: linear-gradient(175deg, #fffdf8 0%, #fdf5ec 45%, #fbecd9 100%);
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
-  
   overflow-y: auto;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
+  overscroll-behavior-y: none;
   
   /* Native momentum scrolling on iOS */
   -webkit-overflow-scrolling: touch;
